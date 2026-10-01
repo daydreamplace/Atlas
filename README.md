@@ -1,4 +1,4 @@
-# iGEM TeamName Wiki
+# Team PSI Korea 2026 Wiki
 
 This repository uses `TypeScript` and `React` to manage the wikis.
 
@@ -30,8 +30,8 @@ for web development.
 
 1. Clone the repository:
    ```bash
-   git clone https://gitlab.igem.org/templates/wiki-react-vite
-   cd wiki-react-vite
+   git clone https://gitlab.igem.org/2026/psi-korea
+   cd psi-korea
    ```
 2. Install the dependencies:
 
