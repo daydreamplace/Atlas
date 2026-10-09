@@ -36,7 +36,7 @@ for web development.
 2. Install the dependencies:
 
    ```bash
-   yarn install
+   npm install
    ```
 
    ### Important:
@@ -46,7 +46,7 @@ for web development.
 
 3. Start the development server:
    ```bash
-   yarn run dev
+   npm run dev
    ```
 4. Navigate to the files you wish to edit:
    - The main App component can be found under `src/containers/App`
@@ -78,7 +78,7 @@ Below is the structure of important files and directories in this project:
     ├── tsconfig.json        -> Configures TypeScript options
     ├── tsconfig.node.json   -> TypeScript settings for Node.js
     ├── vite.config.ts       -> Configuration for the Vite tool
-    └── yarn.lock            -> Yarn lock file for dependency management
+    └── package-lock.json    -> npm lock file for dependency management
 
 ### Technologies
 

@@ -1,7 +1,7 @@
 # Notes for AI assistants
 
 Read **[README.md](README.md)** first — it covers the stack, where to edit
-(`src/contents/*`, `src/pages.ts`), the `yarn` commands, and the iGEM asset rules
+(`src/contents/*`, `src/pages.ts`), the `npm` commands, and the iGEM asset rules
 (images via the uploads tool, videos from iGEM servers, no external CDNs).
 
 ## Responsible & honest use

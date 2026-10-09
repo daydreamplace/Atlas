@@ -1,6 +1,7 @@
 {
   "name": "team-slug",
   "version": "0.0.1",
+  "packageManager": "npm@10.9.2",
   "license": "CC-BY-4.0",
   "type": "module",
   "scripts": {
