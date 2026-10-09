@@ -1,11 +1,19 @@
 interface HeaderProps {
   title: string;
   lead: string;
+  withInspectionLight?: boolean;
 }
 
-export function Header({ title, lead }: HeaderProps) {
+export function Header({
+  title,
+  lead,
+  withInspectionLight = false,
+}: HeaderProps) {
   return (
     <header className="bg-hero py-5 mb-5">
+      {withInspectionLight ? (
+        <div className="inspection-light" aria-hidden="true" />
+      ) : null}
       <div className="container h-100">
         <div className="row h-100 align-items-center">
           <div className="col-lg-12">

@@ -1,19 +1,18 @@
-import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Route, Routes } from "react-router-dom";
-import { getPathMapping, stringToSlug } from "../../utils";
+import "./App.css";
+import "../../styles/global.css";
+import { Route, Routes, useLocation } from "react-router-dom";
+import { getPathMapping } from "../../utils";
 import { useEffect } from "react";
 import { Navbar } from "../../components/Navbar";
 import { Header } from "../../components/Header";
 import { NotFound } from "../../components/NotFound";
 import { Footer } from "../../components/Footer";
+import { WikiPageBackground } from "../../components/WikiPageBackground";
 
 const App = () => {
+  const { pathname: currentPath } = useLocation();
   const pathMapping = getPathMapping();
-  const currentPath =
-    location.pathname
-      .split(`${stringToSlug(import.meta.env.VITE_TEAM_NAME)}`)
-      .pop() || "/";
 
   // Set Page Title
   const title =
@@ -36,12 +35,22 @@ const App = () => {
               key={path}
               path={path}
               element={
-                <>
-                  <Header title={title || ""} lead={lead || ""} />
-                  <div className="container">
+                path === "/" ? (
+                  <main id="main-content" className="home-page">
+                    <Header title={title || ""} lead={lead || ""} />
+                    <div className="container">
+                      <Component />
+                    </div>
+                  </main>
+                ) : (
+                  <WikiPageBackground
+                    title={title || ""}
+                    lead={lead || ""}
+                    pathname={path}
+                  >
                     <Component />
-                  </div>
-                </>
+                  </WikiPageBackground>
+                )
               }
             />
           ),
@@ -49,13 +58,12 @@ const App = () => {
         <Route
           path="*"
           element={
-            <>
-              <Header
-                title="Not Found"
-                lead="The requested URL was not found on this server."
-              />
+            <WikiPageBackground
+              title="Not Found"
+              lead="The requested URL was not found on this server."
+            >
               <NotFound />
-            </>
+            </WikiPageBackground>
           }
         />
       </Routes>

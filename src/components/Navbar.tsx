@@ -2,10 +2,11 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import BootstrapNavbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Pages from "../pages.ts";
 
 export function Navbar() {
+  const { pathname } = useLocation();
   const pages = Pages.map((item, pageIndex) => {
     if ("folder" in item && item.folder) {
       const folderItems = item.folder.map((subpage, subpageIndex) => {
@@ -15,6 +16,8 @@ export function Navbar() {
               key={`subpage-${pageIndex}-${subpageIndex}`}
               as={Link}
               to={subpage.path}
+              className={pathname === subpage.path ? "active" : undefined}
+              aria-current={pathname === subpage.path ? "page" : undefined}
             >
               {subpage.name}
             </NavDropdown.Item>
@@ -26,13 +29,20 @@ export function Navbar() {
           key={`page-${pageIndex}`}
           title={item.name}
           id={`page-${pageIndex}`}
+          active={item.folder.some((subpage) => subpage.path === pathname)}
         >
           {folderItems}
         </NavDropdown>
       );
     } else if ("path" in item && item.path) {
       return (
-        <Nav.Link key={`page-${pageIndex}`} as={Link} to={item.path}>
+        <Nav.Link
+          key={`page-${pageIndex}`}
+          as={Link}
+          to={item.path}
+          className={pathname === item.path ? "active" : undefined}
+          aria-current={pathname === item.path ? "page" : undefined}
+        >
           {item.name}
         </Nav.Link>
       );
@@ -40,9 +50,17 @@ export function Navbar() {
   });
 
   return (
-    <BootstrapNavbar expand="lg" className="bg-body-tertiary" fixed="top">
+    <BootstrapNavbar
+      expand="lg"
+      className="site-navigation"
+      fixed="top"
+      variant="dark"
+    >
+      <a className="skip-link" href="#main-content">
+        Skip to content
+      </a>
       <Container>
-        <BootstrapNavbar.Brand>
+        <BootstrapNavbar.Brand as={Link} to="/">
           {import.meta.env.VITE_TEAM_NAME}
         </BootstrapNavbar.Brand>
         <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
