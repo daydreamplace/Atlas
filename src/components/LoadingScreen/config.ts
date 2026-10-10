@@ -1,38 +1,27 @@
 // Everything you may want to tweak for the splash screen lives here.
 
-// TODO: iGEM requires images to be served from static.igem.wiki.
-// Upload src/assets/loading/* with the uploads tool, then replace these
-// imports with the resulting https://static.igem.wiki/... URLs.
-import cosmetics1 from "../../assets/loading/cosmetics-1.webp";
-import cosmetics2 from "../../assets/loading/cosmetics-2.webp";
-import progress000 from "../../assets/loading/progress-000.webp";
-import progress010 from "../../assets/loading/progress-010.webp";
-import progress020 from "../../assets/loading/progress-020.webp";
-import progress030 from "../../assets/loading/progress-030.webp";
-import progress040 from "../../assets/loading/progress-040.webp";
-import progress050 from "../../assets/loading/progress-050.webp";
-import progress060 from "../../assets/loading/progress-060.webp";
-import progress070 from "../../assets/loading/progress-070.webp";
-import progress080 from "../../assets/loading/progress-080.webp";
-import progress090 from "../../assets/loading/progress-090.webp";
-import progress100 from "../../assets/loading/progress-100.webp";
+const LOADING_ASSET_BASE =
+  "https://static.igem.wiki/teams/6479/wiki/loading";
 
 /** Drawings that alternate in a loop. */
-export const COSMETICS_FRAMES = [cosmetics1, cosmetics2];
+export const COSMETICS_FRAMES = [
+  `${LOADING_ASSET_BASE}/cosmetics-1.webp`,
+  `${LOADING_ASSET_BASE}/cosmetics-2.webp`,
+];
 
 /** Progress bar images, from empty to full, in equal steps. */
 export const PROGRESS_FRAMES = [
-  progress000,
-  progress010,
-  progress020,
-  progress030,
-  progress040,
-  progress050,
-  progress060,
-  progress070,
-  progress080,
-  progress090,
-  progress100,
+  `${LOADING_ASSET_BASE}/progress-000.webp`,
+  `${LOADING_ASSET_BASE}/progress-010.webp`,
+  `${LOADING_ASSET_BASE}/progress-020.webp`,
+  `${LOADING_ASSET_BASE}/progress-030.webp`,
+  `${LOADING_ASSET_BASE}/progress-040.webp`,
+  `${LOADING_ASSET_BASE}/progress-050.webp`,
+  `${LOADING_ASSET_BASE}/progress-060.webp`,
+  `${LOADING_ASSET_BASE}/progress-070.webp`,
+  `${LOADING_ASSET_BASE}/progress-080.webp`,
+  `${LOADING_ASSET_BASE}/progress-090.webp`,
+  `${LOADING_ASSET_BASE}/progress-100.webp`,
 ];
 
 // --- Timing (all in ms) ---------------------------------------------------
