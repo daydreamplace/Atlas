@@ -387,7 +387,7 @@
   }
 
   .counterfeit-story .counterfeit-story__title {
-    max-width: 18ch;
+    max-width: min(37rem, calc(100vw - 4rem));
     font-size: clamp(2.2rem, 3vw, 2.5rem);
   }
 
@@ -497,6 +497,10 @@
 }
 
 @media (max-width: 420px) {
+  .counterfeit-story .counterfeit-story__title {
+    max-width: calc(100vw - 2.2rem);
+  }
+
   .counterfeit-story__artwork {
     gap: 1rem;
   }

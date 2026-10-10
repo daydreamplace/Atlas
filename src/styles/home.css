@@ -469,6 +469,12 @@
 
 /* Selected desktop compositions are deliberately cut into movable art fragments. */
 @media (min-width: 1201px) {
+  .home-page
+    .home-story-section--key-features-and-advantages
+    .home-story-section__title {
+    max-width: min(38rem, calc(100vw - 4rem));
+  }
+
   .home-story-section--key-features-and-advantages
     .home-story-section__image--base,
   .home-story-section--new-authentication-standard
