@@ -1,0 +1,26 @@
+/* Site-wide font: Pretendard (SIL Open Font License 1.1).
+   https://github.com/orioncactus/pretendard
+
+   iGEM forbids external CDNs, so the font must be uploaded to
+   static.igem.wiki with the uploads tool.
+   TODO: upload `PretendardVariable.woff2` (from the release zip:
+   web/variable/woff2/) and make sure the URL below matches.
+   Until then the fallbacks in --font-sans are used. */
+@font-face {
+  font-family: "Pretendard Variable";
+  font-weight: 45 920;
+  font-style: normal;
+  font-display: swap;
+  src: url("https://static.igem.wiki/teams/6479/fonts/pretendard-variable.woff2")
+    format("woff2-variations");
+}
+
+/* Must load after Bootstrap so these override its :root variables. */
+:root {
+  --font-sans:
+    "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    system-ui, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic",
+    sans-serif;
+  --bs-font-sans-serif: var(--font-sans);
+  --bs-body-font-family: var(--font-sans);
+}

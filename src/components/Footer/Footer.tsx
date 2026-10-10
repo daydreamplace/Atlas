@@ -1,11 +1,6 @@
-import { stringToSlug } from "../utils";
+import { stringToSlug } from "../../utils";
+import { CONTACT, SPONSORS } from "./config";
 import "./Footer.css";
-
-const CONTACT = {
-  call: "+82-2-6959-2757",
-  email: "pcakoreainfo@pcakorea.org",
-  address: "26, Teheran-ro 34-gil, Gangnam-gu, Seoul, Republic of Korea 06223",
-};
 
 export function Footer() {
   const teamYear = import.meta.env.VITE_TEAM_YEAR;
@@ -19,8 +14,19 @@ export function Footer() {
           <div className="col-lg-7">
             <div className="footer-card h-100">
               <h2 className="footer-card-title">Sponsor</h2>
-              {/* TODO: add sponsor logos */}
-              <div className="footer-sponsors" />
+              <ul className="footer-sponsors">
+                {SPONSORS.map(({ name, logo, href }) => (
+                  <li key={name}>
+                    {href ? (
+                      <a href={href} target="_blank" rel="noopener noreferrer">
+                        <img src={logo} alt={name} />
+                      </a>
+                    ) : (
+                      <img src={logo} alt={name} />
+                    )}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
           <div className="col-lg-5">
