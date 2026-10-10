@@ -1,0 +1,28 @@
+{
+  "intent": "Section 4: tangible single legal notepad, self-hosted handwriting fonts and separate colored-pencil objects. All approved titles and paragraphs remain real unchanged HTML text.",
+  "mode": "built-in image_gen",
+  "paper": {
+    "file": "public/images/main-page/limitations/legal-pad-paper-v1.png",
+    "prompt": "Use case: product-mockup. Asset type: realistic legal writing pad background for an editable web page. Create one overhead, perfectly straight, front-facing pale canary-yellow top-bound legal notepad, isolated on true transparency. Portrait ratio about 3:4. Full pad fills almost the whole canvas with only a narrow 2% transparent safety margin. A narrow dark navy cloth-and-glue binding band across the very top, subtle wear along its edge, tiny binding perforation below. Uncoated warm pale yellow paper, subtle visible paper fiber grain, very faint pressure dents, barely uneven sheet edges, a few extremely subtle wrinkles along outside edges. At the bottom and lower-right edge show three thin underlying paper sheets and a very thin muted cardboard backing; restrained natural soft shadow immediately adjacent to pad edges. The huge central writing surface must be completely empty and uninterrupted, light and easy to put long text over. IMPORTANT: absolutely NO printed ruled lines and NO red margin line; those will be added precisely in CSS so they fit editable text. No writing, no lettering, no logo, no numbers, no stamps, no tape, no stickers, no pens, no desk, no background, no spiral rings. Orthographic overhead not angled, no perspective distortion, no central folds, no heavy staining or crumpling. Tangible beautifully lit real stationery photography, not a flat vector UI or a cartoon. Keep color pale natural yellow, not brown vintage parchment or saturated neon. This is one continuous long writing pad."
+  },
+  "objects": [
+    {
+      "source": "public/images/main-page/authentication/open-carton.png",
+      "file": "public/images/main-page/authentication/open-carton-pencil-v2.png",
+      "prompt": "Use case: style-transfer. Input image 1 is the edit target. Preserve the exact open cosmetic carton silhouette, size, position, upright perspective, top flaps and large empty front face. Re-render the same carton as an accomplished hand-drawn colored-pencil study on transparent background: visible directional pencil strokes, crisp slightly irregular graphite contour, warm ochre/kraft-tan front and inner flaps, muted lilac shaded right side, restrained indigo line accents at folded edges. Richer real pigment and noticeably more drawn than a realistic cardboard rendering, but gentle natural colors not bright cartoon. Keep realistic form and client educational artbook quality. Central front panel remains completely blank for separately overlaid QR/NFC labels. No attached labels, marks, arrows, words, numbers, floor, backing paper, border, extra props or cast background shadow. Preserve alpha transparency, exact full-object composition and square canvas."
+    },
+    {
+      "source": "public/images/main-page/authentication/product-jar.png",
+      "file": "public/images/main-page/authentication/product-jar-pencil-v2.png",
+      "prompt": "Use case: style-transfer. Input image 1 is the edit target. Preserve the exact closed skincare cream jar silhouette, size, position, cylindrical proportions and front three-quarter overhead perspective. Re-render the same jar as an accomplished hand-drawn colored-pencil scientific notebook study on transparent background: fine visible cross-hatching and directional pencil strokes, slightly irregular graphite contour, charcoal-graphite lid with purple pencil highlights, creamy ivory contents with soft pale-peach pencil shading, translucent glass edges with richer dusty periwinkle and muted lavender pigment strokes. More visibly colored-pencil drawing, less smooth product rendering; realistic form but clearly hand-made artbook illustration, not glossy 3D and not flat clipart. Keep front unbranded and blank. No labels, text, symbols, arrows, swatches, loose pencils, paper backing, floor, surrounding background or new props. True transparent background and same square canvas."
+    }
+  ],
+  "sharedElements": "QR paper, hologram security labels, serial paper and hand-drawn N-Mark remain shared with Section 3.",
+  "typography": {
+    "bodyAndHeading": "Self-hosted Caveat variable font, weights 400–700; Section 4 only.",
+    "annotations": "Self-hosted Nothing You Could Do; Section 4 only.",
+    "licenses": "SIL Open Font License 1.1 and source records are included under public/fonts/caveat and public/fonts/nothing-you-could-do.",
+    "responsiveBody": "The original HTML body uses 100% of the paper's usable writing width, natural word wrapping, no character-count width cap, no columns, no truncation, and no automatic hyphenation."
+  },
+  "publication": "Local draft. Upload final images and fonts to static.igem.wiki before publication."
+}

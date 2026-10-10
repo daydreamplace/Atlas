@@ -1,0 +1,24 @@
+{
+  "mode": "built-in image_gen",
+  "source": "public/images/main-page/sections/03-existing-authentication.png",
+  "intent": "Restore original Section 3 paper-cutout style as independently animated assets",
+  "assets": [
+    {
+      "file": "public/images/main-page/authentication/qr-paper-v2.png",
+      "prompt": "Use case: background-extraction. Input image 1: edit target and invariant style reference, the earlier Section 3 artwork. Create a separate transparent cutout of ONLY the upper-left torn ivory paper QR label. Preserve its charcoal and dusty lavender chunky QR pattern, visible graphite/pencil paper grain, curled upper-right edge and two small lavender tape pieces at opposite corners. Keep the original handmade research artbook aesthetic, not a clean vector UI. Remove all other objects, remove thin annotation lines, remove the blurred background/halo completely. Enlarge and center this one nearly-square paper on a square transparent canvas with 8% empty margin. No words or letters; HTML labels will be added later. True alpha transparent background. No glow, no scene, no frames, no extra props. This is an illustrative nonfunctional QR, preserve its original appearance."
+    },
+    {
+      "file": "public/images/main-page/authentication/hologram-disc-v2.png",
+      "prompt": "Use case: background-extraction. Input image 1: edit target and invariant style reference, the earlier Section 3 artwork. Create a separate transparent cutout of ONLY the round holographic seal at upper center. Preserve its lavender, cyan, pale yellow colored-pencil iridescent facets, graphite circular edge, realistic paper texture and curled peeled silver lower-right corner. Keep the ORIGINAL handmade research artbook aesthetic, not glossy 3D, not a clean vector UI. Remove every other object, annotation lines, blurred background and halo. Enlarge and center this ONE circular seal on a square transparent canvas with 8% empty margin. No text, no words, no other props, no card, no background paper. True transparent alpha."
+    },
+    {
+      "file": "public/images/main-page/authentication/serial-paper-v2.png",
+      "prompt": "Use case: precise-object-edit. Input image 1: edit target and invariant style reference, the earlier Section 3 artwork. Isolate and develop ONLY the lower-right long ivory paper serial-label fragment into a standalone transparent cutout. Preserve its elongated rounded torn-paper shape, soft graphite/pencil texture and lavender tape pieces on upper-left and lower-right. Replace the faint indistinct pencil strokes on its face with one clearly drawn DARK CHARCOAL BARCODE, uneven handcrafted vertical bars, across the middle upper half. Leave a clean empty ivory strip under the barcode for an HTML serial number. No actual letters or numbers anywhere. Horizontal paper label centered on a square transparent canvas, fully visible at 84% canvas width, about 40% canvas height. Remove all other objects, annotation lines, halo and background. True transparent alpha, no glow, not clean vector, keep original artbook style."
+    },
+    {
+      "file": "public/images/main-page/authentication/nfc-paper-v2.png",
+      "prompt": "Use case: style-transfer. Input image 1: style and material reference for a matching independent Section 3 illustration. Create ONE small torn ivory paper NFC contactless marker in exactly the same tactile graphite and dusty-lavender colored-pencil artbook language as the original QR paper. The front has a dark lavender handdrawn NFC contactless symbol: a simple centered slanted N mark with three curved radio arcs on its right, easy to recognize, no extra letters or words. A small lavender tape piece secures one corner. Slightly curled paper edge, irregular fibers, charcoal outlines, soft natural pencil grain. Nearly square paper centered at 82% of a square transparent canvas. NO background, NO halo, NO glow, NO external shadow rectangle, NO other objects, NO phone, NO hand. True transparent alpha. Original restrained research artbook aesthetic, not glossy icon, not clean vector UI."
+    }
+  ],
+  "publication": "Local draft; upload images to static.igem.wiki before publication."
+}

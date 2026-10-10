@@ -1,0 +1,678 @@
+/* Caveat and Nothing You Could Do, SIL OFL 1.1; local draft assets, no font CDN. */
+@font-face {
+  font-family: "Caveat";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/fonts/caveat/Caveat-wght.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Nothing You Could Do";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/nothing-you-could-do/NothingYouCouldDo-Regular.ttf")
+    format("truetype");
+}
+
+.home-page .home-story-section.limitations-story {
+  --limitations-ink: #29242b;
+  --limitations-pencil: #524a56;
+  --limitations-red: #954853;
+  min-height: auto;
+  padding-block: clamp(4.5rem, 8vw, 7rem);
+  overflow: clip;
+}
+
+/* One uninterrupted sheet: the animation occupies space inside the pad. */
+.limitations-story__stage {
+  --limitations-pad-rule-step: 2rem;
+  --limitations-pad-binding-depth: clamp(4.6rem, 7vw, 5.3rem);
+  --limitations-pad-edge-inline: clamp(0.72rem, 1.5vw, 1.1rem);
+  --limitations-pad-bottom-depth: clamp(1.2rem, 2.4vw, 1.8rem);
+  --limitations-pad-margin-position: clamp(3.25rem, 5.6vw, 4.35rem);
+  --limitations-pad-content-left: clamp(5.25rem, 8.2vw, 6.6rem);
+  --limitations-pad-content-right: clamp(1.35rem, 2.4vw, 2.1rem);
+  --limitations-pad-paper: linear-gradient(
+    180deg,
+    #20283a 0 8.3%,
+    #f2e39c 8.3% 100%
+  );
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+  width: min(1080px, 100%);
+  margin-inline: auto;
+}
+.limitations-story__stage::before {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  box-sizing: border-box;
+  border-style: solid;
+  border-color: transparent;
+  border-width: var(--limitations-pad-binding-depth)
+    var(--limitations-pad-edge-inline) var(--limitations-pad-bottom-depth);
+  border-image-source: var(--limitations-pad-paper);
+  border-image-slice: 120 42 80 42 fill;
+  border-image-width: var(--limitations-pad-binding-depth)
+    var(--limitations-pad-edge-inline) var(--limitations-pad-bottom-depth);
+  border-image-repeat: stretch;
+  transform: none;
+  filter: drop-shadow(0 1rem 1.45rem #0000003d);
+  pointer-events: none;
+}
+.limitations-story__stage::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: var(--limitations-pad-binding-depth) var(--limitations-pad-edge-inline)
+    var(--limitations-pad-bottom-depth);
+  background-image:
+    linear-gradient(
+      90deg,
+      transparent 0 var(--limitations-pad-margin-position),
+      #b1535f70 var(--limitations-pad-margin-position)
+        calc(var(--limitations-pad-margin-position) + 1px),
+      transparent calc(var(--limitations-pad-margin-position) + 1px)
+    ),
+    repeating-linear-gradient(
+      180deg,
+      transparent 0 calc(var(--limitations-pad-rule-step) - 1px),
+      #6387a359 calc(var(--limitations-pad-rule-step) - 1px)
+        var(--limitations-pad-rule-step)
+    );
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  pointer-events: none;
+}
+.home-page .limitations-story .home-story-section__content {
+  position: relative;
+  isolation: auto;
+  width: auto;
+  max-width: none;
+  margin: 0;
+  color: var(--limitations-ink);
+}
+.home-page .limitations-story .home-story-section__content::before,
+.home-page .limitations-story .home-story-section__content::after {
+  content: none;
+}
+.home-page .limitations-story .limitations-story__pad-heading {
+  padding: calc(var(--limitations-pad-binding-depth) + 1.35rem)
+    var(--limitations-pad-content-right) 1.35rem
+    var(--limitations-pad-content-left);
+}
+.home-page .limitations-story .limitations-story__pad-body {
+  padding: 1.65rem var(--limitations-pad-content-right)
+    clamp(3.7rem, 5vw, 4.8rem) var(--limitations-pad-content-left);
+}
+.home-page .limitations-story .home-story-section__title {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  color: #332c35;
+  font-family: "Caveat", cursive;
+  font-size: clamp(3rem, 6.7vw, 5.2rem);
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+.home-page .limitations-story .home-story-section__body {
+  width: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  overflow: visible;
+  color: #403942;
+  font-family: "Caveat", cursive;
+  font-size: clamp(1.28rem, 1.75vw, 1.55rem);
+  font-weight: 500;
+  line-height: var(--limitations-pad-rule-step);
+  letter-spacing: 0.004em;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
+  text-wrap: wrap;
+  text-wrap-style: auto;
+}
+
+.limitations-story__slideshow {
+  margin: 0 clamp(1rem, 4vw, 3.5rem);
+}
+.limitations-story__viewport {
+  position: relative;
+  height: clamp(19rem, 32vw, 24rem);
+  overflow: hidden;
+  isolation: isolate;
+}
+.limitations-story__slide {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+.limitations-story__slide[data-active="true"] {
+  visibility: visible;
+  opacity: 1;
+  animation: limitations-slide-in 580ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+.limitations-story__risk {
+  position: absolute;
+  inset: 0;
+  width: min(39rem, 100%);
+  height: 100%;
+  margin: auto;
+}
+.limitations-story__risk--hologram {
+  width: min(43rem, 100%);
+}
+.limitations-story__asset {
+  display: block;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  filter: drop-shadow(0 8px 9px #24202b26);
+}
+.limitations-story__mark,
+.limitations-story__package-label {
+  position: absolute;
+  color: #3d3542;
+  filter: drop-shadow(0 4px 4px #24202b20);
+}
+.limitations-story__mark > svg,
+.limitations-story__package-label > svg,
+.limitations-story__mark > img,
+.limitations-story__package-label > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.limitations-story__mark--qr-source {
+  top: 12%;
+  left: 2%;
+  width: 38%;
+  aspect-ratio: 1;
+  transform: rotate(-5deg);
+}
+.limitations-story__qr-copy-sheet {
+  top: 14%;
+  right: 4%;
+  width: 38%;
+  aspect-ratio: 1;
+}
+.limitations-story__qr-copy-sheet--back-two {
+  transform: translate(6%, -8%) rotate(9deg);
+}
+.limitations-story__qr-copy-sheet--back-one {
+  transform: translate(1%, -3%) rotate(-5deg);
+}
+.limitations-story__mark--qr-copy {
+  transform: rotate(7deg);
+}
+.limitations-story__transfer {
+  position: absolute;
+  display: block;
+  width: clamp(3rem, 5vw, 4.5rem);
+  height: auto;
+  overflow: visible;
+  color: #6c536e;
+}
+.limitations-story__transfer--qr {
+  top: 36%;
+  left: 44%;
+  transform: rotate(-5deg);
+}
+.limitations-story__annotation,
+.limitations-story__question {
+  font-family: "Nothing You Could Do", "Caveat", cursive;
+}
+.limitations-story__annotation {
+  position: absolute;
+  color: var(--limitations-red);
+  font-size: clamp(1.1rem, 2.2vw, 1.75rem);
+  line-height: 1.2;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.2em;
+}
+.limitations-story__annotation--qr {
+  right: 12%;
+  bottom: 6%;
+  transform: rotate(-3deg);
+}
+.limitations-story__mark--hologram-source {
+  top: 9%;
+  left: 3%;
+  width: 37%;
+  aspect-ratio: 1;
+  transform: rotate(-8deg);
+  opacity: 1;
+}
+.limitations-story__mark--hologram-reused {
+  top: 9%;
+  right: 3%;
+  width: 37%;
+  aspect-ratio: 1;
+  transform: rotate(13deg);
+}
+.limitations-story__annotation--hologram {
+  right: 9%;
+  bottom: 6%;
+  transform: rotate(2deg);
+}
+.limitations-story__transfer--hologram {
+  top: 35%;
+  left: 44%;
+  transform: rotate(-8deg);
+}
+.limitations-story__risk--serial {
+  width: min(49rem, 100%);
+}
+.limitations-story__mark--serial-source,
+.limitations-story__mark--serial-copy {
+  top: 22%;
+  width: 30%;
+  aspect-ratio: 1;
+}
+.limitations-story__mark--serial-source {
+  left: 0;
+  transform: rotate(-9deg);
+}
+.limitations-story__mark--serial-copy {
+  right: 0;
+  transform: rotate(8deg);
+}
+.limitations-story__serial-number {
+  position: absolute;
+  top: 57%;
+  left: 19%;
+  width: 62%;
+  color: #3d3542;
+  font: 700 clamp(0.6rem, 1.3vw, 1rem)/1 monospace;
+  letter-spacing: 0.07em;
+  text-align: center;
+}
+.limitations-story__clone-operator {
+  position: absolute;
+  top: 7%;
+  left: 31%;
+  width: 38%;
+  transform: rotate(-2deg);
+}
+.limitations-story__transfer--serial {
+  top: 57%;
+  left: 70%;
+  width: clamp(2.4rem, 3.6vw, 3.25rem);
+}
+.limitations-story__annotation--serial {
+  right: 0;
+  bottom: 3%;
+  left: 0;
+  text-align: center;
+  transform: rotate(-2deg);
+}
+
+.limitations-story__comparison {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 12% minmax(0, 1fr);
+  align-items: center;
+  justify-items: center;
+  width: min(45rem, 100%);
+  height: 100%;
+  margin: auto;
+  padding: 2.5rem 0 3.2rem;
+}
+.limitations-story__question {
+  position: absolute;
+  top: 0.3rem;
+  right: 0;
+  left: 0;
+  color: #534655;
+  font-size: clamp(1rem, 2vw, 1.55rem);
+  font-weight: 400;
+  line-height: 1.25;
+  text-align: center;
+}
+.limitations-story__comparison-object {
+  position: relative;
+  width: min(100%, 17rem);
+  height: 100%;
+  max-height: 17rem;
+}
+.limitations-story__comparison-object--packaging {
+  grid-column: 1;
+}
+.limitations-story__comparison-object--product {
+  grid-column: 3;
+}
+.limitations-story__carton--comparison,
+.limitations-story__product-jar {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.limitations-story__carton--comparison {
+  transform: rotate(-3deg);
+}
+.limitations-story__product-jar {
+  transform: rotate(2.5deg);
+}
+.limitations-story__package-label--qr {
+  top: 43%;
+  left: 31%;
+  width: 16%;
+  aspect-ratio: 1;
+  transform: rotate(-7deg);
+}
+.limitations-story__package-label--nfc {
+  top: 51%;
+  right: 34%;
+  width: 16%;
+  aspect-ratio: 1;
+  transform: rotate(5deg);
+}
+.limitations-story__not-equal {
+  grid-column: 2;
+  display: block;
+  width: clamp(3rem, 6vw, 5rem);
+  height: auto;
+  overflow: visible;
+  color: #994f5e;
+  transform: rotate(-5deg);
+}
+.limitations-story__comparison-note {
+  position: absolute;
+  right: 0;
+  bottom: 0.4rem;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.22em;
+  color: #49334f;
+  font-family: "Caveat", cursive;
+  font-size: clamp(1.4rem, 3.2vw, 2.7rem);
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-align: center;
+  transform: rotate(-1deg);
+}
+.limitations-story__comparison-note-mark {
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 0.95em;
+  height: 0.78em;
+  overflow: visible;
+  color: #994f5e;
+}
+
+.limitations-story__controls {
+  position: relative;
+  margin: 0.6rem clamp(0.7rem, 2.5vw, 2.5rem) 0;
+  padding: 0.7rem 0;
+  border-top: 1px dashed #6b536548;
+}
+.limitations-story__steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: center;
+  gap: 0.35rem;
+}
+.limitations-story__step-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  min-height: 2.5rem;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid transparent;
+  border-radius: 1.5rem;
+  color: #665362;
+  background: transparent;
+  font: 600 0.72rem/1.2 var(--wiki-sans);
+  cursor: pointer;
+}
+.limitations-story__step-button:not(:last-child)::after {
+  position: absolute;
+  top: 50%;
+  right: -0.38rem;
+  content: "\2192";
+  color: #7b6677;
+  font:
+    700 0.86rem/1 "Caveat",
+    cursive;
+  transform: translate(50%, -52%) rotate(-2deg);
+}
+.limitations-story__step-button[aria-pressed="true"] {
+  color: #443047;
+  background: #8a729923;
+  border-color: #7c628d65;
+}
+.limitations-story__step-button:focus-visible {
+  outline: 2px solid #74547f;
+  outline-offset: 2px;
+}
+.limitations-story__step-button:hover {
+  background: #8a729919;
+}
+
+/* Finite illustration actions; the conclusion never advances or loops. */
+.limitations-story[data-limitations-running="true"]
+  .limitations-story__slide[data-active="true"]
+  .limitations-story__mark--qr-copy,
+.limitations-story[data-limitations-running="true"]
+  .limitations-story__slide[data-active="true"]
+  .limitations-story__mark--serial-copy {
+  animation: limitations-copy-in 1100ms 400ms ease both;
+}
+.limitations-story[data-limitations-running="true"]
+  .limitations-story__slide[data-active="true"]
+  .limitations-story__mark--hologram-reused {
+  animation: limitations-hologram-transfer 1400ms 450ms ease both;
+}
+.limitations-story[data-limitations-running="true"]
+  .limitations-story__slide[data-active="true"]
+  .limitations-story__mark--hologram-source {
+  animation: limitations-hologram-peel 1100ms 450ms ease both;
+}
+.limitations-story[data-limitations-paused="true"]
+  .limitations-story__viewport
+  * {
+  animation-play-state: paused !important;
+}
+.limitations-story[data-reduced-motion="true"] .limitations-story__viewport * {
+  animation: none !important;
+}
+
+@media (max-width: 620px) {
+  .home-page .home-story-section.limitations-story {
+    padding: 4.5rem 0.9rem;
+  }
+  .limitations-story__stage {
+    --limitations-pad-rule-step: 1.875rem;
+    --limitations-pad-binding-depth: 4.25rem;
+    --limitations-pad-edge-inline: 0.58rem;
+    --limitations-pad-bottom-depth: 1.15rem;
+    --limitations-pad-margin-position: 1.35rem;
+    --limitations-pad-content-left: 2.65rem;
+    --limitations-pad-content-right: 1rem;
+  }
+  .home-page .limitations-story .limitations-story__pad-heading {
+    padding: calc(var(--limitations-pad-binding-depth) + 1.05rem)
+      var(--limitations-pad-content-right) 1.1rem
+      var(--limitations-pad-content-left);
+  }
+  .home-page .limitations-story .limitations-story__pad-body {
+    padding: 1.3rem var(--limitations-pad-content-right) 3.4rem
+      var(--limitations-pad-content-left);
+  }
+  .home-page .limitations-story .home-story-section__title {
+    font-size: clamp(2.35rem, 12vw, 3.15rem);
+    line-height: 0.92;
+  }
+  .home-page .limitations-story .home-story-section__body {
+    max-width: none;
+    font-size: clamp(1.18rem, 6vw, 1.36rem);
+  }
+  .limitations-story__slideshow {
+    margin-inline: 0.8rem;
+  }
+  .limitations-story__viewport {
+    height: 17rem;
+  }
+  .limitations-story__mark--qr-source {
+    top: 22%;
+    left: 0;
+    width: 42%;
+  }
+  .limitations-story__qr-copy-sheet {
+    top: 23%;
+    right: 2%;
+    width: 42%;
+  }
+  .limitations-story__transfer--qr {
+    top: 38%;
+    left: 44%;
+  }
+  .limitations-story__annotation--qr {
+    right: 8%;
+    bottom: 11%;
+  }
+  .limitations-story__mark--hologram-source {
+    top: 22%;
+    left: 0;
+    width: 42%;
+  }
+  .limitations-story__mark--hologram-reused {
+    top: 22%;
+    right: 0;
+    width: 42%;
+  }
+  .limitations-story__annotation--hologram {
+    right: 7%;
+    bottom: 8%;
+  }
+  .limitations-story__mark--serial-source,
+  .limitations-story__mark--serial-copy {
+    top: 30%;
+    width: 31%;
+  }
+  .limitations-story__mark--serial-source {
+    left: 0;
+  }
+  .limitations-story__mark--serial-copy {
+    right: 0;
+  }
+  .limitations-story__clone-operator {
+    top: 19%;
+    left: 28%;
+    width: 44%;
+  }
+  .limitations-story__serial-number {
+    font-size: clamp(0.37rem, 1.65vw, 0.55rem);
+  }
+  .limitations-story__transfer--serial {
+    top: 57%;
+    width: 2.3rem;
+  }
+  .limitations-story__annotation--serial {
+    right: 0;
+    bottom: 10%;
+  }
+  .limitations-story__comparison {
+    padding: 2.5rem 0 3rem;
+  }
+  .limitations-story__comparison-object {
+    height: auto;
+    aspect-ratio: 1;
+  }
+  .limitations-story__comparison-note {
+    bottom: 0.8rem;
+    font-size: clamp(1.25rem, 6.2vw, 1.65rem);
+    letter-spacing: 0;
+  }
+  .limitations-story__question {
+    font-size: 0.95rem;
+  }
+  .limitations-story__controls {
+    margin-inline: 0.3rem;
+  }
+  .limitations-story__steps {
+    width: 100%;
+    gap: 0.1rem;
+  }
+  .limitations-story__step-button {
+    padding: 0.35rem 0.4rem;
+    font-size: 0.61rem;
+    gap: 0.2rem;
+  }
+  .limitations-story__step-button:not(:last-child)::after {
+    right: -0.12rem;
+    font-size: 0.68rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .limitations-story__viewport * {
+    animation: none !important;
+  }
+}
+@keyframes limitations-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(2rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes limitations-copy-in {
+  from {
+    opacity: 0;
+    transform: translate(-45%, 10%) rotate(-5deg);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(5deg);
+  }
+}
+@keyframes limitations-hologram-transfer {
+  0% {
+    opacity: 0;
+    transform: translate(-150%, 0) rotate(-8deg);
+  }
+  35% {
+    opacity: 1;
+    transform: translate(-75%, -12%) rotate(-25deg);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(13deg);
+  }
+}
+@keyframes limitations-hologram-peel {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.55;
+  }
+}

@@ -1,0 +1,561 @@
+.counterfeit-story {
+  --counterfeit-ink: #eee9df;
+  --counterfeit-muted-ink: #c8c0b4;
+  background:
+    radial-gradient(
+      ellipse 64% 56% at 75% 42%,
+      rgba(151, 111, 191, 0.085),
+      rgba(73, 87, 142, 0.035) 43%,
+      transparent 72%
+    ),
+    #09090d;
+  overflow: clip;
+}
+
+.counterfeit-story__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: min(100%, 1560px);
+  margin-inline: auto;
+}
+
+.counterfeit-story .counterfeit-story__content {
+  position: relative;
+  z-index: 4;
+  grid-column: 1;
+  grid-row: 1;
+  align-self: center;
+  width: 100%;
+  max-width: 68ch;
+  padding: 0;
+}
+
+.counterfeit-story .counterfeit-story__content::before {
+  content: none;
+}
+
+.counterfeit-story .counterfeit-story__title {
+  width: max-content;
+  max-width: 100%;
+  color: var(--counterfeit-ink);
+  font-size: clamp(2rem, 8vw, 2.5rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.counterfeit-story .counterfeit-story__body {
+  width: min(100%, 66ch);
+  max-height: none;
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  overflow: visible;
+  color: var(--counterfeit-muted-ink);
+  line-height: 1.78;
+  white-space: normal;
+}
+
+.counterfeit-story__artwork {
+  position: relative;
+  display: grid;
+  grid-template-areas:
+    "map"
+    "freight"
+    "market"
+    "products";
+  gap: clamp(1rem, 4vw, 2rem);
+  width: 100%;
+  min-width: 0;
+  margin-top: clamp(3rem, 8vw, 5.5rem);
+  isolation: isolate;
+}
+
+.counterfeit-story__asset {
+  display: block;
+  max-width: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.counterfeit-story__map-stage {
+  position: relative;
+  z-index: 0;
+  grid-area: map;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+}
+
+.counterfeit-story__paper {
+  position: absolute;
+  pointer-events: none;
+}
+
+.counterfeit-story__paper--map {
+  z-index: 0;
+  inset: -3% -2%;
+  width: 104%;
+  height: 106%;
+  opacity: 0.92;
+  transform: rotate(-0.7deg);
+}
+
+.counterfeit-story__world-map {
+  position: absolute;
+  z-index: 1;
+  inset: 5% 4%;
+  width: 92%;
+  height: 90%;
+  opacity: 0.9;
+  filter: saturate(0.84) drop-shadow(0 18px 18px rgba(0, 0, 0, 0.24));
+}
+
+.counterfeit-story__routes {
+  display: contents;
+}
+
+.counterfeit-story__route {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.counterfeit-story__route--desktop {
+  display: none;
+}
+
+.counterfeit-story__route--mobile {
+  display: block;
+}
+
+.supply-route {
+  color: #bcb4cf;
+  overflow: visible;
+}
+
+.supply-route__track,
+.supply-route__flow {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+
+.supply-route__track {
+  stroke: rgba(228, 221, 235, 0.2);
+  stroke-width: 3;
+}
+
+.supply-route__flow {
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-dasharray: 10 12;
+  animation: counterfeit-route-flow 2.2s linear infinite;
+}
+
+.supply-route__segment--2 .supply-route__flow {
+  animation-delay: -1.1s;
+}
+
+.supply-route__arrowhead {
+  fill: currentColor;
+}
+
+.supply-route__moving-arrow {
+  fill: currentColor;
+  opacity: 0.95;
+  filter: drop-shadow(0 2px 2px rgba(9, 9, 13, 0.45));
+}
+
+.counterfeit-story__freight {
+  position: relative;
+  z-index: 3;
+  grid-area: freight;
+  width: 100%;
+  aspect-ratio: 16 / 7;
+  pointer-events: none;
+}
+
+.counterfeit-story__aircraft,
+.counterfeit-story__cargo-ship,
+.counterfeit-story__parcel {
+  position: absolute;
+  height: auto;
+  filter: drop-shadow(0 15px 14px rgba(0, 0, 0, 0.3));
+}
+
+.counterfeit-story__aircraft {
+  top: 0;
+  left: 3%;
+  width: 42%;
+  transform: rotate(-4deg);
+}
+
+.counterfeit-story__cargo-ship {
+  bottom: 0;
+  left: 29%;
+  width: 46%;
+  transform: rotate(1.5deg);
+}
+
+.counterfeit-story__parcel {
+  top: 30%;
+  right: 0;
+  width: 24%;
+  transform: rotate(3deg);
+}
+
+.counterfeit-story__market-stage {
+  position: relative;
+  z-index: 3;
+  grid-area: market;
+  width: min(82%, 29rem);
+  margin-inline: auto;
+}
+
+.counterfeit-story__market {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 16px 16px rgba(0, 0, 0, 0.28));
+}
+
+.counterfeit-story__product-comparison {
+  position: relative;
+  z-index: 4;
+  grid-area: products;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.45rem, 2.5vw, 1.5rem);
+  width: 100%;
+}
+
+.counterfeit-story__product-group {
+  position: relative;
+  min-width: 0;
+  padding: 9% 4% 2%;
+}
+
+.counterfeit-story__paper--product {
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.88;
+}
+
+.counterfeit-story__product-group--fake .counterfeit-story__paper--product {
+  transform: rotate(-2.2deg) scale(1.04);
+}
+
+.counterfeit-story__product-group--authentic
+  .counterfeit-story__paper--product {
+  transform: rotate(1.8deg) scale(1.04);
+}
+
+.counterfeit-story__product-samples {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 15px 14px rgba(0, 0, 0, 0.28));
+}
+
+.counterfeit-story__stamp {
+  position: absolute;
+  z-index: 3;
+  top: 1%;
+  width: clamp(3.4rem, 42%, 7.5rem);
+}
+
+.counterfeit-story__stamp--fake {
+  left: 1%;
+  transform: rotate(-4deg);
+}
+
+.counterfeit-story__stamp--authentic {
+  right: 1%;
+  transform: rotate(3deg);
+}
+
+.authenticity-stamp {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  filter: drop-shadow(0 9px 7px rgba(0, 0, 0, 0.32));
+}
+
+.authenticity-stamp--fake {
+  color: #ce3742;
+}
+
+.authenticity-stamp--authentic {
+  color: #287f4e;
+}
+
+.authenticity-stamp__signal {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: counterfeit-stamp-double-pulse 4.8s ease-in-out infinite;
+}
+
+.authenticity-stamp--authentic .authenticity-stamp__signal {
+  animation-delay: -2.4s;
+}
+
+.authenticity-stamp__icon {
+  fill: rgba(9, 9, 13, 0.08);
+  stroke: currentColor;
+  stroke-width: 5;
+}
+
+.authenticity-stamp__label rect {
+  fill: rgba(242, 238, 227, 0.94);
+  stroke: currentColor;
+  stroke-width: 5;
+}
+
+.authenticity-stamp__icon-detail {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.authenticity-stamp__label rect:last-of-type {
+  fill: none;
+  stroke-width: 2;
+}
+
+.authenticity-stamp__label text {
+  fill: currentColor;
+  font-family: inherit;
+  font-size: 31px;
+  font-weight: 900;
+  letter-spacing: 0.035em;
+}
+
+@media (min-width: 620px) {
+  .counterfeit-story__artwork {
+    width: min(100%, 54rem);
+    margin-inline: auto;
+  }
+}
+
+@media (min-width: 1200px) {
+  .counterfeit-story {
+    min-height: max(100svh, 1050px);
+    padding-block: clamp(5rem, 8vh, 7.5rem);
+  }
+
+  .counterfeit-story__inner {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    align-items: start;
+    gap: clamp(2rem, 4vw, 4.5rem);
+  }
+
+  .counterfeit-story__artwork {
+    grid-column: 1;
+    grid-row: 1;
+    display: block;
+    width: 100%;
+    min-height: 0;
+    aspect-ratio: 16 / 8;
+    margin: 0;
+  }
+
+  .counterfeit-story .counterfeit-story__content {
+    grid-column: 1;
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: minmax(31rem, 0.88fr) minmax(0, 1.12fr);
+    align-items: start;
+    gap: clamp(3rem, 6vw, 7rem);
+    width: 100%;
+    max-width: none;
+    padding-inline: clamp(0.5rem, 3vw, 3rem);
+  }
+
+  .counterfeit-story .counterfeit-story__content::after {
+    content: none;
+  }
+
+  .counterfeit-story .counterfeit-story__title {
+    max-width: 18ch;
+    font-size: clamp(2.2rem, 3vw, 2.5rem);
+  }
+
+  .counterfeit-story .counterfeit-story__body {
+    width: 100%;
+    max-width: 66ch;
+    margin: 0;
+    font-size: clamp(1rem, 1.05vw, 1.14rem);
+  }
+
+  .counterfeit-story__map-stage {
+    position: absolute;
+    z-index: 0;
+    top: 3%;
+    left: 17%;
+    width: 66%;
+    height: 80%;
+    aspect-ratio: auto;
+  }
+
+  .counterfeit-story__route--desktop {
+    display: block;
+  }
+
+  .counterfeit-story__route--mobile {
+    display: none;
+  }
+
+  .counterfeit-story__freight {
+    position: absolute;
+    z-index: 3;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+  }
+
+  .counterfeit-story__aircraft {
+    top: 7%;
+    left: 58%;
+    width: 26%;
+  }
+
+  .counterfeit-story__cargo-ship {
+    top: 61%;
+    bottom: auto;
+    left: 39%;
+    width: 29%;
+    transform: rotate(1deg);
+  }
+
+  .counterfeit-story__parcel {
+    top: 42%;
+    right: auto;
+    left: 43%;
+    width: 13%;
+  }
+
+  .counterfeit-story__market-stage {
+    position: absolute;
+    z-index: 3;
+    top: 28%;
+    right: 6%;
+    width: 19%;
+    margin: 0;
+    transform: rotate(1.5deg);
+  }
+
+  .counterfeit-story__product-comparison {
+    position: absolute;
+    z-index: 4;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .counterfeit-story__product-group {
+    position: absolute;
+    bottom: 0;
+    width: 29%;
+    padding: 2.5% 1.5% 0;
+  }
+
+  .counterfeit-story__product-group--fake {
+    left: 0;
+  }
+
+  .counterfeit-story__product-group--authentic {
+    right: 0;
+  }
+
+  .counterfeit-story__stamp {
+    top: -3%;
+    width: clamp(5.5rem, 36%, 8.5rem);
+  }
+
+  .counterfeit-story__stamp--fake {
+    right: 2%;
+    left: auto;
+  }
+
+  .counterfeit-story__stamp--authentic {
+    right: 2%;
+  }
+}
+
+@media (max-width: 420px) {
+  .counterfeit-story__artwork {
+    gap: 1rem;
+  }
+
+  .counterfeit-story__freight {
+    aspect-ratio: 16 / 7.5;
+  }
+
+  .counterfeit-story__market-stage {
+    width: 86%;
+  }
+
+  .counterfeit-story__product-comparison {
+    gap: 0.35rem;
+  }
+
+  .counterfeit-story__product-group {
+    padding-inline: 2%;
+  }
+
+  .counterfeit-story__stamp {
+    width: 62%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .supply-route__flow,
+  .authenticity-stamp__signal {
+    animation: none;
+  }
+
+  .supply-route__moving-arrow {
+    display: none;
+  }
+}
+
+@keyframes counterfeit-route-flow {
+  to {
+    stroke-dashoffset: -44;
+  }
+}
+
+@keyframes counterfeit-stamp-double-pulse {
+  0%,
+  30%,
+  100% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+
+  7%,
+  19% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+
+  12%,
+  24% {
+    opacity: 0.94;
+    transform: scale(1);
+  }
+}

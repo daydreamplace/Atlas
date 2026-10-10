@@ -1,0 +1,16 @@
+{
+  "mode": "built-in image_gen",
+  "intent": "Replace the disc with the client's recognisable square security foil, shield/globe motif and peeled/reapplied states; keep elements independently placeable",
+  "reference": "Client-provided Section 4 illustration, Screenshot 2026-10-10 at 2.32.19 PM",
+  "assets": [
+    {
+      "file": "public/images/main-page/authentication/hologram-security-peeled-v3.png",
+      "prompt": "Use case: style-transfer. Asset type: independent transparent website illustration for explaining peel-and-reuse of security holograms. Input image 1 is the client's subject and style reference, NOT a page to reproduce. Recreate ONLY the single square HOLOGRAPHIC SECURITY STICKER in the center-left of that reference at much higher illustration detail, with its bottom-right corner dramatically peeled back to show thin silver foil underside and pale adhesive backing. The front has a very recognizable fine white SHIELD outline containing a white longitude-latitude GLOBE icon, with repeated faint geometric security rosettes under it. IMPORTANT: not a CD, not a circular seal, not a generic pastel rainbow disc. It must instantly read as a square anti-counterfeit authentication hologram label. True metallic rainbow diffraction: diagonal bands of cyan, violet, magenta, green, gold with silver specular streaks, restrained rather than neon; tiny guilloche microline motifs without readable text. Keep client's beautifully drawn colored-pencil / graphite study aesthetic: subtle visible pencil grain, crisp hand-drawn edges, realistic thin foil material and curled corner. Mostly front-on nearly square viewpoint, fully visible at 80% of a square transparent canvas, minimal perspective, generous 8% clear alpha margin. Exactly ONE security label only; no labels, no words, no arrows, no frames, no extra scene, no blue background, no rounded card, no floating sparkles or halo, no external glow. Transparent background alpha. The client image is used for the hologram's square geometry, shield/globe motif and peel cue, not for its surrounding text or other objects."
+    },
+    {
+      "file": "public/images/main-page/authentication/hologram-security-flat-v3.png",
+      "prompt": "Use case: precise-object-edit. Input image 1 is the edit target. Make a second FLAT / REAPPLIED state of this exact holographic security sticker for use alongside the peeled version in a website animation. Change ONLY the peeled lower-right corner: lay the foil down completely flat so the sticker has four intact square rounded corners, and continue the same rich multicolored metallic diffraction bands and delicate security guilloche into that now-flat corner. Preserve the square shape, scale, front-on viewpoint, thin graphite-silver perimeter, precise central white shield and longitude-latitude globe mark, white etching, colored-pencil grain, and vivid cyan/violet/magenta/gold/green/silver holographic foil material. Do NOT redesign the emblem or colors. Keep transparent alpha background and identical canvas padding; ONE isolated sticker, no paper card, no text, no glow or halo, no extra objects."
+    }
+  ],
+  "publication": "Local draft; upload images to static.igem.wiki before publication."
+}

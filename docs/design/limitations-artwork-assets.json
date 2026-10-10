@@ -1,0 +1,20 @@
+{
+  "mode": "built-in image_gen",
+  "intent": "Section 4 continuous legal-pad illustration quality upgrade; separate assets for responsive placement and finite animation",
+  "assets": [
+    {
+      "file": "public/images/main-page/authentication/clone-operator-v1.png",
+      "prompt": "Use case: illustration-story. Asset type: an independent transparent cutout for a research-artbook website illustrating counterfeit identity cloning. Primary request: ONE anonymous hooded figure sitting behind an open laptop, front-facing, shoulders, hood, forearms and laptop fully visible. The face is mostly concealed in natural graphite shadow, no glowing eyes, not scary. Dusty indigo and lavender hoodie, dark charcoal folds, warm ivory-gray laptop with no logo. Style/medium: highly detailed colored pencil and graphite drawing on tactile paper, carefully layered hatch marks, visible pencil grain, paper-fiber texture and softly irregular hand-drawn contours. The quality should feel like a beautifully observed high-school research artbook illustration, not clip art or a flat vector icon and not glossy 3D. Composition: single centered waist-up figure and laptop filling about 85% of a square canvas, laptop lid in front and two natural hands at its sides, clear cutout silhouette. Materials: nuanced cloth folds, subtle scratched graphite metal texture, deep lavender shadows, restrained muted palette. Background truly transparent alpha, no rectangle, no scene, no surrounding paper card, no desk or floor. No labels, text, numbers, watermarks, icons, arrows, flare, or glow. Keep the silhouette readable at 220px on a pale yellow legal pad."
+    }
+  ],
+  "reused": [
+    "qr-paper-v2.png",
+    "hologram-disc-v2.png",
+    "serial-paper-v2.png",
+    "nfc-paper-v2.png",
+    "open-carton.png",
+    "product-jar.png",
+    "hand.png"
+  ],
+  "publication": "Local draft; upload images to static.igem.wiki before publication."
+}

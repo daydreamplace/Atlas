@@ -1,0 +1,25 @@
+{
+  "intent": "Use a recognizable NFC Forum N-Mark in the user-requested graphite hand-drawn illustration style, separated from the paper surface.",
+  "officialMark": {
+    "file": "public/images/main-page/authentication/nfc-n-mark-official.svg",
+    "source": "https://nfc-forum.org/img/n-mark-gen1.svg",
+    "branding": "https://nfc-forum.org/build/branding",
+    "guidelines": "https://nfc-forum.org/uploads/Branding-and-Marks/NFC_N_Mark_Guidelines.pdf",
+    "geometry": "Unmodified official SVG retained as source reference; the current local demo renders the hand-drawn derivative below instead.",
+    "attribution": "The N-Mark is a trademark or registered trademark of NFC Forum, Inc. in the United States and in other countries.",
+    "publicationStatus": "Local educational draft only. Official guidelines prohibit redrawing the mark. This user-requested hand-drawn derivative is not an approved official mark; obtain permission for the altered artwork or restore the unmodified mark and confirm the N-Mark license before public use. No agreement was submitted or accepted by the assistant."
+  },
+  "handDrawnMark": {
+    "file": "public/images/main-page/authentication/nfc-n-mark-handdrawn-v1.png",
+    "mode": "built-in image_gen",
+    "reference": "Rasterized official SVG with no geometry modifications",
+    "prompt": "Use case: style-transfer. Asset type: separate transparent graphite illustration for an educational research-artbook website, not a certification seal. Input image 1 is the shape reference and edit target: NFC Forum N-Mark including the small registered-mark sign. Convert ONLY the rendering style and ink color of this exact symbol into a beautiful hand-drawn charcoal/graphite pencil illustration. IMPORTANT the WHITE opaque shapes in the source are the mark; render those source white shapes as DARK GRAPHITE pigment, and keep all source transparent cutouts/openings transparent. Do not invert the shape. Preserve the recognizable exact N-Mark silhouette, its two nested curved vertical ribbons and diagonal N negative spaces, proportions, upright orientation, and tiny registered mark. Use fine visible pencil hatching, a richly filled near-black graphite core, slight natural hand-pressure variation and subtly irregular sketched edges; sophisticated realistic pencil drawing matching a student's meticulous research artbook, not a smooth digital logo and not a childish doodle. Keep the recognizable N shapes open and crisp at small web sizes. Subject should occupy about 92% of canvas width and height with only a small consistent transparent safety margin. True transparent background and transparent internal negative spaces. No paper, tape, sticker backing, waves, phone, shadows, glow, text captions, border, additional objects, or new symbols. A single isolated N-Mark only."
+  },
+  "paper": {
+    "file": "public/images/main-page/authentication/nfc-paper-blank-v3.png",
+    "mode": "built-in image_gen",
+    "source": "public/images/main-page/authentication/nfc-paper-v2.png",
+    "prompt": "Use case: precise-object-edit. Input image 1 is the edit target. Remove ONLY all purple printed/drawn symbols from the central face of this torn ivory paper: remove the N-like mark and every radio wave arc completely, filling those exact regions with uninterrupted matching blank ivory paper grain. Keep the paper silhouette, exact size and position, torn fibers, slightly curled upper-right corner, graphite shadow detail, lavender tape strip at upper-left, and all material texture unchanged. Keep the entire square canvas size and transparent alpha background. The central paper face must be completely BLANK and clean, suitable for separately overlaying an official vector symbol in the website. Do NOT generate any replacement symbol, text, logo, letters, arrows, extra tape, or decorations. Preserve the original soft colored-pencil/graphite artbook material style and existing transparency."
+  },
+  "hosting": "Upload website image assets to static.igem.wiki before publication; do not hotlink external assets."
+}

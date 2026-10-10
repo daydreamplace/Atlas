@@ -1,0 +1,23 @@
+{
+  "mode": "built-in image_gen",
+  "intent": "Generate independent transparent research-artbook illustrations for Sections 3 and 4.",
+  "assets": [
+    {
+      "file": "public/images/main-page/authentication/product-jar.png",
+      "prompt": "Use case: illustration-story. Asset type: isolated transparent modular cutout for a high-school biology research artbook website, drawn in graphite pencil and restrained colored pencil. Primary request: ONE unbranded closed skincare cream jar, seen front-on with a slightly visible top, ivory frosted glass cylindrical body, dark graphite screw lid, a faint dusty lavender band near the bottom. Handmade fine crosshatching, realistic proportions, tactile soft pencil grain, not a cartoon, not photorealistic and not a 3D render. Large blank ivory front, NO writing, NO labels, NO symbols, NO barcode, NO other objects. Jar completely visible with 8% empty transparent margin. Square canvas, isolated jar occupies most of the width, no floor and no background paper, genuine transparent alpha. Calm muted ivory, charcoal and lavender palette suitable over a dark charcoal website. No glow, no sticker outline, no drop shadow baked into a rectangle."
+    },
+    {
+      "file": "public/images/main-page/authentication/open-carton.png",
+      "prompt": "Use case: illustration-story. Asset type: isolated transparent modular cutout for a high-school biology research artbook website, drawn in graphite pencil and restrained colored pencil. Primary request: ONE open upright small cosmetic product carton with open top flaps, generous tall flat front panel left entirely blank for a later web label. Very slight three-quarter view showing a narrow right side; front is almost parallel to the picture plane. Ivory paperboard outer surface, warm gray-tan interior, subtle dusty lavender on narrow side. Handmade fine graphite crosshatching and paper-fiber texture, realistic proportions, tactile pencil grain, not cartoon, not photorealistic and not 3D render. No product inside, NO text, NO printed label, NO symbols, NO barcode, NO other objects. Entire box visible with 8% transparent margin, square canvas, carton fills majority of canvas. Genuine transparent alpha, no background paper, no floor, no halo, no glow. Quiet palette for placement on dark charcoal or a yellow legal-pad backdrop."
+    },
+    {
+      "file": "public/images/main-page/authentication/phone.png",
+      "prompt": "Use case: illustration-story. Asset type: isolated transparent modular cutout for a high-school biology research artbook website, drawn in graphite pencil and restrained colored pencil. Primary request: ONE modern generic smartphone, straight vertical portrait orientation, EXACTLY front-on orthographic screen facing viewer, not tilted in perspective. Slim dark charcoal pencil-textured frame, subtle silver-gray edge, small centered earpiece at top. Large flat completely blank ivory/off-white screen, rectangular with gently rounded corners, absolutely NO UI, NO text, NO logos, NO icons, NO hands or other objects. Fine handmade graphite hatching consistent with a carefully drawn student science artbook, realistic proportions, not cartoon not 3D render. Square canvas with complete tall phone occupying 85% canvas height and about43% canvas width, transparent alpha surrounding it, no floor or background. No colored glow, no lensflare, no baked-in rectangle shadow. Web UI will be independently overlaid inside the blank screen."
+    },
+    {
+      "file": "public/images/main-page/authentication/hand.png",
+      "prompt": "Use case: illustration-story. Asset type: independent transparent hand cutout for a high-school biology research artbook website animation. Primary request: a single natural RIGHT HAND entering from the lower right with a small lavender-gray sweater cuff and short forearm, index finger extended diagonally toward the upper-left as if about to tap a phone screen, remaining fingers gently curled. NO object, NO phone, NO other hands. Entire fingertip and wrist/cuff visible, anatomically coherent five fingers, no jewelry. Drawn by hand in fine graphite pencil with muted warm skin-tone colored pencil shading and visible crosshatching, realistic observational artbook drawing, not cartoon not photorealistic not 3D. Square canvas; isolated gesture centered with generous transparency and no floor or background paper. Crisp detailed silhouette, no sticker border, no glow. Color palette ivory-tan skin, gray/lavender cuff, graphite outlines, designed to layer above separate smartphone on a charcoal website."
+    }
+  ],
+  "publication": "Local draft assets. Upload image files to static.igem.wiki and update paths before publication, following README.md."
+}

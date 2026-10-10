@@ -1,0 +1,4 @@
+IBM Plex Sans webfonts
+Source: https://github.com/IBM/plex
+Files: packages/plex-sans/fonts/complete/woff2/IBMPlexSans-{Regular,Italic,Medium,MediumItalic,SemiBold,SemiBoldItalic}.woff2
+License: SIL Open Font License 1.1 (LICENSE.txt)
