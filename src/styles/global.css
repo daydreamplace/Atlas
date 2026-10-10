@@ -1,0 +1,1108 @@
+:root {
+  --wiki-ink: #eef2f3;
+  --wiki-muted: #9ea9ad;
+  --wiki-paper: #0d1113;
+  --wiki-line: rgba(224, 235, 239, 0.15);
+  --wiki-accent: #8b45df;
+  --wiki-soft: rgba(139, 69, 223, 0.11);
+  --wiki-accent-glow:
+    0 0 10px rgba(139, 69, 223, 0.88), 0 0 28px rgba(139, 69, 223, 0.48);
+  --wiki-serif: "Times New Roman", Times, serif;
+  --wiki-sans: Arial, Helvetica, sans-serif;
+
+  /* Height of the fixed GNB bar (logo row). Everything that sits below the
+     GNB — body offset, sticky SNB, anchor scroll offsets — derives from it. */
+  --gnb-height: 70px;
+  /* Height of the SNB strip when it sticks under the GNB on small screens. */
+  --snb-strip-height: 0px;
+  /* Left/right page margin shared by the GNB, page title, content and footer
+     so their edges line up at every width. */
+  --page-gutter: clamp(1.25rem, 4vw, 3.5rem);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  padding-top: var(--gnb-height);
+  background: #101211;
+  font-family: var(--wiki-sans);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: var(--wiki-sans);
+}
+
+.home-page {
+  font-family: var(--wiki-sans);
+}
+
+.home-page .bg-hero h1 {
+  font-family: var(--wiki-sans);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+}
+
+.home-page .bg-hero .lead {
+  font-family: var(--wiki-serif);
+}
+
+.home-page h2,
+.home-page h3,
+.home-page h4 {
+  font-family: var(--wiki-sans);
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 1100;
+  top: -5rem;
+  left: 1rem;
+  padding: 0.7rem 1rem;
+  color: #090b0e;
+  background: #f3efff;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* GNB — structure and labels still come from pages.ts. */
+.site-navigation.navbar {
+  min-height: var(--gnb-height);
+  padding-block: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(7, 9, 10, 0.82);
+  box-shadow: none;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  font-family: var(--font-sans);
+}
+
+.site-navigation > .container {
+  width: min(1440px, 100%);
+  max-width: none;
+  min-height: var(--gnb-height);
+  padding-inline: var(--page-gutter);
+}
+
+.site-navigation .navbar-brand {
+  margin-right: 2rem;
+  color: #f0eafa;
+  font: italic 500 1.3rem/1 var(--wiki-serif);
+  letter-spacing: -0.035em;
+}
+
+.site-navigation .navbar-brand:hover,
+.site-navigation .navbar-brand:focus-visible {
+  color: #fff;
+}
+
+.site-navigation .navbar-nav {
+  min-height: var(--gnb-height);
+  align-items: stretch;
+  margin-left: auto;
+}
+
+.site-navigation .nav-link {
+  min-height: var(--gnb-height);
+  display: flex;
+  align-items: center;
+  padding: 0 clamp(0.7rem, 1.25vw, 1.15rem) !important;
+  border-bottom: 1px solid transparent;
+  color: #b9bebf;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.site-navigation .nav-link:hover,
+.site-navigation .nav-link:focus-visible,
+.site-navigation .nav-link.active,
+.site-navigation .nav-link.show {
+  color: #c9a8ff;
+  border-bottom-color: var(--wiki-accent);
+}
+
+.site-navigation .dropdown-menu {
+  min-width: 230px;
+  margin-top: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 0;
+  background: rgba(10, 13, 15, 0.94);
+  box-shadow: 0 24px 55px rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(18px);
+}
+
+.site-navigation .dropdown-item {
+  width: 100%;
+  margin: 0;
+  padding: 0.82rem 1rem;
+  color: #aeb5b7;
+  border-left: 2px solid transparent;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+.site-navigation .dropdown-item:hover,
+.site-navigation .dropdown-item:focus,
+.site-navigation .dropdown-item.active {
+  color: #f3efff;
+  border-left-color: var(--wiki-accent);
+  background: linear-gradient(
+    90deg,
+    rgba(139, 69, 223, 0.24),
+    rgba(139, 69, 223, 0.1)
+  );
+}
+
+.site-navigation .navbar-toggler {
+  padding: 0.4rem 0.55rem;
+  border-color: rgba(255, 255, 255, 0.18);
+  border-radius: 0;
+}
+
+/* Replace Bootstrap's thick grey focus shadow with a keyboard-only ring. */
+.site-navigation .navbar-toggler:focus {
+  box-shadow: none;
+}
+
+.site-navigation .navbar-toggler:focus-visible {
+  outline: 2px solid var(--wiki-accent);
+  outline-offset: 2px;
+}
+
+@media (min-width: 992px) {
+  .site-navigation .nav-item.dropdown {
+    position: relative;
+  }
+
+  .site-navigation .nav-item.dropdown:hover > .nav-link {
+    color: #c9a8ff;
+    border-bottom-color: var(--wiki-accent);
+  }
+}
+
+/* Shared detail-page stage. The homepage intentionally keeps its own design. */
+.wiki-page-background {
+  min-height: calc(100vh - var(--gnb-height));
+  color: var(--wiki-ink);
+  background:
+    radial-gradient(
+      ellipse at 12% 18%,
+      rgba(106, 76, 180, 0.11),
+      transparent 30%
+    ),
+    linear-gradient(180deg, #05080a 0%, var(--wiki-paper) 42%, #0b0e10 100%);
+}
+
+.wiki-page-background .bg-hero {
+  position: relative;
+  isolation: isolate;
+  min-height: 640px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  margin-bottom: 0 !important;
+  background:
+    radial-gradient(
+      ellipse at 38% 48%,
+      rgba(112, 76, 204, 0.16),
+      transparent 46%
+    ),
+    linear-gradient(180deg, #030608 0%, #060a0d 58%, #0a0e11 100%) !important;
+}
+
+.wiki-page-background .bg-hero::before {
+  content: "";
+  position: absolute;
+  z-index: -3;
+  inset: 0;
+  opacity: 0.34;
+  pointer-events: none;
+  background-image: repeating-radial-gradient(
+    circle at 38% 35%,
+    rgba(219, 238, 248, 0.06) 0 1px,
+    transparent 1px 6px
+  );
+  mask-image: radial-gradient(
+    ellipse 60% 105% at 34% 12%,
+    black 0%,
+    rgba(0, 0, 0, 0.76) 48%,
+    transparent 84%
+  );
+}
+
+.wiki-page-background .bg-hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -12%;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 48% 34% at 46% 65%,
+      rgba(130, 100, 230, 0.16),
+      transparent 64%
+    ),
+    radial-gradient(
+      ellipse 86% 96% at 46% 46%,
+      transparent 28%,
+      rgba(0, 0, 0, 0.5) 76%,
+      rgba(0, 0, 0, 0.86) 100%
+    );
+}
+
+.inspection-light {
+  position: absolute;
+  z-index: -2;
+  top: 50px;
+  left: 10.5vw;
+  width: min(78vw, 1180px);
+  height: 105%;
+  transform: rotate(-8deg);
+  transform-origin: 0 0;
+  opacity: 0.96;
+  filter: blur(20px);
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 10% 74% at 3% -2%,
+      rgba(228, 220, 255, 0.96) 0%,
+      rgba(159, 140, 245, 0.64) 13%,
+      rgba(108, 80, 220, 0.32) 36%,
+      rgba(70, 50, 150, 0.1) 59%,
+      transparent 76%
+    ),
+    radial-gradient(
+      ellipse 29% 98% at 4% -5%,
+      rgba(170, 150, 245, 0.48) 0%,
+      rgba(120, 90, 230, 0.23) 35%,
+      rgba(70, 50, 150, 0.075) 62%,
+      transparent 82%
+    );
+}
+
+.inspection-light::before {
+  content: "";
+  position: absolute;
+  top: -1.3%;
+  left: -0.4%;
+  width: 7%;
+  height: 3%;
+  border-radius: 50%;
+  opacity: 0.82;
+  filter: blur(8px);
+  background: radial-gradient(
+    ellipse,
+    rgba(240, 230, 255, 0.99),
+    rgba(170, 140, 250, 0.62) 46%,
+    transparent 78%
+  );
+  box-shadow: 0 0 38px rgba(150, 110, 255, 0.58);
+}
+
+.inspection-light::after {
+  content: "";
+  position: absolute;
+  right: 2%;
+  bottom: 13%;
+  left: 14%;
+  height: 18%;
+  border-radius: 50%;
+  transform: rotate(8deg);
+  opacity: 0.64;
+  filter: blur(31px);
+  background: radial-gradient(
+    ellipse,
+    rgba(150, 120, 250, 0.58) 0%,
+    rgba(110, 80, 230, 0.25) 45%,
+    rgba(60, 40, 140, 0.06) 67%,
+    transparent 81%
+  );
+}
+
+.wiki-page-background .bg-hero > .container {
+  position: relative;
+  z-index: 1;
+  width: min(1180px, 100%);
+  max-width: none;
+  padding-inline: var(--page-gutter);
+  padding-bottom: clamp(3rem, 7vw, 6rem);
+}
+
+.wiki-page-background .bg-hero h1 {
+  max-width: 980px;
+  margin-bottom: 1rem !important;
+  color: rgba(238, 244, 247, 0.93) !important;
+  font-size: clamp(2rem, 0.9rem + 5.5vw, 5.8rem);
+  font-weight: 700;
+  line-height: 0.96;
+  letter-spacing: -0.065em;
+  text-transform: uppercase;
+  text-shadow: 0 12px 46px rgba(0, 0, 0, 0.72);
+  /* Long titles: wrap into even lines, and break words that still don't fit
+     instead of overflowing the screen. */
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+/* Set by <Header> for titles of 20+ characters. */
+.wiki-page-background .bg-hero h1.is-long {
+  font-size: clamp(1.85rem, 0.8rem + 4.2vw, 4.5rem);
+}
+
+.wiki-page-background .bg-hero .lead {
+  max-width: 720px;
+  margin-bottom: 0 !important;
+  color: rgba(206, 211, 209, 0.74) !important;
+  font: 400 clamp(0.95rem, 1.3vw, 1.12rem) / 1.55 var(--wiki-serif);
+  letter-spacing: 0.02em;
+}
+
+/* SNB and document body. */
+.wiki-documentation-grid.container {
+  width: min(1320px, 100%);
+  max-width: none;
+  display: grid;
+  grid-template-columns: 220px minmax(0, 830px);
+  gap: clamp(2.25rem, 4vw, 4rem);
+  justify-content: center;
+  padding: clamp(4rem, 7vw, 6rem) var(--page-gutter) clamp(6rem, 10vw, 9rem);
+}
+
+.wiki-documentation-grid--single.container {
+  grid-template-columns: minmax(0, 830px);
+}
+
+.wiki-documentation-grid--team.container {
+  width: min(1380px, 100%);
+  grid-template-columns: 220px minmax(0, 980px);
+}
+
+.snb {
+  position: sticky;
+  top: calc(var(--gnb-height) + 28px);
+  align-self: start;
+  padding-top: 0.7rem;
+  font-family: var(--wiki-sans);
+}
+
+.snb-label {
+  margin: 0 0 0.35rem;
+  color: var(--wiki-accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-shadow: var(--wiki-accent-glow);
+}
+
+.snb h2 {
+  margin: 0 0 1.35rem;
+  color: #eef1f2;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.snb ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.snb a {
+  position: relative;
+  min-height: 54px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.7rem 0.75rem 0.7rem 1rem;
+  color: var(--wiki-muted);
+  border-left: 1px solid var(--wiki-line);
+  font-size: 0.9rem;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  transition:
+    color 160ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease;
+}
+
+.snb a strong {
+  font-weight: 600;
+}
+
+.snb a:hover,
+.snb a:focus-visible {
+  color: var(--wiki-ink);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.snb a.active {
+  color: var(--wiki-ink);
+  border-left-color: var(--wiki-accent);
+  background: linear-gradient(90deg, var(--wiki-soft), transparent);
+}
+
+.snb a.active::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0.6rem;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--wiki-accent);
+  box-shadow:
+    0 0 8px rgba(124, 92, 255, 0.9),
+    0 0 18px rgba(124, 92, 255, 0.5);
+}
+
+.wiki-page-content {
+  min-width: 0;
+}
+
+/* Text styles for page content live in styles/typography.css. */
+
+.wiki-page-content .bd-callout {
+  border-color: rgba(201, 168, 255, 0.24);
+  border-left-color: var(--wiki-accent);
+  background: rgba(139, 69, 223, 0.055);
+}
+
+.wiki-page-content .btn-secondary {
+  color: #f7f3ff;
+  border-color: rgba(201, 168, 255, 0.42);
+  background: rgba(139, 69, 223, 0.24);
+}
+
+.wiki-page-background + .site-footer,
+.home-page + .site-footer {
+  margin-top: 0 !important;
+}
+
+/* Team archive with the original card and profile interaction. */
+.team-archive,
+.member-groups {
+  min-width: 0;
+}
+
+.member-group {
+  margin-top: 5rem;
+  /* Clear the GNB (and the SNB strip on small screens) when jumped to. */
+  scroll-margin-top: calc(var(--gnb-height) + var(--snb-strip-height) + 26px);
+}
+
+.member-group:first-child {
+  margin-top: 0;
+}
+
+.member-group > header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(224, 235, 239, 0.28);
+}
+
+.member-group > header p {
+  margin: 0;
+  color: #edf0f2;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.member-group > header span {
+  color: #8a9399;
+  font-size: 0.85rem;
+}
+
+.contact-sheet {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 3rem 1.15rem;
+}
+
+.contact-card {
+  appearance: none;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.7rem;
+  align-items: end;
+  padding: 0 0 0.8rem;
+  color: #dfe2e5;
+  border: 0;
+  border-bottom: 1px solid var(--wiki-line);
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.contact-card:focus-visible {
+  outline: 1px solid var(--wiki-accent);
+  outline-offset: 5px;
+}
+
+.contact-photo {
+  position: relative;
+  isolation: isolate;
+  grid-column: 1 / -1;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      ellipse at 50% 100%,
+      rgba(174, 153, 231, 0.36),
+      transparent 42%
+    ),
+    linear-gradient(160deg, #181421 0%, #0d1016 56%, #07090d 100%);
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.contact-photo::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  right: 14%;
+  bottom: -11%;
+  left: 14%;
+  height: 30%;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse,
+    rgba(205, 190, 255, 0.48),
+    rgba(133, 112, 197, 0.14) 52%,
+    transparent 74%
+  );
+}
+
+.contact-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.62;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(167, 145, 220, 0.12) 0 1px,
+      transparent 1px 18%
+    ),
+    linear-gradient(180deg, rgba(203, 189, 251, 0.12), transparent 38%);
+  mask-image: linear-gradient(180deg, black, transparent 92%);
+}
+
+.contact-photo.tone-1 {
+  background:
+    radial-gradient(
+      ellipse at 50% 100%,
+      rgba(176, 150, 232, 0.4),
+      transparent 42%
+    ),
+    linear-gradient(160deg, #191322, #0d0f16 56%, #07090d);
+}
+
+.contact-photo.tone-2 {
+  background:
+    radial-gradient(
+      ellipse at 42% 88%,
+      rgba(135, 157, 233, 0.34),
+      transparent 40%
+    ),
+    linear-gradient(160deg, #121824, #0c1018 56%, #07090e);
+}
+
+.contact-photo.tone-3 {
+  background:
+    radial-gradient(
+      ellipse at 55% 96%,
+      rgba(212, 152, 217, 0.3),
+      transparent 42%
+    ),
+    linear-gradient(160deg, #21141f, #100d15 56%, #09080d);
+}
+
+.contact-card > span:nth-last-of-type(1) {
+  display: grid;
+}
+
+.contact-card strong {
+  color: #e7e9eb;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.contact-card small {
+  margin-top: 0.15rem;
+  color: #8a9399;
+  font-size: 0.8rem;
+}
+
+.contact-card i {
+  color: #687177;
+  font-style: normal;
+}
+
+.contact-card:hover .contact-photo,
+.contact-card:focus-visible .contact-photo {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 45px rgba(143, 123, 207, 0.14);
+}
+
+.member-modal-backdrop {
+  position: fixed;
+  z-index: 2000;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: clamp(1.25rem, 4vw, 3rem);
+  isolation: isolate;
+  background: rgba(1, 2, 7, 0.58);
+  backdrop-filter: blur(8px) brightness(0.78);
+  animation: member-modal-fade-in 180ms ease-out;
+}
+
+.member-modal-backdrop::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 12%;
+  filter: blur(54px);
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    rgba(132, 67, 221, 0.34) 0%,
+    rgba(89, 57, 178, 0.18) 34%,
+    rgba(43, 26, 91, 0.06) 55%,
+    transparent 74%
+  );
+}
+
+.member-modal {
+  position: relative;
+  isolation: isolate;
+  width: min(840px, calc(100vw - 3rem));
+  max-height: calc(100vh - 3rem);
+  display: grid;
+  grid-template-columns: 220px minmax(280px, 330px);
+  gap: clamp(2rem, 4vw, 3.25rem);
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: clamp(3rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3rem);
+  border: 1px solid rgba(218, 210, 247, 0.13);
+  background:
+    radial-gradient(
+      ellipse at 18% 88%,
+      rgba(128, 68, 211, 0.18),
+      transparent 43%
+    ),
+    radial-gradient(
+      ellipse at 82% 12%,
+      rgba(126, 100, 207, 0.08),
+      transparent 42%
+    ),
+    rgba(5, 6, 12, 0.97);
+  box-shadow:
+    0 38px 88px rgba(0, 0, 0, 0.76),
+    0 0 58px rgba(119, 64, 205, 0.18);
+  animation: member-modal-rise-in 220ms ease-out;
+}
+
+.modal-light {
+  position: absolute;
+  z-index: -1;
+  top: -20%;
+  left: -10%;
+  width: 70%;
+  height: 136%;
+  transform: rotate(-2deg);
+  opacity: 0.9;
+  filter: blur(26px);
+  background: radial-gradient(
+    ellipse 36% 98% at 48% -7%,
+    rgba(239, 235, 255, 0.5),
+    rgba(191, 177, 242, 0.23) 22%,
+    rgba(141, 123, 200, 0.1) 49%,
+    transparent 82%
+  );
+}
+
+.modal-close {
+  position: absolute;
+  z-index: 3;
+  top: 1.15rem;
+  right: 1.2rem;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  color: #ded9ef;
+  border: 1px solid rgba(218, 210, 247, 0.16);
+  border-radius: 50%;
+  background: rgba(9, 9, 16, 0.28);
+  font: 500 1.1rem/1 var(--wiki-sans);
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+}
+
+.modal-close span {
+  display: none;
+}
+
+.modal-close:hover,
+.modal-close:focus-visible {
+  color: #fff;
+  border-color: rgba(170, 149, 255, 0.55);
+  background: rgba(124, 92, 255, 0.15);
+}
+
+.modal-stage {
+  position: relative;
+  width: 220px;
+  height: min(340px, 46vh);
+  min-height: 250px;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      ellipse at 50% 92%,
+      rgba(186, 165, 248, 0.35),
+      transparent 27%
+    ),
+    linear-gradient(160deg, #221b31 0%, #11101a 56%, #090a0f 100%);
+}
+
+.modal-stage::before {
+  content: "";
+  position: absolute;
+  top: -8%;
+  left: 50%;
+  width: 30%;
+  height: 112%;
+  transform: translateX(-50%);
+  filter: blur(14px);
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    rgba(239, 236, 255, 0.76),
+    rgba(188, 175, 239, 0.3) 28%,
+    rgba(133, 116, 195, 0.08) 57%,
+    transparent 78%
+  );
+}
+
+.modal-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(8, 8, 14, 0.48),
+      transparent 31%,
+      transparent 69%,
+      rgba(8, 8, 14, 0.48)
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(226, 217, 255, 0.075) 0 1px,
+      transparent 1px 17%
+    );
+  mix-blend-mode: screen;
+}
+
+.modal-copy {
+  width: 100%;
+  max-width: 330px;
+  animation: member-modal-copy-in 420ms 120ms both;
+}
+
+.modal-kicker {
+  margin: 0 0 0.6rem !important;
+  color: #9aa19c !important;
+  font-size: 0.85rem !important;
+  font-weight: 600;
+}
+
+.wiki-page-content .modal-copy h2 {
+  margin: 0;
+  color: #f1f2ec;
+  font: 600 clamp(2rem, 2.8vw, 2.8rem) / 0.92 var(--wiki-sans);
+  letter-spacing: -0.035em;
+  text-shadow:
+    0 2px 9px rgba(255, 255, 245, 0.07),
+    0 16px 50px rgba(0, 0, 0, 0.6);
+}
+
+.modal-details {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.1rem;
+  margin: 1.35rem 0 1.5rem;
+  padding: 1.15rem 0;
+  border-block: 1px solid rgba(213, 204, 244, 0.16);
+}
+
+.modal-details div {
+  min-width: 0;
+}
+
+.modal-details dt {
+  margin-bottom: 0.45rem;
+  color: #c9a8ff;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.modal-details dd {
+  margin: 0;
+  color: #d9d6e7;
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.modal-content {
+  max-width: 540px !important;
+  margin: 0 !important;
+  color: #aeb2bc !important;
+  font-size: 0.84rem !important;
+  line-height: 1.75;
+}
+
+@keyframes member-modal-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes member-modal-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes member-modal-copy-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Footer styles live in components/Footer/Footer.css. */
+
+@media (max-width: 991.98px) {
+  /* The logo row is exactly --gnb-height whether the menu is open or not;
+     the opened menu is added below it and scrolls if it is too tall. */
+  .site-navigation.navbar {
+    padding-block: 0;
+  }
+
+  .site-navigation > .container {
+    align-content: flex-start;
+  }
+
+  .site-navigation .navbar-brand {
+    height: var(--gnb-height);
+    display: flex;
+    align-items: center;
+    padding-block: 0;
+  }
+
+  .site-navigation .navbar-nav {
+    min-height: 0;
+  }
+
+  .site-navigation .navbar-collapse {
+    max-height: calc(100dvh - var(--gnb-height));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0.5rem 0 1rem;
+    border-top: 1px solid var(--wiki-line);
+  }
+
+  .site-navigation .nav-link {
+    min-height: 46px;
+    padding: 0 1rem !important;
+    border-bottom: 0;
+    border-left: 2px solid transparent;
+  }
+
+  .site-navigation .dropdown-item {
+    padding-left: 2rem;
+  }
+
+  .site-navigation .nav-link.active,
+  .site-navigation .nav-link.show {
+    border-left-color: var(--wiki-accent);
+  }
+
+  .site-navigation .dropdown-menu {
+    border: 0;
+    background: rgba(255, 255, 255, 0.025);
+    box-shadow: none;
+  }
+
+  .wiki-documentation-grid.container {
+    grid-template-columns: 180px minmax(0, 1fr);
+    gap: 2.5rem;
+  }
+
+  .wiki-documentation-grid--team.container {
+    grid-template-columns: 180px minmax(0, 1fr);
+  }
+
+  .contact-sheet {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767.98px) {
+  :root {
+    --gnb-height: 64px;
+    /* 42px link + 2 × 0.75rem padding + 1px border */
+    --snb-strip-height: 67px;
+  }
+
+  .wiki-page-background .bg-hero {
+    min-height: 510px;
+  }
+
+  .inspection-light {
+    top: 56px;
+    left: 2.2rem;
+    width: 105vw;
+    height: 92%;
+    transform: rotate(-5deg);
+  }
+
+  .wiki-documentation-grid.container {
+    width: 100%;
+    display: block;
+    padding: 0 var(--page-gutter) 5rem;
+  }
+
+  .snb {
+    z-index: 20;
+    top: var(--gnb-height);
+    margin: 0 calc(-1 * var(--page-gutter)) 3rem;
+    padding: 0.75rem var(--page-gutter);
+    overflow-x: auto;
+    border-bottom: 1px solid var(--wiki-line);
+    background: rgba(13, 17, 19, 0.94);
+    backdrop-filter: blur(12px);
+  }
+
+  .snb-label,
+  .snb h2 {
+    display: none;
+  }
+
+  .snb ol {
+    width: max-content;
+    display: flex;
+    gap: 0.45rem;
+  }
+
+  .snb a {
+    min-height: 42px;
+    grid-template-columns: auto;
+    padding: 0.55rem 0.9rem;
+    border: 1px solid var(--wiki-line);
+  }
+
+  .snb a.active {
+    border-color: rgba(139, 69, 223, 0.7);
+  }
+
+  .snb a.active::after {
+    display: none;
+  }
+
+  .wiki-page-content {
+    padding-inline: 0.1rem;
+  }
+
+  .member-modal-backdrop {
+    padding: 0;
+  }
+
+  .member-modal {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    display: block;
+    padding: 5rem 1.2rem 3rem;
+  }
+
+  .modal-stage {
+    width: min(220px, 64vw);
+    height: 145px;
+    min-height: 0;
+    margin: 0 0 1.4rem;
+  }
+
+  .modal-copy {
+    width: 100%;
+    max-width: none;
+  }
+
+  .modal-details {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .modal-details div:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .member-modal-backdrop,
+  .member-modal,
+  .modal-copy {
+    animation: none;
+  }
+}
+
+@media (max-width: 540px) {
+  .contact-sheet {
+    grid-template-columns: 1fr;
+  }
+}

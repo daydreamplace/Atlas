@@ -1,0 +1,254 @@
+.home-story {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  background: #05060a;
+}
+
+.home-story-thread {
+  display: none;
+}
+
+.home-section {
+  --scene-base: #07080c;
+  --scene-wash: rgba(89, 55, 129, 0.08);
+  --light-x: 50%;
+  --light-y: 50%;
+  --light-width: 72%;
+  --light-height: 68%;
+  --light-rotate: 0deg;
+  --light-core: rgba(237, 232, 248, 0.3);
+  --light-violet: rgba(159, 112, 218, 0.19);
+  position: relative;
+  min-height: 100svh;
+  overflow: visible;
+  color: #f1edf7;
+  background: radial-gradient(
+    ellipse at 18% 20%,
+    var(--scene-wash),
+    transparent 42%
+  );
+}
+
+.home-section + .home-section {
+  margin-top: -12svh;
+}
+
+.home-section::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.3;
+  background-image: repeating-radial-gradient(
+    circle at 38% 42%,
+    rgba(231, 224, 241, 0.035) 0 1px,
+    transparent 1px 6px
+  );
+  mask-image: radial-gradient(
+    ellipse 85% 80% at var(--light-x) var(--light-y),
+    black,
+    transparent 88%
+  );
+}
+
+.home-section::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  right: -12%;
+  bottom: -14%;
+  width: 124%;
+  height: 32%;
+  pointer-events: none;
+  opacity: 0.5;
+  filter: blur(46px);
+  background:
+    radial-gradient(
+      ellipse at 26% 70%,
+      rgba(111, 72, 157, 0.18),
+      transparent 48%
+    ),
+    radial-gradient(
+      ellipse at 76% 58%,
+      rgba(58, 43, 79, 0.16),
+      transparent 52%
+    ),
+    linear-gradient(180deg, transparent, rgba(4, 5, 9, 0.78));
+}
+
+.home-scene-inner {
+  position: relative;
+  z-index: 2;
+  width: min(1440px, 100%);
+  min-height: inherit;
+  margin-inline: auto;
+}
+
+.home-light-field {
+  position: absolute;
+  z-index: 4;
+  top: var(--light-y);
+  left: var(--light-x);
+  width: var(--light-width);
+  height: var(--light-height);
+  transform: translate(-50%, -50%) rotate(var(--light-rotate));
+  pointer-events: none;
+  border-radius: 48% 52% 46% 54% / 55% 43% 57% 45%;
+  filter: blur(17px);
+  mix-blend-mode: screen;
+  background: radial-gradient(
+    ellipse at 50% 48%,
+    var(--light-core) 0%,
+    rgba(218, 207, 235, 0.2) 22%,
+    var(--light-violet) 46%,
+    transparent 70%
+  );
+}
+
+.home-light-field::after {
+  content: "";
+  position: absolute;
+  inset: 18% 12%;
+  border-radius: 50%;
+  filter: blur(30px);
+  background: radial-gradient(
+    ellipse,
+    rgba(246, 243, 252, 0.16),
+    transparent 66%
+  );
+}
+
+.home-visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.home-hero-section {
+  --scene-base: #040509;
+  --scene-wash: rgba(96, 61, 143, 0.11);
+  --light-x: 61%;
+  --light-y: 49%;
+  --light-width: 86%;
+  --light-height: 82%;
+  --light-rotate: -7deg;
+  --light-core: rgba(241, 236, 250, 0.34);
+  height: 100svh;
+  min-height: 100svh;
+  margin-top: calc(-1 * var(--gnb-height));
+}
+
+.home-counterfeit-problem-section {
+  --scene-base: #08090d;
+  --light-x: 30%;
+  --light-y: 52%;
+  --light-width: 64%;
+  --light-height: 72%;
+  --light-rotate: 8deg;
+}
+
+.home-authentication-gap-section {
+  --scene-base: #0a0a10;
+  --scene-wash: rgba(118, 72, 173, 0.07);
+  --light-x: 70%;
+  --light-y: 46%;
+  --light-width: 58%;
+  --light-height: 76%;
+  --light-rotate: -10deg;
+}
+
+.home-bio-color-id-concept-section {
+  --scene-base: #09070e;
+  --scene-wash: rgba(139, 69, 223, 0.11);
+  --light-x: 50%;
+  --light-y: 50%;
+  --light-width: 84%;
+  --light-height: 64%;
+  --light-core: rgba(232, 220, 247, 0.32);
+  --light-violet: rgba(171, 117, 229, 0.23);
+}
+
+.home-biosynthesis-section {
+  --scene-base: #06070b;
+  --light-x: 38%;
+  --light-y: 54%;
+  --light-width: 58%;
+  --light-height: 78%;
+  --light-rotate: 12deg;
+}
+
+.home-production-pipeline-section {
+  --scene-base: #09090e;
+  --light-x: 63%;
+  --light-y: 52%;
+  --light-width: 76%;
+  --light-height: 55%;
+  --light-rotate: -4deg;
+}
+
+.home-verification-section {
+  --scene-base: #05060a;
+  --scene-wash: rgba(125, 75, 188, 0.1);
+  --light-x: 48%;
+  --light-y: 48%;
+  --light-width: 70%;
+  --light-height: 82%;
+  --light-core: rgba(242, 237, 250, 0.35);
+}
+
+.home-applications-section {
+  --scene-base: #09080d;
+  --light-x: 72%;
+  --light-y: 48%;
+  --light-width: 62%;
+  --light-height: 70%;
+  --light-rotate: 9deg;
+}
+
+.home-closing-section {
+  --scene-base: #050509;
+  --scene-wash: rgba(111, 67, 161, 0.09);
+  --light-x: 50%;
+  --light-y: 50%;
+  --light-width: 88%;
+  --light-height: 60%;
+  --light-core: rgba(229, 218, 242, 0.27);
+}
+
+@media (max-width: 700px) {
+  .home-section + .home-section {
+    margin-top: -9svh;
+  }
+
+  .home-section {
+    --light-width: 115%;
+    --light-height: 70%;
+    min-height: 100svh;
+  }
+
+  .home-hero-section {
+    --light-x: 52%;
+    --light-y: 52%;
+    --light-width: 130%;
+    --light-height: 82%;
+  }
+
+  .home-light-field {
+    filter: blur(15px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-light-field,
+  .home-light-field::after {
+    animation: none !important;
+  }
+}

@@ -1,23 +1,31 @@
-import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Route, Routes } from "react-router-dom";
-import { getPathMapping, stringToSlug } from "../../utils";
+import "../../styles/tokens.css";
+import "../../styles/fonts.css";
+import "./App.css";
+import "../../styles/global.css";
+import "../../styles/home.css";
+import "../../styles/typography.css";
+import { Route, Routes, useLocation } from "react-router-dom";
+import { getPathMapping } from "../../utils";
 import { useEffect } from "react";
 import { Navbar } from "../../components/Navbar";
-import { Header } from "../../components/Header";
 import { NotFound } from "../../components/NotFound";
 import { Footer } from "../../components/Footer";
+import { LoadingScreen } from "../../components/LoadingScreen";
+import { StyleGuide } from "../../contents/style-guide";
+import { WikiPageBackground } from "../../components/WikiPageBackground";
 
 const App = () => {
+  const { pathname: currentPath } = useLocation();
   const pathMapping = getPathMapping();
-  const currentPath =
-    location.pathname
-      .split(`${stringToSlug(import.meta.env.VITE_TEAM_NAME)}`)
-      .pop() || "/";
 
   // Set Page Title
   const title =
-    currentPath in pathMapping ? pathMapping[currentPath].title : "Not Found";
+    currentPath in pathMapping
+      ? pathMapping[currentPath].title
+      : currentPath === "/style-guide"
+        ? "Style Guide"
+        : "Not Found";
 
   useEffect(() => {
     document.title = `${title || ""} | ${import.meta.env.VITE_TEAM_NAME} - iGEM ${import.meta.env.VITE_TEAM_YEAR}`;
@@ -25,6 +33,9 @@ const App = () => {
 
   return (
     <>
+      {/* Initial splash screen (every full page load) */}
+      <LoadingScreen />
+
       {/* Navigation */}
       <Navbar />
 
@@ -36,26 +47,44 @@ const App = () => {
               key={path}
               path={path}
               element={
-                <>
-                  <Header title={title || ""} lead={lead || ""} />
-                  <div className="container">
+                path === "/" ? (
+                  <main id="main-content" className="home-page">
                     <Component />
-                  </div>
-                </>
+                  </main>
+                ) : (
+                  <WikiPageBackground
+                    title={title || ""}
+                    lead={lead || ""}
+                    pathname={path}
+                  >
+                    <Component />
+                  </WikiPageBackground>
+                )
               }
             />
           ),
         )}
+        {/* Text style reference for the team; not linked from the GNB. */}
+        <Route
+          path="/style-guide"
+          element={
+            <WikiPageBackground
+              title="Style Guide"
+              lead="Every text style available on content pages, with how to use it."
+            >
+              <StyleGuide />
+            </WikiPageBackground>
+          }
+        />
         <Route
           path="*"
           element={
-            <>
-              <Header
-                title="Not Found"
-                lead="The requested URL was not found on this server."
-              />
+            <WikiPageBackground
+              title="Not Found"
+              lead="The requested URL was not found on this server."
+            >
               <NotFound />
-            </>
+            </WikiPageBackground>
           }
         />
       </Routes>
