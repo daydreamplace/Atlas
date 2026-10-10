@@ -133,7 +133,7 @@ it can support safer products, stronger consumer trust, and smarter anti-counter
 Starting in K-beauty and pharmaceuticals, this platform could grow into a broader authentication standard with applications
 across many industries, helping brands, regulators, and consumers rely on a more secure and meaningful way to verify authenticity.`,
     layout: "image-left",
-    imagePath: "images/main-page/sections/07-color-to-identity.webp",
+    imagePath: "images/main-page/sections/09-authentication-standard.webp",
   },
   {
     number: 10,

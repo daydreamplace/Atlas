@@ -27,15 +27,15 @@
   z-index: 1;
   top: 54%;
   left: 50%;
-  width: 34%;
+  width: 40%;
   height: auto;
-  object-fit: contain;
+  overflow: visible;
   opacity: 1;
   mix-blend-mode: normal;
   transform: translate(-50%, -50%);
 }
 
-/* Keep the N-Mark illustration upright in both S3 sequence states. */
+/* Keep the NFC symbol upright in both S3 sequence states. */
 .auth-sequence__artwork[data-sequence-step="nfc"]
   .auth-sequence__token.auth-sequence__token--nfc,
 .auth-sequence__artwork[data-sequence-step="verified"]
@@ -43,13 +43,7 @@
   transform: none;
 }
 
-.auth-sequence__n-mark-attribution {
-  margin: 0.45rem 0 0;
-  color: #817986;
-  font: 400 0.64rem/1.45 var(--wiki-sans);
-}
-
-/* The paper carries the shadow; the N-Mark illustration remains unrotated/unshadowed. */
+/* The paper carries the shadow; the NFC symbol remains unrotated/unshadowed. */
 .limitations-story__package-label.limitations-story__package-label--nfc {
   width: clamp(3.5rem, 16%, 4.5rem);
   aspect-ratio: 1;

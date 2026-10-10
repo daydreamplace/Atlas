@@ -11,8 +11,7 @@
       transparent 33%
     ),
     #080a0c;
-  font-family: var(--font-sans);
-  letter-spacing: -0.025em;
+  font-family: var(--wiki-sans);
 }
 
 .site-footer > .container {

@@ -10,6 +10,7 @@ import type { HomeSectionContent } from "../../data/homeContent";
 import "../../styles/authentication-story.css";
 import { IllustratedPhone } from "./IllustratedPhone";
 import { NfcPaperMark } from "./NfcPaperMark";
+import { useScrollSteps, useScrollStepsEnabled } from "./useScrollSteps";
 
 interface AuthenticationStorySectionProps {
   readonly section: HomeSectionContent;
@@ -147,6 +148,8 @@ export function AuthenticationStorySection({
   const titleId = `${section.id}-title`;
   const sceneId = `${section.id}-sequence-scene`;
   const artworkRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const pinRef = useRef<HTMLDivElement>(null);
   const elapsedRef = useRef(0);
   const pausedTransitionsRef = useRef<Animation[]>([]);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(
@@ -165,6 +168,16 @@ export function AuthenticationStorySection({
   const hasAutoPlayedRef = useRef(prefersReducedMotion);
   const [sequenceRun, setSequenceRun] = useState(0);
   const [announcement, setAnnouncement] = useState("");
+
+  // On large screens the steps follow the scroll position instead of a timer.
+  const isScrollDriven = useScrollStepsEnabled() && !prefersReducedMotion;
+  const { stepIndex: scrollStepIndex, scrollToStep } = useScrollSteps({
+    trackRef,
+    pinRef,
+    stepCount: SEQUENCE_STEPS.length,
+    enabled: isScrollDriven,
+    stepLength: 0.38,
+  });
 
   const setCurrentStep = useCallback((nextStepIndex: number) => {
     currentStepIndexRef.current = nextStepIndex;
@@ -246,15 +259,28 @@ export function AuthenticationStorySection({
   }, [markAutoplayUsed, prefersReducedMotion, setCurrentStep]);
 
   useEffect(() => {
-    if (!isArtworkReady || prefersReducedMotion || hasAutoPlayedRef.current) {
+    if (
+      !isArtworkReady ||
+      prefersReducedMotion ||
+      isScrollDriven ||
+      hasAutoPlayedRef.current
+    ) {
       return;
     }
 
     startSequence();
-  }, [isArtworkReady, prefersReducedMotion, startSequence]);
+  }, [isArtworkReady, isScrollDriven, prefersReducedMotion, startSequence]);
 
+  useEffect(() => {
+    if (isScrollDriven && scrollStepIndex === LAST_STEP_INDEX) {
+      setAnnouncement(FINAL_ANNOUNCEMENT);
+    }
+  }, [isScrollDriven, scrollStepIndex]);
+
+  // In scroll mode each step's own animation plays whenever it is reached.
+  const isSequenceActive = isScrollDriven || isRunning;
   const isEnvironmentPaused = !isArtworkVisible || !isPageVisible;
-  const isSequencePaused = isRunning && isEnvironmentPaused;
+  const isSequencePaused = isSequenceActive && isEnvironmentPaused;
 
   useLayoutEffect(() => {
     const artwork = artworkRef.current;
@@ -275,7 +301,13 @@ export function AuthenticationStorySection({
   }, [isSequencePaused, sequenceRun]);
 
   useEffect(() => {
-    if (!isRunning || isSequencePaused || prefersReducedMotion) return;
+    if (
+      !isRunning ||
+      isSequencePaused ||
+      prefersReducedMotion ||
+      isScrollDriven
+    )
+      return;
 
     let animationFrameId = 0;
     let previousTimestamp: number | undefined;
@@ -311,6 +343,7 @@ export function AuthenticationStorySection({
     return () => window.cancelAnimationFrame(animationFrameId);
   }, [
     isRunning,
+    isScrollDriven,
     isSequencePaused,
     prefersReducedMotion,
     sequenceRun,
@@ -323,6 +356,11 @@ export function AuthenticationStorySection({
     );
     if (nextStepIndex < 0) return;
 
+    if (isScrollDriven) {
+      scrollToStep(nextStepIndex);
+      return;
+    }
+
     markAutoplayUsed();
     elapsedRef.current = getElapsedAtStepStart(nextStepIndex);
     setIsRunning(false);
@@ -333,14 +371,15 @@ export function AuthenticationStorySection({
     );
   };
 
-  const currentStep = SEQUENCE_STEPS[currentStepIndex];
+  const currentStep =
+    SEQUENCE_STEPS[isScrollDriven ? scrollStepIndex : currentStepIndex];
   const sceneStyle = {
     "--auth-sequence-step-duration": `${currentStep.durationMs}ms`,
     "--auth-sequence-total-duration": `${TOTAL_SEQUENCE_DURATION_MS}ms`,
   } as CSSProperties;
   const sequenceData = {
     "data-sequence-step": currentStep.id,
-    "data-sequence-running": isRunning ? "true" : "false",
+    "data-sequence-running": isSequenceActive ? "true" : "false",
     "data-sequence-paused": isSequencePaused ? "true" : "false",
     "data-sequence-run": sequenceRun,
   } as const;
@@ -356,151 +395,48 @@ export function AuthenticationStorySection({
       aria-labelledby={titleId}
       {...sequenceData}
     >
-      <div className="authentication-story__inner">
-        <div className="authentication-story__content">
-          <h2
-            id={titleId}
-            className="home-story-section__title authentication-story__title"
-          >
-            {section.title}
-          </h2>
-          <p className="home-story-section__body authentication-story__body">
-            {section.body}
-          </p>
-        </div>
+      <div
+        ref={trackRef}
+        className="scroll-steps-track"
+        data-scroll-driven={isScrollDriven ? "true" : "false"}
+      >
+        <div
+          ref={pinRef}
+          className="authentication-story__inner scroll-steps-pin"
+        >
+          <div className="authentication-story__content">
+            <h2
+              id={titleId}
+              className="home-story-section__title authentication-story__title"
+            >
+              {section.title}
+            </h2>
+            <p className="home-story-section__body authentication-story__body">
+              {section.body}
+            </p>
+          </div>
 
-        <div className="auth-sequence__demo">
-          <div
-            ref={artworkRef}
-            id={sceneId}
-            className="auth-sequence__artwork"
-            data-reduced-motion={prefersReducedMotion ? "true" : "false"}
-            style={sceneStyle}
-            role="img"
-            aria-label="Illustrative sequence showing QR code, hologram, serial number, and NFC as alternative surface-authentication methods, ending in a verified demo. Easy to apply, but still on the surface."
-            {...sequenceData}
-          >
-            <div key={sequenceRun} className="auth-sequence__motion-layer">
-              <IllustratedPhone
-                className="auth-sequence__phone-stage"
-                screenClassName="auth-sequence__phone-screen"
-                foreground={
-                  <img
-                    className="auth-sequence__asset auth-sequence__hand"
-                    data-art-piece="hand"
-                    src={authenticationAssets.hand}
-                    alt=""
-                    width="1254"
-                    height="1254"
-                    draggable="false"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                }
-              >
-                <div className="auth-sequence__phone-ui auth-sequence__phone-ui--intro">
-                  SCAN
-                </div>
-                <div className="auth-sequence__phone-ui auth-sequence__phone-ui--camera">
-                  <div className="auth-camera__header">
-                    <svg
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                      focusable="false"
-                    >
-                      <path d="M3 7h4l2-3h6l2 3h4v13H3Z" />
-                      <circle cx="12" cy="13" r="4" />
-                    </svg>
-                    <span>QR scanner</span>
-                    <small>DEMO</small>
-                  </div>
-                  <div className="auth-camera__viewfinder">
-                    <img
-                      className="auth-camera__qr"
-                      src={authenticationAssets.tokens[0].src}
-                      alt=""
-                      width="1254"
-                      height="1254"
-                      draggable="false"
-                    />
-                    <span className="auth-camera__focus-frame">
-                      <i />
-                      <i />
-                      <i />
-                      <i />
-                      <span className="auth-camera__scan-line" />
-                    </span>
-                    <span className="auth-camera__aim-hint">
-                      Align QR in frame
-                    </span>
-                    <span className="auth-camera__scanning-hint">
-                      Scanning…
-                    </span>
-                    <span className="auth-camera__zoom">1×</span>
-                  </div>
-                  <div className="auth-camera__result">
-                    <svg
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                      focusable="false"
-                    >
-                      <circle cx="12" cy="12" r="10" />
-                      <path d="m7 12 3 3 7-7" />
-                    </svg>
-                    <span>
-                      <strong>QR detected</strong>
-                      <small>Product information</small>
-                    </span>
-                  </div>
-                  <div className="auth-camera__footer">
-                    <span>Camera preview</span>
-                    <span className="auth-camera__shutter" />
-                    <small>Illustrative demo</small>
-                  </div>
-                </div>
-
-                <div className="auth-sequence__phone-ui auth-sequence__phone-ui--serial">
-                  <span className="auth-sequence__serial-value">A1B3C2D4</span>
-                </div>
-
-                <div className="auth-sequence__phone-ui auth-sequence__phone-ui--nfc">
-                  <span className="auth-sequence__nfc-waves">
-                    <i />
-                    <i />
-                    <i />
-                  </span>
-                </div>
-
-                <div className="auth-sequence__phone-ui auth-sequence__phone-ui--verified">
-                  <svg
-                    className="auth-sequence__verified-tick"
-                    viewBox="0 0 64 64"
-                    aria-hidden="true"
-                    focusable="false"
-                  >
-                    <circle cx="32" cy="32" r="28" />
-                    <path d="m18 33 9 9 19-21" />
-                  </svg>
-                  <span className="auth-sequence__verified-copy">
-                    <strong>Verified</strong>
-                    <small>Demo</small>
-                  </span>
-                </div>
-              </IllustratedPhone>
-
-              {authenticationAssets.tokens.map((token) => (
-                <figure
-                  key={token.method}
-                  className={`auth-sequence__token auth-sequence__token--${token.method}`}
-                  data-art-piece={`${token.method}-paper`}
-                >
-                  <div className="auth-sequence__token-art">
-                    {token.method === "nfc" ? (
-                      <NfcPaperMark className="auth-sequence__nfc-paper-mark" />
-                    ) : (
+          <div className="auth-sequence__demo">
+            <div
+              ref={artworkRef}
+              id={sceneId}
+              className="auth-sequence__artwork"
+              data-reduced-motion={prefersReducedMotion ? "true" : "false"}
+              style={sceneStyle}
+              role="img"
+              aria-label="Illustrative sequence showing QR code, hologram, serial number, and NFC as alternative surface-authentication methods, ending in a verified demo. Easy to apply, but still on the surface."
+              {...sequenceData}
+            >
+              <div key={sequenceRun} className="auth-sequence__motion-layer">
+                <IllustratedPhone
+                  className="auth-sequence__phone-stage"
+                  screenClassName="auth-sequence__phone-screen"
+                  foreground={
+                    <>
                       <img
-                        className="auth-sequence__asset auth-sequence__token-image"
-                        src={token.src}
+                        className="auth-sequence__asset auth-sequence__hand"
+                        data-art-piece="hand"
+                        src={authenticationAssets.hand}
                         alt=""
                         width="1254"
                         height="1254"
@@ -508,72 +444,191 @@ export function AuthenticationStorySection({
                         loading="lazy"
                         decoding="async"
                       />
-                    )}
-                    {token.method === "serial" ? (
-                      <span className="auth-sequence__token-number">
-                        A1B3C2D4
-                      </span>
-                    ) : null}
-                  </div>
-                  <figcaption className="auth-sequence__token-caption">
-                    <strong>{token.label}</strong>
-                    <span>{token.subtitle}</span>
-                  </figcaption>
-                </figure>
-              ))}
-
-              <p className="auth-sequence__surface-note">
-                Easy to apply, but still on the surface.
-              </p>
-            </div>
-          </div>
-
-          <div className="auth-sequence__controls">
-            <div
-              className="auth-sequence__steps"
-              role="group"
-              aria-label="Authentication sequence steps"
-            >
-              {SEQUENCE_STEPS.map((step, index) => (
-                <button
-                  key={step.id}
-                  className="auth-sequence__step-button"
-                  type="button"
-                  data-sequence-step-control={step.id}
-                  aria-controls={sceneId}
-                  aria-pressed={currentStep.id === step.id}
-                  aria-label={`Show step ${index + 1} of ${SEQUENCE_STEPS.length}: ${step.controlLabel}`}
-                  onClick={() => handleStepSelection(step.id)}
+                      {/* Sits under the phone and turns with it. */}
+                      <p className="auth-sequence__surface-note">
+                        Easy to apply, but still on the surface.
+                      </p>
+                    </>
+                  }
                 >
-                  <span
-                    className="auth-sequence__step-number"
-                    aria-hidden="true"
-                  >
-                    {index + 1}
-                  </span>
-                  <span className="auth-sequence__step-label">
-                    {step.controlLabel}
-                  </span>
-                </button>
-              ))}
-            </div>
-          </div>
+                  <div className="auth-sequence__phone-ui auth-sequence__phone-ui--intro">
+                    SCAN
+                  </div>
+                  <div className="auth-sequence__phone-ui auth-sequence__phone-ui--camera">
+                    <div className="auth-camera__header">
+                      <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                        focusable="false"
+                      >
+                        <path d="M3 7h4l2-3h6l2 3h4v13H3Z" />
+                        <circle cx="12" cy="13" r="4" />
+                      </svg>
+                      <span>QR scanner</span>
+                      <small>DEMO</small>
+                    </div>
+                    <div className="auth-camera__viewfinder">
+                      <img
+                        className="auth-camera__qr"
+                        src={authenticationAssets.tokens[0].src}
+                        alt=""
+                        width="1254"
+                        height="1254"
+                        draggable="false"
+                      />
+                      <span className="auth-camera__focus-frame">
+                        <i />
+                        <i />
+                        <i />
+                        <i />
+                        <span className="auth-camera__scan-line" />
+                      </span>
+                      <span className="auth-camera__aim-hint">
+                        Align QR in frame
+                      </span>
+                      <span className="auth-camera__scanning-hint">
+                        Scanning…
+                      </span>
+                      <span className="auth-camera__zoom">1×</span>
+                    </div>
+                    <div className="auth-camera__result">
+                      <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                        focusable="false"
+                      >
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="m7 12 3 3 7-7" />
+                      </svg>
+                      <span>
+                        <strong>QR detected</strong>
+                        <small>Product information</small>
+                      </span>
+                    </div>
+                    <div className="auth-camera__footer">
+                      <span>Camera preview</span>
+                      <span className="auth-camera__shutter" />
+                      <small>Illustrative demo</small>
+                    </div>
+                  </div>
 
-          <p className="auth-sequence__disclaimer">
-            Illustrative sequence — methods are alternatives, not a combined
-            verification or product guarantee.
-          </p>
-          <p className="auth-sequence__n-mark-attribution">
-            The N-Mark is a trademark or registered trademark of NFC Forum, Inc.
-            in the United States and in other countries.
-          </p>
-          <p
-            className="visually-hidden auth-sequence__announcement"
-            aria-live="polite"
-            aria-atomic="true"
-          >
-            {announcement}
-          </p>
+                  <div className="auth-sequence__phone-ui auth-sequence__phone-ui--serial">
+                    <span className="auth-sequence__serial-value">
+                      A1B3C2D4
+                    </span>
+                  </div>
+
+                  <div className="auth-sequence__phone-ui auth-sequence__phone-ui--nfc">
+                    <span className="auth-sequence__nfc-waves">
+                      <i />
+                      <i />
+                      <i />
+                    </span>
+                  </div>
+
+                  <div className="auth-sequence__phone-ui auth-sequence__phone-ui--verified">
+                    <svg
+                      className="auth-sequence__verified-tick"
+                      viewBox="0 0 64 64"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <circle cx="32" cy="32" r="28" />
+                      <path d="m18 33 9 9 19-21" />
+                    </svg>
+                    <span className="auth-sequence__verified-copy">
+                      <strong>Verified</strong>
+                      <small>Demo</small>
+                    </span>
+                  </div>
+                </IllustratedPhone>
+
+                {authenticationAssets.tokens.map((token) => (
+                  <figure
+                    key={token.method}
+                    className={`auth-sequence__token auth-sequence__token--${token.method}`}
+                    data-art-piece={`${token.method}-paper`}
+                  >
+                    <div className="auth-sequence__token-art">
+                      {token.method === "nfc" ? (
+                        <NfcPaperMark className="auth-sequence__nfc-paper-mark" />
+                      ) : (
+                        <img
+                          className="auth-sequence__asset auth-sequence__token-image"
+                          src={token.src}
+                          alt=""
+                          width="1254"
+                          height="1254"
+                          draggable="false"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      )}
+                      {token.method === "serial" ? (
+                        <span className="auth-sequence__token-number">
+                          A1B3C2D4
+                        </span>
+                      ) : null}
+                    </div>
+                    <figcaption className="auth-sequence__token-caption">
+                      <strong>{token.label}</strong>
+                      <span>{token.subtitle}</span>
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            </div>
+
+            <div className="auth-sequence__controls">
+              <div
+                className="auth-sequence__steps"
+                role="group"
+                aria-label="Authentication sequence steps"
+                style={
+                  {
+                    "--step-count": SEQUENCE_STEPS.length,
+                    "--step-index": SEQUENCE_STEPS.indexOf(currentStep),
+                  } as CSSProperties
+                }
+              >
+                {SEQUENCE_STEPS.map((step, index) => (
+                  <button
+                    key={step.id}
+                    className="auth-sequence__step-button"
+                    type="button"
+                    data-sequence-step-control={step.id}
+                    aria-controls={sceneId}
+                    aria-pressed={currentStep.id === step.id}
+                    aria-label={`Show step ${index + 1} of ${SEQUENCE_STEPS.length}: ${step.controlLabel}`}
+                    onClick={() => handleStepSelection(step.id)}
+                  >
+                    <span className="auth-sequence__step-label">
+                      {step.controlLabel}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Secondary note: collapsed so it stays available without
+                competing with the illustration. */}
+            <details className="auth-sequence__notes">
+              <summary>About this illustration</summary>
+              <div className="auth-sequence__notes-panel">
+                <p className="auth-sequence__disclaimer">
+                  Illustrative sequence — methods are alternatives, not a
+                  combined verification or product guarantee.
+                </p>
+              </div>
+            </details>
+            <p
+              className="visually-hidden auth-sequence__announcement"
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              {announcement}
+            </p>
+          </div>
         </div>
       </div>
     </section>

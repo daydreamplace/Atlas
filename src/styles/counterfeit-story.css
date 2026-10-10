@@ -16,6 +16,9 @@
   position: relative;
   z-index: 1;
   display: grid;
+  /* Without an explicit track the column grows to the artwork's width and
+     pushes the text off narrow screens. */
+  grid-template-columns: minmax(0, 1fr);
   width: min(100%, 1560px);
   margin-inline: auto;
 }
@@ -557,5 +560,13 @@
   24% {
     opacity: 0.94;
     transform: scale(1);
+  }
+}
+
+/* Single-column layout: centre the text block (text stays left-aligned). */
+@media (max-width: 1199px) {
+  .counterfeit-story .counterfeit-story__content {
+    justify-self: center;
+    max-width: 66ch;
   }
 }

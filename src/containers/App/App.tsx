@@ -1,6 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styles/tokens.css";
-import "../../styles/fonts.css";
 import "./App.css";
 import "../../styles/global.css";
 import "../../styles/home.css";
@@ -30,6 +29,13 @@ const App = () => {
   useEffect(() => {
     document.title = `${title || ""} | ${import.meta.env.VITE_TEAM_NAME} - iGEM ${import.meta.env.VITE_TEAM_YEAR}`;
   }, [title]);
+
+  // Start each newly opened page at the top. Links to a #section on the same
+  // page (e.g. the Team SNB) only change the hash, so they are not affected.
+  useEffect(() => {
+    if (window.location.hash) return;
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [currentPath]);
 
   return (
     <>

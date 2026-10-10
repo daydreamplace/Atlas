@@ -278,14 +278,6 @@
   pointer-events: none;
 }
 
-.k-beauty-story__export-route--desktop {
-  display: none;
-}
-
-.k-beauty-story__export-route--mobile {
-  display: block;
-}
-
 .k-beauty-story__export-route marker path {
   fill: currentColor;
 }
@@ -436,14 +428,6 @@
     right: 0;
     width: clamp(5.5rem, 38%, 8rem);
   }
-
-  .k-beauty-story__export-route--desktop {
-    display: block;
-  }
-
-  .k-beauty-story__export-route--mobile {
-    display: none;
-  }
 }
 
 @media (max-width: 390px) {
@@ -494,5 +478,13 @@
   18% {
     opacity: 1;
     transform: scale(1.045);
+  }
+}
+
+/* Single-column layout: centre the text block (text stays left-aligned). */
+@media (max-width: 999px) {
+  .home-page .k-beauty-story .k-beauty-story__content {
+    max-width: min(48rem, 66ch);
+    margin-inline: auto;
   }
 }

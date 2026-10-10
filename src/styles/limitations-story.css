@@ -146,7 +146,9 @@
 }
 .limitations-story__viewport {
   position: relative;
-  height: clamp(19rem, 32vw, 24rem);
+  /* --limitations-viewport-height is set when the whole pad is pinned and the
+     illustration area has to shrink to fit the screen. */
+  height: var(--limitations-viewport-height, clamp(19rem, 32vw, 24rem));
   overflow: hidden;
   isolation: isolate;
 }
@@ -162,15 +164,18 @@
   opacity: 1;
   animation: limitations-slide-in 580ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
 }
+/* The art is laid out for a 24rem-tall area. When the pinned pad shrinks the
+   area (--limitations-viewport-height), narrow the art in proportion so it
+   scales down instead of being cropped. */
 .limitations-story__risk {
   position: absolute;
   inset: 0;
-  width: min(39rem, 100%);
+  width: min(39rem, 100%, var(--limitations-viewport-height, 100vw) * 39 / 24);
   height: 100%;
   margin: auto;
 }
 .limitations-story__risk--hologram {
-  width: min(43rem, 100%);
+  width: min(43rem, 100%, var(--limitations-viewport-height, 100vw) * 43 / 24);
 }
 .limitations-story__asset {
   display: block;
@@ -278,7 +283,7 @@
   transform: rotate(-8deg);
 }
 .limitations-story__risk--serial {
-  width: min(49rem, 100%);
+  width: min(49rem, 100%, var(--limitations-viewport-height, 100vw) * 49 / 24);
 }
 .limitations-story__mark--serial-source,
 .limitations-story__mark--serial-copy {
@@ -300,8 +305,9 @@
   left: 19%;
   width: 62%;
   color: #3d3542;
-  font: 700 clamp(0.6rem, 1.3vw, 1rem)/1 monospace;
-  letter-spacing: 0.07em;
+  font: 700 clamp(0.6rem, 1.3vw, 1rem)/1 var(--wiki-sans);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
   text-align: center;
 }
 .limitations-story__clone-operator {
@@ -331,10 +337,17 @@
   grid-template-columns: minmax(0, 1fr) 12% minmax(0, 1fr);
   align-items: center;
   justify-items: center;
-  width: min(45rem, 100%);
+  width: min(45rem, 100%, var(--limitations-viewport-height, 100vw) * 45 / 24);
   height: 100%;
   margin: auto;
   padding: 2.5rem 0 3.2rem;
+}
+/* Proportional padding so the comparison also scales with a shorter area. */
+.limitations-story
+  > .scroll-steps-track[data-scroll-driven="true"]
+  .limitations-story__comparison {
+  padding: calc(var(--limitations-viewport-height, 24rem) * 0.1) 0
+    calc(var(--limitations-viewport-height, 24rem) * 0.13);
 }
 .limitations-story__question {
   position: absolute;
@@ -426,51 +439,68 @@
   position: relative;
   margin: 0.6rem clamp(0.7rem, 2.5vw, 2.5rem) 0;
   padding: 0.7rem 0;
-  border-top: 1px dashed #6b536548;
 }
+/* Stepper: handwritten labels over a pencil track that is inked up to the
+   current slide. --step-index / --step-count are set inline. */
 .limitations-story__steps {
+  position: relative;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  align-items: center;
-  gap: 0.35rem;
+  grid-template-columns: repeat(var(--step-count), minmax(0, 1fr));
+  padding-bottom: 0.55rem;
+}
+.limitations-story__steps::before,
+.limitations-story__steps::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  border-radius: 2px;
+}
+.limitations-story__steps::before {
+  right: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    #6b536555 0 6px,
+    transparent 6px 11px
+  );
+}
+.limitations-story__steps::after {
+  width: calc((var(--step-index) + 0.5) / var(--step-count) * 100%);
+  background: #5a3f63;
+  transition: width 450ms cubic-bezier(0.22, 0.7, 0.3, 1);
 }
 .limitations-story__step-button {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.3rem;
-  min-height: 2.5rem;
-  padding: 0.4rem 0.75rem;
-  border: 1px solid transparent;
-  border-radius: 1.5rem;
-  color: #665362;
+  min-width: 0;
+  padding: 0.2rem 0.25rem;
+  border: 0;
   background: transparent;
-  font: 600 0.72rem/1.2 var(--wiki-sans);
-  cursor: pointer;
-}
-.limitations-story__step-button:not(:last-child)::after {
-  position: absolute;
-  top: 50%;
-  right: -0.38rem;
-  content: "\2192";
   color: #7b6677;
+  cursor: pointer;
+  transition: color 200ms ease;
+}
+.limitations-story__step-label {
+  display: block;
   font:
-    700 0.86rem/1 "Caveat",
+    600 clamp(1.05rem, 1.5vw, 1.3rem)/1.1 "Caveat",
     cursive;
-  transform: translate(50%, -52%) rotate(-2deg);
+  text-align: center;
+  white-space: nowrap;
+}
+.limitations-story__step-button:hover {
+  color: #4f3a55;
 }
 .limitations-story__step-button[aria-pressed="true"] {
-  color: #443047;
-  background: #8a729923;
-  border-color: #7c628d65;
+  color: #2f2533;
+}
+.limitations-story__step-button[aria-pressed="true"]
+  .limitations-story__step-label {
+  font-weight: 700;
 }
 .limitations-story__step-button:focus-visible {
   outline: 2px solid #74547f;
   outline-offset: 2px;
-}
-.limitations-story__step-button:hover {
-  background: #8a729919;
+  border-radius: 4px;
 }
 
 /* Finite illustration actions; the conclusion never advances or loops. */
@@ -535,7 +565,7 @@
     margin-inline: 0.8rem;
   }
   .limitations-story__viewport {
-    height: 17rem;
+    height: var(--limitations-viewport-height, 17rem);
   }
   .limitations-story__mark--qr-source {
     top: 22%;
@@ -614,18 +644,9 @@
   .limitations-story__controls {
     margin-inline: 0.3rem;
   }
-  .limitations-story__steps {
-    width: 100%;
-    gap: 0.1rem;
-  }
-  .limitations-story__step-button {
-    padding: 0.35rem 0.4rem;
-    font-size: 0.61rem;
-    gap: 0.2rem;
-  }
-  .limitations-story__step-button:not(:last-child)::after {
-    right: -0.12rem;
-    font-size: 0.68rem;
+  .limitations-story__step-label {
+    font-size: 0.98rem;
+    white-space: normal;
   }
 }
 
@@ -675,4 +696,49 @@
   to {
     opacity: 0.55;
   }
+}
+
+/* Scroll-driven mode pins the pad to the screen, so trim the vertical
+   padding to leave as much room as possible for the illustration. */
+.home-page
+  .limitations-story[data-scroll-driven="true"]
+  .limitations-story__pad-heading {
+  padding-top: calc(var(--limitations-pad-binding-depth) + 0.75rem);
+  padding-bottom: 0.5rem;
+}
+.home-page
+  .limitations-story[data-scroll-driven="true"]
+  .limitations-story__pad-body {
+  padding-top: 1rem;
+  padding-bottom: calc(var(--limitations-pad-bottom-depth) + 1.25rem);
+}
+.limitations-story[data-scroll-driven="true"] .limitations-story__controls {
+  margin-top: 0.25rem;
+  padding-block: 0.45rem;
+}
+
+/* Hand-written notes inside the art also follow a shortened art area. */
+.limitations-story
+  > .scroll-steps-track[data-scroll-driven="true"]
+  .limitations-story__annotation {
+  font-size: min(
+    clamp(1.1rem, 2.2vw, 1.75rem),
+    var(--limitations-viewport-height, 24rem) * 0.075
+  );
+}
+.limitations-story
+  > .scroll-steps-track[data-scroll-driven="true"]
+  .limitations-story__question {
+  font-size: min(
+    clamp(1rem, 2vw, 1.55rem),
+    var(--limitations-viewport-height, 24rem) * 0.065
+  );
+}
+.limitations-story
+  > .scroll-steps-track[data-scroll-driven="true"]
+  .limitations-story__comparison-note {
+  font-size: min(
+    clamp(1.4rem, 3.2vw, 2.7rem),
+    var(--limitations-viewport-height, 24rem) * 0.11
+  );
 }
