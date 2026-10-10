@@ -24,3 +24,15 @@
   --bs-font-sans-serif: var(--font-sans);
   --bs-body-font-family: var(--font-sans);
 }
+
+/* Slightly tighter tracking site-wide (-2.5%); code keeps normal spacing. */
+body {
+  letter-spacing: -0.025em;
+}
+
+pre,
+code,
+kbd,
+samp {
+  letter-spacing: normal;
+}

@@ -1,0 +1,24 @@
+/* Shared colour palette, taken from the loading screen artwork.
+   Use these in component CSS instead of hard-coding colours. */
+:root {
+  /* Purple-black night background */
+  --psi-night-900: #0b0713;
+  --psi-night-800: #110b1c;
+  --psi-night-700: #170f27;
+  --psi-night-600: #2a1c45;
+
+  /* Navy outline of the hand-drawn illustrations */
+  --psi-ink: #231d4f;
+
+  /* Progress-bar purples and the lavender of its empty track */
+  --psi-purple-600: #5b3fd0;
+  --psi-purple-400: #8b6cf0;
+  --psi-lavender-200: #e2d4ff;
+  --psi-lavender-50: #fbf9ff;
+
+  /* Accent from the pink bottles */
+  --psi-pink-300: #f2a7c3;
+
+  /* Body text on light surfaces */
+  --psi-text: #3b3550;
+}

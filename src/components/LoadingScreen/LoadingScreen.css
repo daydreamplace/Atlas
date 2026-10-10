@@ -7,12 +7,12 @@
   justify-content: center;
   padding: 1.5rem;
   overflow: hidden;
-  background-color: #110b1c;
+  background-color: var(--psi-night-800);
   background-image: radial-gradient(
     ellipse at center,
-    #2a1c45 0%,
-    #170f27 45%,
-    #0b0713 100%
+    var(--psi-night-600) 0%,
+    var(--psi-night-700) 45%,
+    var(--psi-night-900) 100%
   );
   opacity: 1;
   transition: opacity 500ms ease; /* keep in sync with FADE_MS */

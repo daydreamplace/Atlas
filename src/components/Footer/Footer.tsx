@@ -8,48 +8,50 @@ export function Footer() {
   const teamSlug = stringToSlug(teamName);
 
   return (
-    <footer className="site-footer mt-5 text-white">
+    <footer className="site-footer mt-5">
       <div className="container">
-        <div className="row g-4 justify-content-center mb-5">
-          <div className="col-lg-7">
-            <div className="footer-card h-100">
-              <h2 className="footer-card-title">Sponsor</h2>
-              <ul className="footer-sponsors">
-                {SPONSORS.map(({ name, logo, href }) => (
-                  <li key={name}>
-                    {href ? (
-                      <a href={href} target="_blank" rel="noopener noreferrer">
-                        <img src={logo} alt={name} />
-                      </a>
-                    ) : (
+        <div className="row g-5 mb-5">
+          <section className="col-lg-7">
+            <h2 className="footer-label">Sponsor</h2>
+            <ul className="footer-sponsors">
+              {SPONSORS.map(({ name, logo, href }) => (
+                <li key={name}>
+                  {href ? (
+                    <a href={href} target="_blank" rel="noopener noreferrer">
                       <img src={logo} alt={name} />
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <div className="col-lg-5">
-            <div className="footer-card h-100">
-              <h2 className="footer-card-title">Contact</h2>
-              <dl className="footer-contact mb-0">
+                    </a>
+                  ) : (
+                    <img src={logo} alt={name} />
+                  )}
+                </li>
+              ))}
+            </ul>
+          </section>
+          <section className="col-lg-5">
+            <h2 className="footer-label">Contact</h2>
+            <dl className="footer-contact">
+              <div>
                 <dt>Call</dt>
                 <dd>
                   <a href={`tel:${CONTACT.call}`}>{CONTACT.call}</a>
                 </dd>
+              </div>
+              <div>
                 <dt>Email</dt>
                 <dd>
                   <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
                 </dd>
+              </div>
+              <div>
                 <dt>Address</dt>
                 <dd>{CONTACT.address}</dd>
-              </dl>
-            </div>
-          </div>
+              </div>
+            </dl>
+          </section>
         </div>
 
         {/* The following MUST be on every page: license information and link to the repository on gitlab.igem.org */}
-        <div className="text-center">
+        <div className="footer-legal text-center">
           <p className="mb-2">
             <small>
               © {teamYear} - Content on this site is licensed under a{" "}
