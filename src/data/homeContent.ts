@@ -1,14 +1,12 @@
 export type HomeSectionLayout =
-  | "image-left"
-  | "image-right"
-  | "text-only"
-  | "closing";
+  "image-left" | "image-right" | "text-only" | "closing";
 
 export interface HomeSectionContent {
   readonly number: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
   readonly id: string;
   readonly title: string;
   readonly body: string;
+  readonly pages?: readonly string[];
   readonly layout: HomeSectionLayout;
   readonly imagePath?: string;
 }
@@ -68,6 +66,18 @@ These methods often verify the package, not the material itself, leaving a gap b
 and product identity.
 As counterfeiting becomes more sophisticated, there is a clear need for stronger, material-level
 authentication approaches that go beyond the surface.`,
+    pages: [
+      `Common authentication tools such as QR codes, holograms, serial numbers, and digital tracking are useful
+and widely adopted. However, these features are usually attached to the packaging or label surface, rather
+than embedded in the product itself.`,
+      `Because they are surface-level features, labels can be copied, replaced, transferred, or reused.`,
+      `Many systems
+also rely heavily on databases or user participation, which can be vulnerable to manipulation or human error.
+These methods often verify the package, not the material itself, leaving a gap between packaging identity
+and product identity.`,
+      `As counterfeiting becomes more sophisticated, there is a clear need for stronger, material-level
+authentication approaches that go beyond the surface.`,
+    ],
     layout: "text-only",
   },
   {

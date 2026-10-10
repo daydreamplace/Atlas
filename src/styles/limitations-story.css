@@ -634,6 +634,271 @@
     animation: none !important;
   }
 }
+
+/* Scroll-driven tear stack: each approved-copy segment lives on its own sheet. */
+.home-page .home-story-section.limitations-tear-sequence {
+  --limitations-sheet-paper: #efe2aa;
+  min-height: 185svh;
+  align-items: flex-start;
+}
+
+.limitations-tear-sequence .limitations-story__stage {
+  position: sticky;
+  top: calc(var(--gnb-height) + 0.75rem);
+  width: min(1120px, 100%);
+  padding-top: var(--limitations-pad-binding-depth);
+}
+
+.limitations-tear-sequence .limitations-story__stage::after {
+  background-color: var(--limitations-sheet-paper);
+}
+
+.limitations-story__tear-instruction {
+  display: inline-block;
+  margin-top: 0.55rem;
+  color: #67576a;
+  font:
+    400 clamp(0.9rem, 1.3vw, 1.05rem) / 1.2 "Nothing You Could Do",
+    "Caveat",
+    cursive;
+  transform: rotate(-1deg);
+}
+
+.limitations-story__sheet-stack {
+  position: relative;
+  height: clamp(39rem, 74vh, 47rem);
+  margin: 0 var(--limitations-pad-edge-inline)
+    var(--limitations-pad-bottom-depth);
+  perspective: 1400px;
+  isolation: isolate;
+  cursor: grab;
+  outline: none;
+}
+
+.limitations-story__sheet-stack:active {
+  cursor: grabbing;
+}
+
+.limitations-story__sheet-stack:focus-visible {
+  outline: 2px dashed #74547f;
+  outline-offset: 0.35rem;
+}
+
+.limitations-story__sheet-page {
+  --sheet-tilt: calc((var(--sheet-index) - 1.5) * 0.22deg);
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto minmax(15rem, 49%) minmax(0, 1fr);
+  overflow: hidden;
+  padding: 1.25rem var(--limitations-pad-content-right) 1.4rem
+    var(--limitations-pad-content-left);
+  color: var(--limitations-ink);
+  transform-origin: 50% 0;
+  clip-path: polygon(
+    0 1.4%,
+    4% 0.4%,
+    8% 1.8%,
+    13% 0.2%,
+    18% 1.5%,
+    24% 0.5%,
+    30% 1.7%,
+    36% 0.3%,
+    43% 1.5%,
+    50% 0.2%,
+    57% 1.6%,
+    64% 0.4%,
+    72% 1.7%,
+    80% 0.2%,
+    87% 1.4%,
+    94% 0.3%,
+    100% 1.5%,
+    100% 100%,
+    0 100%
+  );
+  background-image:
+    linear-gradient(
+      90deg,
+      transparent 0 var(--limitations-pad-margin-position),
+      #b1535f70 var(--limitations-pad-margin-position)
+        calc(var(--limitations-pad-margin-position) + 1px),
+      transparent calc(var(--limitations-pad-margin-position) + 1px)
+    ),
+    repeating-linear-gradient(
+      180deg,
+      transparent 0 calc(var(--limitations-pad-rule-step) - 1px),
+      #6387a359 calc(var(--limitations-pad-rule-step) - 1px)
+        var(--limitations-pad-rule-step)
+    );
+  background-color: var(--limitations-sheet-paper);
+  box-shadow: 0 0.9rem 1.4rem #3a2d3026;
+  transition:
+    transform 920ms cubic-bezier(0.22, 0.72, 0.24, 1),
+    opacity 720ms ease,
+    filter 720ms ease;
+}
+
+.limitations-story__sheet-page[data-sheet-state="stacked"] {
+  z-index: calc(20 - var(--sheet-index));
+  transform: translateY(calc(var(--sheet-index) * 0.35rem))
+    rotate(var(--sheet-tilt));
+}
+
+.limitations-story__sheet-page[data-sheet-state="current"] {
+  z-index: 30;
+  opacity: 1;
+  transform: none;
+}
+
+.limitations-story__sheet-page[data-sheet-state="torn"] {
+  z-index: 40;
+  opacity: 0;
+  filter: blur(1.5px);
+  pointer-events: none;
+  transform: translate(34vw, 88vh) rotate(17deg) skewY(-1.5deg);
+}
+
+.limitations-story__sheet-page::after {
+  position: absolute;
+  top: 0;
+  left: 6%;
+  width: 88%;
+  height: 1.1rem;
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, #eadca7 0 1px, transparent 1.5px);
+  background-size: 1rem 0.65rem;
+}
+
+.limitations-story__sheet-page[data-sheet-state="torn"]::after {
+  animation: limitations-paper-fibers 720ms ease-out both;
+}
+
+.limitations-story__sheet-visual {
+  position: relative;
+  min-height: 0;
+}
+
+.limitations-story__sheet-heading {
+  position: relative;
+  z-index: 4;
+  min-height: clamp(4.5rem, 8vw, 6.5rem);
+}
+
+.limitations-story__sheet-heading h2,
+.limitations-story__sheet-heading h3 {
+  width: max-content;
+  max-width: 100%;
+  margin: 0;
+  color: #332c35;
+  font-family: "Caveat", cursive;
+  font-size: clamp(2.6rem, 5.3vw, 4.5rem);
+  font-weight: 700;
+  line-height: 0.94;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.limitations-story__sheet-copy {
+  position: relative;
+  z-index: 3;
+  align-self: start;
+  width: 100%;
+  margin: 0;
+  padding-top: 0.55rem;
+  color: #403942;
+  font:
+    500 clamp(1.08rem, 1.45vw, 1.32rem) / var(--limitations-pad-rule-step)
+      "Caveat",
+    cursive;
+  letter-spacing: 0.004em;
+  text-wrap: pretty;
+}
+
+.limitations-story__sheet-page[data-sheet-state="current"]
+  .limitations-story__copied-piece {
+  animation: limitations-copy-in 1050ms 180ms ease both;
+}
+
+.limitations-story__sheet-page[data-sheet="hologram"][data-sheet-state="current"]
+  .limitations-story__mark--hologram-source {
+  animation: limitations-hologram-peel 1100ms 250ms ease both;
+}
+
+.limitations-story__sheet-page[data-sheet="hologram"][data-sheet-state="current"]
+  .limitations-story__mark--hologram-reused {
+  animation: limitations-hologram-transfer 1400ms 250ms ease both;
+}
+
+@media (max-width: 620px) {
+  .home-page .home-story-section.limitations-tear-sequence {
+    min-height: 205svh;
+  }
+
+  .limitations-tear-sequence .limitations-story__stage {
+    top: calc(var(--gnb-height) + 0.35rem);
+  }
+
+  .limitations-story__sheet-stack {
+    height: 40rem;
+  }
+
+  .limitations-story__sheet-page {
+    grid-template-rows: auto minmax(14rem, 43%) minmax(0, 1fr);
+    padding-top: 0.85rem;
+    padding-right: 0.85rem;
+    padding-bottom: 0.9rem;
+    padding-left: var(--limitations-pad-content-left);
+  }
+
+  .limitations-story__sheet-copy {
+    padding-top: 0.35rem;
+    font-size: clamp(0.98rem, 4.5vw, 1.12rem);
+    line-height: 1.55;
+  }
+
+  .limitations-story__tear-instruction {
+    font-size: 0.84rem;
+  }
+
+  .limitations-story__sheet-heading {
+    min-height: 4.2rem;
+  }
+
+  .limitations-story__sheet-heading h2,
+  .limitations-story__sheet-heading h3 {
+    font-size: clamp(2rem, 10vw, 2.75rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-page .home-story-section.limitations-tear-sequence {
+    min-height: auto;
+  }
+
+  .limitations-tear-sequence .limitations-story__stage {
+    position: relative;
+    top: auto;
+  }
+
+  .limitations-story__sheet-stack {
+    display: grid;
+    height: auto;
+    gap: 1.2rem;
+  }
+
+  .limitations-story__sheet-page,
+  .limitations-story__sheet-page[data-sheet-state] {
+    position: relative;
+    min-height: 35rem;
+    opacity: 1;
+    filter: none;
+    transform: none;
+    transition: none;
+  }
+}
+
 @keyframes limitations-slide-in {
   from {
     opacity: 0;
@@ -642,6 +907,17 @@
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+@keyframes limitations-paper-fibers {
+  0% {
+    opacity: 0.8;
+    transform: translateY(0) scaleX(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(2.4rem) scaleX(1.12);
   }
 }
 @keyframes limitations-copy-in {

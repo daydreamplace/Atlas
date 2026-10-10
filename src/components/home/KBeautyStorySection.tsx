@@ -1,6 +1,7 @@
 import type { HomeSectionContent } from "../../data/homeContent";
 import "../../styles/k-beauty-story.css";
 import { AuthenticityStamp } from "./AuthenticityStamp";
+import { useInteractiveScene } from "../../hooks/useInteractiveScene";
 
 interface KBeautyStorySectionProps {
   readonly section: HomeSectionContent;
@@ -30,14 +31,17 @@ const kBeautyAssets = {
 
 export function KBeautyStorySection({ section }: KBeautyStorySectionProps) {
   const titleId = `${section.id}-title`;
+  const { targetRef, isInView } = useInteractiveScene<HTMLElement>();
 
   return (
     <section
+      ref={targetRef}
       id={section.id}
       className="home-section home-story-section home-story-section--k-beauty-challenge k-beauty-story"
       data-home-section={section.id}
       data-section-number={section.number}
       aria-labelledby={titleId}
+      data-scene-active={isInView ? "true" : "false"}
     >
       <div className="k-beauty-story__inner">
         <div className="k-beauty-story__content">

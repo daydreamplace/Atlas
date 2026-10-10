@@ -469,7 +469,52 @@
   }
 }
 
+.k-beauty-story__origin,
+.k-beauty-story__global,
+.k-beauty-story__market-risk {
+  transition:
+    opacity 760ms ease,
+    translate 960ms cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+.k-beauty-story[data-scene-active="false"] .k-beauty-story__origin,
+.k-beauty-story[data-scene-active="false"] .k-beauty-story__global,
+.k-beauty-story[data-scene-active="false"] .k-beauty-story__market-risk {
+  opacity: 0;
+  translate: 0 1.5rem;
+}
+
+.k-beauty-story[data-scene-active="true"] .k-beauty-story__global {
+  transition-delay: 160ms;
+}
+
+.k-beauty-story[data-scene-active="true"] .k-beauty-story__market-risk {
+  transition-delay: 320ms;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .k-beauty-story[data-scene-active="true"] .k-beauty-story__origin {
+    translate: calc(var(--scene-x, 0) * -7px) calc(var(--scene-y, 0) * -4px);
+  }
+
+  .k-beauty-story[data-scene-active="true"] .k-beauty-story__global {
+    translate: calc(var(--scene-x, 0) * 9px) calc(var(--scene-y, 0) * 6px);
+  }
+
+  .k-beauty-story[data-scene-active="true"] .k-beauty-story__market-risk {
+    translate: calc(var(--scene-x, 0) * -5px) calc(var(--scene-y, 0) * 8px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .k-beauty-story__origin,
+  .k-beauty-story__global,
+  .k-beauty-story__market-risk {
+    opacity: 1 !important;
+    translate: none !important;
+    transition: none !important;
+  }
+
   .home-page .k-beauty-story .k-beauty-story__route-flow,
   .home-page .k-beauty-story .authenticity-stamp__signal {
     animation: none;

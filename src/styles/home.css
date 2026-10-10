@@ -43,6 +43,7 @@
 
 /* The original hero stays independent from the ten approved-copy sections. */
 .home-hero-section {
+  --hero-scroll: 0;
   --light-x: 61%;
   --light-y: 49%;
   --light-width: 86%;
@@ -125,7 +126,11 @@
   left: var(--light-x);
   width: var(--light-width);
   height: var(--light-height);
-  transform: translate(-50%, -50%) rotate(var(--light-rotate));
+  transform: translate(-50%, calc(-50% + var(--hero-scroll) * 2.5rem))
+    rotate(var(--light-rotate)) scale(calc(1 + var(--hero-scroll) * 0.035));
+  transition:
+    top 420ms ease-out,
+    left 420ms ease-out;
   pointer-events: none;
   border-radius: 48% 52% 46% 54% / 55% 43% 57% 45%;
   filter: blur(17px);
