@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { HeroMicrobeField } from "./HeroMicrobeField";
 
 export function HomeHeroSection() {
   const heroRef = useRef<HTMLElement>(null);
@@ -52,6 +53,7 @@ export function HomeHeroSection() {
         Bio Color ID
       </h1>
       <div className="home-scene-inner" aria-hidden="true">
+        <HeroMicrobeField />
         <div className="home-light-field" />
       </div>
     </section>
