@@ -14,6 +14,8 @@ interface HomeStorySectionProps {
 }
 
 function getBaseAwareImageUrl(imagePath: string) {
+  if (/^https?:\/\//.test(imagePath)) return imagePath;
+
   const baseUrl = import.meta.env.BASE_URL.endsWith("/")
     ? import.meta.env.BASE_URL
     : `${import.meta.env.BASE_URL}/`;
