@@ -2,6 +2,7 @@ import type { HomeSectionContent } from "../../data/homeContent";
 import "../../styles/counterfeit-story.css";
 import { AuthenticityStamp } from "./AuthenticityStamp";
 import { SupplyRoute } from "./SupplyRoute";
+import { useInteractiveScene } from "../../hooks/useInteractiveScene";
 import { HandNote } from "./SectionExtras";
 
 interface CounterfeitStorySectionProps {
@@ -32,14 +33,17 @@ export function CounterfeitStorySection({
   section,
 }: CounterfeitStorySectionProps) {
   const titleId = `${section.id}-title`;
+  const { targetRef, isInView } = useInteractiveScene<HTMLElement>();
 
   return (
     <section
+      ref={targetRef}
       id={section.id}
       className="home-section home-story-section home-story-section--global-counterfeit-problem counterfeit-story"
       data-home-section={section.id}
       data-section-number={section.number}
       aria-labelledby={titleId}
+      data-scene-active={isInView ? "true" : "false"}
     >
       <div className="counterfeit-story__inner">
         <div className="home-story-section__content counterfeit-story__content">

@@ -351,8 +351,8 @@
   }
 
   .home-page .k-beauty-story .k-beauty-story__title {
-    width: 100%;
-    max-width: 15ch;
+    width: max-content;
+    max-width: 100%;
     font-size: clamp(2.2rem, 3vw, 2.5rem);
   }
 
