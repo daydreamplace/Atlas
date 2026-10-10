@@ -1,22 +1,13 @@
 import { useId } from "react";
+import { getMainPageAssetUrl } from "../../utils/wikiAssets";
 import "../../styles/nfc-paper-mark.css";
 
 interface NfcPaperMarkProps {
   readonly className?: string;
 }
 
-const AUTHENTICATION_ASSET_PATH = "images/main-page/authentication";
-
-function getBaseAwareImageUrl(fileName: string): string {
-  const baseUrl = import.meta.env.BASE_URL.endsWith("/")
-    ? import.meta.env.BASE_URL
-    : `${import.meta.env.BASE_URL}/`;
-
-  return `${baseUrl}${AUTHENTICATION_ASSET_PATH}/${fileName}`;
-}
-
 const nfcPaperMarkAssets = {
-  paper: getBaseAwareImageUrl("nfc-paper-blank-v3.webp"),
+  paper: getMainPageAssetUrl("authentication/nfc-paper-blank-v3.webp"),
 } as const;
 
 /**

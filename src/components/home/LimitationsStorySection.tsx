@@ -7,6 +7,7 @@ import {
   type CSSProperties,
 } from "react";
 import type { HomeSectionContent } from "../../data/homeContent";
+import { getMainPageAssetUrl } from "../../utils/wikiAssets";
 import "../../styles/limitations-story.css";
 import { HandDrawnMark } from "./HandDrawnMark";
 import { NfcPaperMark } from "./NfcPaperMark";
@@ -42,7 +43,7 @@ const LIMITATION_SLIDES = [
 
 type LimitationSlideId = (typeof LIMITATION_SLIDES)[number]["id"];
 
-const AUTHENTICATION_ASSET_PATH = "images/main-page/authentication";
+const AUTHENTICATION_ASSET_PATH = "authentication";
 const PROOF_SLIDE_DURATION_MS = 2_600;
 const CONCLUSION_SLIDE_INDEX = LIMITATION_SLIDES.length - 1;
 const SEQUENCE_DURATION_MS = PROOF_SLIDE_DURATION_MS * CONCLUSION_SLIDE_INDEX;
@@ -53,11 +54,7 @@ function getBaseAwareImageUrl(
   fileName: string,
   assetPath = AUTHENTICATION_ASSET_PATH,
 ): string {
-  const baseUrl = import.meta.env.BASE_URL.endsWith("/")
-    ? import.meta.env.BASE_URL
-    : `${import.meta.env.BASE_URL}/`;
-
-  return `${baseUrl}${assetPath}/${fileName}`;
+  return getMainPageAssetUrl(`${assetPath}/${fileName}`);
 }
 
 const limitationAssets = {
@@ -134,7 +131,7 @@ function useTextOnRuledLines(
 }
 
 const legalPadStyle = {
-  "--limitations-pad-paper": `url("${getBaseAwareImageUrl("legal-pad-paper-v1.webp", "images/main-page/limitations")}")`,
+  "--limitations-pad-paper": `url("${getBaseAwareImageUrl("legal-pad-paper-v1.webp", "limitations")}")`,
 } as CSSProperties;
 
 function getInitialReducedMotionPreference(): boolean {

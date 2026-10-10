@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import type { HomeSectionContent } from "../../data/homeContent";
+import { getMainPageAssetUrl } from "../../utils/wikiAssets";
 import "../../styles/k-beauty-story.css";
 import { AuthenticityStamp } from "./AuthenticityStamp";
 import { HandNote } from "./SectionExtras";
@@ -8,26 +9,14 @@ interface KBeautyStorySectionProps {
   readonly section: HomeSectionContent;
 }
 
-function getBaseAwareImageUrl(assetPath: string): string {
-  const baseUrl = import.meta.env.BASE_URL.endsWith("/")
-    ? import.meta.env.BASE_URL
-    : `${import.meta.env.BASE_URL}/`;
-
-  return `${baseUrl}${assetPath.replace(/^\/+/, "")}`;
-}
-
 const kBeautyAssets = {
-  seoulOrigin: getBaseAwareImageUrl(
-    "images/main-page/k-beauty/seoul-origin.webp",
+  seoulOrigin: getMainPageAssetUrl("k-beauty/seoul-origin.webp"),
+  skincareCollection: getMainPageAssetUrl(
+    "k-beauty/skincare-collection.webp",
   ),
-  skincareCollection: getBaseAwareImageUrl(
-    "images/main-page/k-beauty/skincare-collection.webp",
-  ),
-  globalReach: getBaseAwareImageUrl(
-    "images/main-page/k-beauty/global-reach.webp",
-  ),
-  aircraft: getBaseAwareImageUrl("images/main-page/counterfeit/aircraft.webp"),
-  parcel: getBaseAwareImageUrl("images/main-page/counterfeit/parcel.webp"),
+  globalReach: getMainPageAssetUrl("k-beauty/global-reach.webp"),
+  aircraft: getMainPageAssetUrl("counterfeit/aircraft.webp"),
+  parcel: getMainPageAssetUrl("counterfeit/parcel.webp"),
 } as const;
 
 // Anchor points on the artwork, as fractions of each source image.

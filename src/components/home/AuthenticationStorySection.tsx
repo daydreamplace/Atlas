@@ -7,6 +7,7 @@ import {
   type CSSProperties,
 } from "react";
 import type { HomeSectionContent } from "../../data/homeContent";
+import { getMainPageAssetUrl } from "../../utils/wikiAssets";
 import "../../styles/authentication-story.css";
 import { IllustratedPhone } from "./IllustratedPhone";
 import { NfcPaperMark } from "./NfcPaperMark";
@@ -92,7 +93,6 @@ const METHOD_TOKENS = [
   },
 ] as const;
 
-const AUTHENTICATION_ASSET_PATH = "images/main-page/authentication";
 const LAST_STEP_INDEX = SEQUENCE_STEPS.length - 1;
 const TOTAL_SEQUENCE_DURATION_MS = SEQUENCE_STEPS.reduce(
   (total, step) => total + step.durationMs,
@@ -102,11 +102,7 @@ const FINAL_ANNOUNCEMENT =
   "Illustrative sequence complete. Verified demo shown. The methods are alternatives, not a combined verification.";
 
 function getBaseAwareImageUrl(fileName: string): string {
-  const baseUrl = import.meta.env.BASE_URL.endsWith("/")
-    ? import.meta.env.BASE_URL
-    : `${import.meta.env.BASE_URL}/`;
-
-  return `${baseUrl}${AUTHENTICATION_ASSET_PATH}/${fileName}`;
+  return getMainPageAssetUrl(`authentication/${fileName}`);
 }
 
 const authenticationAssets = {

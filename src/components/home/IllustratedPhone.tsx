@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { getMainPageAssetUrl } from "../../utils/wikiAssets";
 import "../../styles/illustrated-phone.css";
 
 interface IllustratedPhoneProps {
@@ -8,10 +9,7 @@ interface IllustratedPhoneProps {
   readonly screenClassName?: string;
 }
 
-const baseUrl = import.meta.env.BASE_URL.endsWith("/")
-  ? import.meta.env.BASE_URL
-  : `${import.meta.env.BASE_URL}/`;
-const phoneFrame = `${baseUrl}images/main-page/authentication/phone.webp`;
+const phoneFrame = getMainPageAssetUrl("authentication/phone.webp");
 
 /**
  * Reusable illustrated device: put the scene in children, and gestures in
