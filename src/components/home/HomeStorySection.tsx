@@ -4,6 +4,7 @@ import { CounterfeitStorySection } from "./CounterfeitStorySection";
 import { KBeautyStorySection } from "./KBeautyStorySection";
 import { AuthenticationStorySection } from "./AuthenticationStorySection";
 import { LimitationsStorySection } from "./LimitationsStorySection";
+import { HandNote, SectionExtras } from "./SectionExtras";
 import { useMediaQuery } from "./useMediaQuery";
 import { useRevealOnScroll } from "./useRevealOnScroll";
 import { useScrollSteps } from "./useScrollSteps";
@@ -151,6 +152,16 @@ function GenericStorySection({ section }: HomeStorySectionProps) {
                 {section.body}
               </p>
             )}
+
+            <div
+              className="reveal-text reveal-body"
+              style={{ "--reveal-delay": "520ms" } as CSSProperties}
+            >
+              <HandNote sectionNumber={section.number} />
+              {section.number === 9 ? (
+                <SectionExtras sectionNumber={section.number} />
+              ) : null}
+            </div>
           </div>
 
           {imageUrl ? (
@@ -173,6 +184,15 @@ function GenericStorySection({ section }: HomeStorySectionProps) {
                 <span className="home-story-section__fragment home-story-section__fragment--b" />
                 <span className="home-story-section__fragment home-story-section__fragment--c" />
               </div>
+            </div>
+          ) : null}
+
+          {section.number !== 9 && section.number !== 10 ? (
+            <div
+              className="home-story-section__extra reveal-text reveal-body"
+              style={{ "--reveal-delay": "650ms" } as CSSProperties}
+            >
+              <SectionExtras sectionNumber={section.number} />
             </div>
           ) : null}
         </div>

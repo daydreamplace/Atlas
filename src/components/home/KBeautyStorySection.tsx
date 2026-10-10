@@ -2,6 +2,7 @@ import { useLayoutEffect, useRef, useState } from "react";
 import type { HomeSectionContent } from "../../data/homeContent";
 import "../../styles/k-beauty-story.css";
 import { AuthenticityStamp } from "./AuthenticityStamp";
+import { HandNote } from "./SectionExtras";
 
 interface KBeautyStorySectionProps {
   readonly section: HomeSectionContent;
@@ -184,6 +185,7 @@ export function KBeautyStorySection({ section }: KBeautyStorySectionProps) {
           <p className="home-story-section__body k-beauty-story__body">
             {section.body}
           </p>
+          <HandNote sectionNumber={section.number} />
         </div>
 
         <div

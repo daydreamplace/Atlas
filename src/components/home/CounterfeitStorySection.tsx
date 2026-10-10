@@ -2,6 +2,7 @@ import type { HomeSectionContent } from "../../data/homeContent";
 import "../../styles/counterfeit-story.css";
 import { AuthenticityStamp } from "./AuthenticityStamp";
 import { SupplyRoute } from "./SupplyRoute";
+import { HandNote } from "./SectionExtras";
 
 interface CounterfeitStorySectionProps {
   readonly section: HomeSectionContent;
@@ -51,6 +52,7 @@ export function CounterfeitStorySection({
           <p className="home-story-section__body counterfeit-story__body">
             {section.body}
           </p>
+          <HandNote sectionNumber={section.number} />
         </div>
 
         <div
