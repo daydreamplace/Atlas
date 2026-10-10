@@ -3,10 +3,12 @@ import Nav from "react-bootstrap/Nav";
 import BootstrapNavbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
 import Pages from "../pages.ts";
 
 export function Navbar() {
   const { pathname } = useLocation();
+  const [openDropdown, setOpenDropdown] = useState<number | null>(null);
   const pages = Pages.map((item, pageIndex) => {
     if ("folder" in item && item.folder) {
       const folderItems = item.folder.map((subpage, subpageIndex) => {
@@ -18,6 +20,7 @@ export function Navbar() {
               to={subpage.path}
               className={pathname === subpage.path ? "active" : undefined}
               aria-current={pathname === subpage.path ? "page" : undefined}
+              onClick={() => setOpenDropdown(null)}
             >
               {subpage.name}
             </NavDropdown.Item>
@@ -30,6 +33,10 @@ export function Navbar() {
           title={item.name}
           id={`page-${pageIndex}`}
           active={item.folder.some((subpage) => subpage.path === pathname)}
+          show={openDropdown === pageIndex}
+          onToggle={(isOpen) => setOpenDropdown(isOpen ? pageIndex : null)}
+          onMouseEnter={() => setOpenDropdown(pageIndex)}
+          onMouseLeave={() => setOpenDropdown(null)}
         >
           {folderItems}
         </NavDropdown>

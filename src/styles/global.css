@@ -132,7 +132,8 @@ textarea {
 .site-navigation .dropdown-menu {
   min-width: 230px;
   margin-top: 0;
-  padding: 0.55rem;
+  padding: 0;
+  overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.13);
   border-radius: 0;
   background: rgba(10, 13, 15, 0.94);
@@ -141,9 +142,11 @@ textarea {
 }
 
 .site-navigation .dropdown-item {
-  padding: 0.72rem 0.8rem;
+  width: 100%;
+  margin: 0;
+  padding: 0.82rem 1rem;
   color: #aeb5b7;
-  border-left: 1px solid transparent;
+  border-left: 2px solid transparent;
   font-size: 0.72rem;
   letter-spacing: 0.045em;
   text-transform: uppercase;
@@ -154,7 +157,11 @@ textarea {
 .site-navigation .dropdown-item.active {
   color: #f3efff;
   border-left-color: var(--wiki-accent);
-  background: linear-gradient(90deg, var(--wiki-soft), transparent);
+  background: linear-gradient(
+    90deg,
+    rgba(139, 69, 223, 0.24),
+    rgba(139, 69, 223, 0.1)
+  );
 }
 
 .site-navigation .navbar-toggler {
@@ -167,13 +174,7 @@ textarea {
     position: relative;
   }
 
-  .site-navigation .nav-item.dropdown:hover > .dropdown-menu,
-  .site-navigation .nav-item.dropdown:focus-within > .dropdown-menu {
-    display: block;
-  }
-
-  .site-navigation .nav-item.dropdown:hover > .nav-link,
-  .site-navigation .nav-item.dropdown:focus-within > .nav-link {
+  .site-navigation .nav-item.dropdown:hover > .nav-link {
     color: #c9a8ff;
     border-bottom-color: var(--wiki-accent);
   }
