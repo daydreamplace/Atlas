@@ -1,0 +1,170 @@
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 2000; /* above Bootstrap's fixed navbar (1030) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  overflow: hidden;
+  background-color: var(--psi-night-800);
+  background-image: radial-gradient(
+    ellipse at center,
+    var(--psi-night-600) 0%,
+    var(--psi-night-700) 45%,
+    var(--psi-night-900) 100%
+  );
+  opacity: 1;
+  transition: opacity 500ms ease; /* keep in sync with FADE_MS */
+}
+
+/* Spotlight from a lamp just off the top-right corner:
+   .loading-light::before = the beam, ::after = the lamp's hotspot,
+   .loading-screen::before = the pool of light where it lands. */
+.loading-light {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  /* Blur here, not on the beam: clip-path is applied after filter, so a blur
+     on the clipped element itself would keep hard edges. */
+  filter: blur(22px);
+  animation: loading-lamp 4s ease-in-out infinite alternate;
+}
+
+.loading-light::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  /* Long enough to reach past the centre of the screen. */
+  width: calc(hypot(50vw, 50vh) * 1.4);
+  height: clamp(520px, 90vmin, 960px);
+  translate: 0 -50%;
+  transform-origin: right center;
+  /* The bar points left by default; aim it from the corner at the centre. */
+  rotate: -32deg;
+  rotate: calc(atan2(50vh, -50vw) - 180deg);
+  clip-path: polygon(100% 47%, 100% 53%, 0 0, 0 100%);
+  background: linear-gradient(
+    to left,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(246, 240, 255, 0.38) 40%,
+    rgba(214, 196, 255, 0.14) 75%,
+    rgba(214, 196, 255, 0) 100%
+  );
+}
+
+.loading-light::after {
+  content: "";
+  position: absolute;
+  top: -140px;
+  right: -140px;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.75) 18%,
+    rgba(232, 220, 255, 0.3) 42%,
+    rgba(232, 220, 255, 0) 70%
+  );
+}
+
+.loading-screen::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(120vw, 820px);
+  aspect-ratio: 1.6;
+  /* Nudged towards the lamp so the lit side faces it. */
+  translate: -47% -53%;
+  background: radial-gradient(
+    closest-side,
+    rgba(255, 255, 255, 0.78) 0%,
+    rgba(246, 240, 255, 0.55) 35%,
+    rgba(214, 196, 255, 0.22) 65%,
+    rgba(170, 140, 235, 0) 100%
+  );
+  pointer-events: none;
+}
+
+@keyframes loading-lamp {
+  from {
+    opacity: 0.86;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.loading-screen.is-leaving {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading-content {
+  position: relative; /* above the glow */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1rem, 4vh, 2.5rem);
+  width: 100%;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 300ms ease,
+    transform 300ms ease;
+}
+
+.loading-content.is-ready {
+  opacity: 1;
+  transform: none;
+}
+
+/* Frames are stacked and toggled instantly (no crossfade): blending two
+   drawings produces ghosted double outlines. */
+.loading-cosmetics,
+.loading-progress {
+  position: relative;
+}
+
+.loading-cosmetics {
+  width: min(70vw, 420px, 60vh);
+  aspect-ratio: 900 / 469;
+}
+
+.loading-progress {
+  width: min(60vw, 280px);
+  aspect-ratio: 640 / 53;
+}
+
+.loading-cosmetics img,
+.loading-progress img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.loading-cosmetics img.is-active,
+.loading-progress img.is-active {
+  visibility: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-screen,
+  .loading-content {
+    transition-duration: 150ms;
+  }
+  .loading-content {
+    transform: none;
+  }
+  .loading-light {
+    animation: none;
+  }
+}
