@@ -15,6 +15,9 @@
   --gnb-height: 70px;
   /* Height of the SNB strip when it sticks under the GNB on small screens. */
   --snb-strip-height: 0px;
+  /* Left/right page margin shared by the GNB, page title, content and footer
+     so their edges line up at every width. */
+  --page-gutter: clamp(1.25rem, 4vw, 3.5rem);
 }
 
 * {
@@ -93,7 +96,7 @@ textarea {
   width: min(1440px, 100%);
   max-width: none;
   min-height: var(--gnb-height);
-  padding-inline: clamp(1.2rem, 3.6vw, 3.5rem);
+  padding-inline: var(--page-gutter);
 }
 
 .site-navigation .navbar-brand {
@@ -340,6 +343,7 @@ textarea {
   z-index: 1;
   width: min(1180px, 100%);
   max-width: none;
+  padding-inline: var(--page-gutter);
   padding-bottom: clamp(3rem, 7vw, 6rem);
 }
 
@@ -347,12 +351,22 @@ textarea {
   max-width: 980px;
   margin-bottom: 1rem !important;
   color: rgba(238, 244, 247, 0.93) !important;
-  font-size: clamp(3rem, 6vw, 5.8rem);
+  font-size: clamp(2rem, 0.9rem + 5.5vw, 5.8rem);
   font-weight: 700;
-  line-height: 0.92;
+  line-height: 0.96;
   letter-spacing: -0.065em;
   text-transform: uppercase;
   text-shadow: 0 12px 46px rgba(0, 0, 0, 0.72);
+  /* Long titles: wrap into even lines, and break words that still don't fit
+     instead of overflowing the screen. */
+  text-wrap: balance;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+/* Set by <Header> for titles of 20+ characters. */
+.wiki-page-background .bg-hero h1.is-long {
+  font-size: clamp(1.85rem, 0.8rem + 4.2vw, 4.5rem);
 }
 
 .wiki-page-background .bg-hero .lead {
@@ -371,8 +385,7 @@ textarea {
   grid-template-columns: 220px minmax(0, 830px);
   gap: clamp(2.25rem, 4vw, 4rem);
   justify-content: center;
-  padding: clamp(4rem, 7vw, 6rem) clamp(1.5rem, 3vw, 3.5rem)
-    clamp(6rem, 10vw, 9rem);
+  padding: clamp(4rem, 7vw, 6rem) var(--page-gutter) clamp(6rem, 10vw, 9rem);
 }
 
 .wiki-documentation-grid--single.container {
@@ -395,20 +408,17 @@ textarea {
 .snb-label {
   margin: 0 0 0.35rem;
   color: var(--wiki-accent);
-  font-size: 0.56rem;
-  font-weight: 800;
-  letter-spacing: 0.17em;
-  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 600;
   text-shadow: var(--wiki-accent-glow);
 }
 
 .snb h2 {
   margin: 0 0 1.35rem;
   color: #eef1f2;
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  text-transform: uppercase;
 }
 
 .snb ol {
@@ -421,26 +431,19 @@ textarea {
   position: relative;
   min-height: 54px;
   display: grid;
-  grid-template-columns: 1.75rem 1fr auto;
+  grid-template-columns: 1fr auto;
   align-items: center;
   gap: 0.25rem;
-  padding: 0.7rem 0.75rem;
+  padding: 0.7rem 0.75rem 0.7rem 1rem;
   color: var(--wiki-muted);
   border-left: 1px solid var(--wiki-line);
-  font-size: 0.75rem;
-  letter-spacing: 0.04em;
+  font-size: 0.9rem;
+  letter-spacing: -0.01em;
   text-decoration: none;
-  text-transform: uppercase;
   transition:
     color 160ms ease,
     background-color 160ms ease,
     border-color 160ms ease;
-}
-
-.snb a span {
-  color: rgba(158, 169, 173, 0.55);
-  font-size: 0.58rem;
-  font-weight: 400;
 }
 
 .snb a strong {
@@ -475,71 +478,9 @@ textarea {
 
 .wiki-page-content {
   min-width: 0;
-  color: #d8dddf;
-  font-family: var(--wiki-sans);
-  font-size: 0.9rem;
-  line-height: 1.76;
 }
 
-.wiki-page-content h2,
-.wiki-page-content h3,
-.wiki-page-content h4 {
-  color: #f2f3f5;
-  font-family: var(--wiki-sans);
-}
-
-.wiki-page-content h2 {
-  margin-top: 3.5rem;
-  margin-bottom: 1.35rem;
-  font-size: clamp(2.1rem, 3vw, 3rem);
-  font-weight: 600;
-  letter-spacing: -0.025em;
-}
-
-.wiki-page-content h3 {
-  margin-top: 3rem;
-  margin-bottom: 0.9rem;
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
-.wiki-page-content h4 {
-  font-size: 0.9rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-}
-
-.wiki-page-content p,
-.wiki-page-content li {
-  color: #adb7bb;
-}
-
-.wiki-page-content strong,
-.wiki-page-content b {
-  color: #ebeff1;
-}
-
-.wiki-page-content blockquote {
-  margin: 3rem 0;
-  padding: 1.7rem 0 1.7rem 1.6rem;
-  color: #edf1f2;
-  border-left: 1px solid var(--wiki-accent);
-  font: 400 1.35rem/1.48 var(--wiki-serif);
-}
-
-.wiki-page-content blockquote cite {
-  color: #717b80;
-  font: 400 0.75rem var(--wiki-sans);
-}
-
-.wiki-page-content hr {
-  border-color: var(--wiki-line);
-  opacity: 1;
-}
-
-.wiki-page-content a {
-  color: #c9a8ff;
-}
+/* Text styles for page content live in styles/typography.css. */
 
 .wiki-page-content .bd-callout {
   border-color: rgba(201, 168, 255, 0.24);
@@ -586,15 +527,14 @@ textarea {
 .member-group > header p {
   margin: 0;
   color: #edf0f2;
-  font-size: 1rem;
+  font-size: 1.35rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: -0.02em;
 }
 
 .member-group > header span {
-  color: #687177;
-  font-size: 0.55rem;
-  letter-spacing: 0.16em;
+  color: #8a9399;
+  font-size: 0.85rem;
 }
 
 .contact-sheet {
@@ -607,7 +547,7 @@ textarea {
   appearance: none;
   min-width: 0;
   display: grid;
-  grid-template-columns: 2rem 1fr auto;
+  grid-template-columns: 1fr auto;
   gap: 0.7rem;
   align-items: end;
   padding: 0 0 0.8rem;
@@ -705,26 +645,21 @@ textarea {
     linear-gradient(160deg, #21141f, #100d15 56%, #09080d);
 }
 
-.contact-number {
-  color: #626b70;
-  font-size: 0.54rem;
-}
-
 .contact-card > span:nth-last-of-type(1) {
   display: grid;
 }
 
 .contact-card strong {
   color: #e7e9eb;
-  font-size: 0.82rem;
+  font-size: 0.95rem;
   font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 .contact-card small {
-  color: #747d82;
-  font-size: 0.56rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  margin-top: 0.15rem;
+  color: #8a9399;
+  font-size: 0.8rem;
 }
 
 .contact-card i {
@@ -905,20 +840,17 @@ textarea {
 }
 
 .modal-kicker {
-  margin: 0 0 0.7rem !important;
-  color: #8a918b !important;
-  font-size: 0.58rem !important;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  margin: 0 0 0.6rem !important;
+  color: #9aa19c !important;
+  font-size: 0.85rem !important;
+  font-weight: 600;
 }
 
 .wiki-page-content .modal-copy h2 {
   margin: 0;
   color: #f1f2ec;
   font: 600 clamp(2rem, 2.8vw, 2.8rem) / 0.92 var(--wiki-sans);
-  letter-spacing: -0.075em;
-  text-transform: uppercase;
+  letter-spacing: -0.035em;
   text-shadow:
     0 2px 9px rgba(255, 255, 245, 0.07),
     0 16px 50px rgba(0, 0, 0, 0.6);
@@ -939,17 +871,15 @@ textarea {
 
 .modal-details dt {
   margin-bottom: 0.45rem;
-  color: var(--wiki-accent);
-  font-size: 0.5rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-shadow: var(--wiki-accent-glow);
+  color: #c9a8ff;
+  font-size: 0.78rem;
+  font-weight: 600;
 }
 
 .modal-details dd {
   margin: 0;
   color: #d9d6e7;
-  font-size: 0.72rem;
+  font-size: 0.875rem;
   line-height: 1.45;
 }
 
@@ -1079,21 +1009,17 @@ textarea {
     transform: rotate(-5deg);
   }
 
-  .wiki-page-background .bg-hero h1 {
-    font-size: clamp(2.65rem, 12vw, 4rem);
-  }
-
   .wiki-documentation-grid.container {
     width: 100%;
     display: block;
-    padding: 0 1rem 5rem;
+    padding: 0 var(--page-gutter) 5rem;
   }
 
   .snb {
     z-index: 20;
     top: var(--gnb-height);
-    margin: 0 -1rem 3rem;
-    padding: 0.75rem 1rem;
+    margin: 0 calc(-1 * var(--page-gutter)) 3rem;
+    padding: 0.75rem var(--page-gutter);
     overflow-x: auto;
     border-bottom: 1px solid var(--wiki-line);
     background: rgba(13, 17, 19, 0.94);
@@ -1113,8 +1039,8 @@ textarea {
 
   .snb a {
     min-height: 42px;
-    grid-template-columns: 1.45rem auto;
-    padding: 0.55rem 0.7rem;
+    grid-template-columns: auto;
+    padding: 0.55rem 0.9rem;
     border: 1px solid var(--wiki-line);
   }
 

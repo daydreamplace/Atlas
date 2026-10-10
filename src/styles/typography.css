@@ -1,0 +1,336 @@
+/* Text styles for wiki content pages.
+
+   Everything inside <div class="wiki-page-content"> is styled from plain
+   HTML: write <h2>, <p>, <figure>, <table> … and it looks right. A few
+   classes cover the rest (.text-lead, .text-caption, .text-accent,
+   .references, .table-wrap). See the live examples at /style-guide.
+
+   Selectors use :where() so they stay low-specificity: component styles
+   (e.g. the member archive) override them without !important. */
+
+:root {
+  /* Font roles */
+  --type-sans: var(--wiki-sans);
+  --type-serif: var(--wiki-serif);
+  --type-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    monospace;
+
+  /* Colours on the dark page */
+  --type-heading: #f2f3f5;
+  --type-body: #b4bec2;
+  --type-strong: #ebeff1;
+  --type-muted: #8a9399;
+  --type-accent: #c9a8ff;
+
+  /* Sizes */
+  --type-h2: clamp(1.75rem, 1.2rem + 1.6vw, 2.5rem);
+  --type-h3: clamp(1.25rem, 1.1rem + 0.5vw, 1.45rem);
+  --type-h4: 1.0625rem;
+  --type-lead: clamp(1.0625rem, 1rem + 0.3vw, 1.2rem);
+  --type-body-size: 1rem;
+  --type-small: 0.875rem;
+  --type-caption: 0.8125rem;
+}
+
+.wiki-page-content {
+  color: var(--type-body);
+  font-family: var(--type-sans);
+  font-size: var(--type-body-size);
+  line-height: 1.8;
+  overflow-wrap: break-word;
+}
+
+/* --- Headings ----------------------------------------------------------- */
+
+.wiki-page-content :where(h2, h3, h4) {
+  color: var(--type-heading);
+  font-family: var(--type-sans);
+  text-wrap: balance;
+  /* Clear the fixed GNB when linked to with #id. */
+  scroll-margin-top: calc(var(--gnb-height) + var(--snb-strip-height) + 1.5rem);
+}
+
+/* Section title */
+.wiki-page-content :where(h2) {
+  margin: 4.5rem 0 1.25rem;
+  font-size: var(--type-h2);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+/* Subsection title */
+.wiki-page-content :where(h3) {
+  margin: 3rem 0 0.85rem;
+  font-size: var(--type-h3);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+}
+
+/* Minor heading inside a subsection */
+.wiki-page-content :where(h4) {
+  margin: 2.25rem 0 0.6rem;
+  font-size: var(--type-h4);
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.wiki-page-content > :where(:first-child),
+.wiki-page-content :where(h2, h3, h4):first-child {
+  margin-top: 0;
+}
+
+/* --- Body text ---------------------------------------------------------- */
+
+.wiki-page-content :where(p) {
+  margin: 0 0 1.25rem;
+}
+
+/* Opening paragraph of a page or section */
+.wiki-page-content :where(.text-lead) {
+  margin-bottom: 2rem;
+  color: #d6dcdf;
+  font-size: var(--type-lead);
+  line-height: 1.7;
+}
+
+.wiki-page-content :where(.text-small) {
+  font-size: var(--type-small);
+}
+
+.wiki-page-content :where(strong, b) {
+  color: var(--type-strong);
+  font-weight: 700;
+}
+
+.wiki-page-content :where(em, i) {
+  font-style: italic;
+}
+
+/* Key term in the accent colour */
+.wiki-page-content :where(.text-accent) {
+  color: var(--type-accent);
+  font-weight: 600;
+}
+
+/* Highlighted phrase (replaces last year's background highlight) */
+.wiki-page-content :where(mark) {
+  padding: 0.05em 0.3em;
+  color: var(--type-strong);
+  border-radius: 3px;
+  background: rgba(139, 69, 223, 0.32);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* Variables and symbols in running text: <var>k</var><sub>IN</sub> */
+.wiki-page-content :where(var) {
+  color: #e6dcff;
+  font-family: var(--type-serif);
+  font-size: 1.08em;
+  font-style: italic;
+}
+
+.wiki-page-content :where(sub, sup) {
+  font-size: 0.72em;
+}
+
+.wiki-page-content :where(a) {
+  color: var(--type-accent);
+  text-decoration: underline;
+  text-decoration-color: rgba(201, 168, 255, 0.4);
+  text-underline-offset: 3px;
+}
+
+.wiki-page-content :where(a:hover) {
+  text-decoration-color: currentColor;
+}
+
+.wiki-page-content :where(hr) {
+  margin: 3.5rem 0;
+  border-color: var(--wiki-line);
+  opacity: 1;
+}
+
+/* --- Lists -------------------------------------------------------------- */
+
+.wiki-page-content :where(ul, ol) {
+  margin: 0 0 1.5rem;
+  padding-left: 1.4rem;
+}
+
+.wiki-page-content :where(li) {
+  margin-bottom: 0.45rem;
+  padding-left: 0.25rem;
+}
+
+.wiki-page-content :where(li)::marker {
+  color: var(--type-accent);
+}
+
+.wiki-page-content :where(ol > li)::marker {
+  font-weight: 600;
+}
+
+.wiki-page-content :where(li > ul, li > ol) {
+  margin: 0.45rem 0 0;
+}
+
+/* Reference list: <ol class="references"> */
+.wiki-page-content :where(.references) {
+  color: var(--type-muted);
+  font-size: var(--type-small);
+  line-height: 1.7;
+}
+
+.wiki-page-content :where(.references li) {
+  margin-bottom: 0.75rem;
+}
+
+.wiki-page-content :where(.references li)::marker {
+  color: var(--type-muted);
+  font-weight: 400;
+}
+
+/* --- Quotes ------------------------------------------------------------- */
+
+.wiki-page-content :where(blockquote) {
+  margin: 3rem 0;
+  padding: 0.25rem 0 0.25rem 1.6rem;
+  color: #edf1f2;
+  border-left: 2px solid var(--wiki-accent);
+  font: 400 clamp(1.15rem, 1rem + 0.6vw, 1.35rem) / 1.55 var(--type-serif);
+}
+
+.wiki-page-content :where(blockquote p:last-of-type) {
+  margin-bottom: 0.75rem;
+}
+
+.wiki-page-content :where(blockquote cite) {
+  color: var(--type-muted);
+  font: normal 400 var(--type-caption) var(--type-sans);
+}
+
+/* --- Code --------------------------------------------------------------- */
+
+.wiki-page-content :where(code, kbd, samp) {
+  font-family: var(--type-mono);
+  font-size: 0.875em;
+}
+
+/* Inline code */
+.wiki-page-content :where(:not(pre) > code) {
+  padding: 0.12em 0.4em;
+  color: #e6dcff;
+  border: 1px solid var(--wiki-line);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  overflow-wrap: anywhere;
+}
+
+/* Code block: <pre><code>…</code></pre> */
+.wiki-page-content :where(pre) {
+  margin: 0 0 1.75rem;
+  padding: 1.1rem 1.25rem;
+  overflow-x: auto;
+  color: #dfe4e6;
+  border: 1px solid var(--wiki-line);
+  border-radius: 8px;
+  background: #07090b;
+  font-size: var(--type-small);
+  line-height: 1.7;
+  tab-size: 2;
+}
+
+.wiki-page-content :where(pre code) {
+  font-size: inherit;
+}
+
+/* --- Figures and captions ----------------------------------------------- */
+
+.wiki-page-content :where(figure) {
+  margin: 2.75rem 0;
+}
+
+.wiki-page-content :where(figure img, figure video, figure svg) {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-inline: auto;
+  border-radius: 8px;
+}
+
+/* <figcaption><strong>Figure 1.</strong> What the figure shows.</figcaption> */
+.wiki-page-content :where(figcaption, .text-caption, table caption) {
+  margin-top: 0.85rem;
+  color: var(--type-muted);
+  font-size: var(--type-caption);
+  line-height: 1.6;
+}
+
+.wiki-page-content :where(figcaption strong, table caption strong) {
+  margin-right: 0.25em;
+  color: var(--type-accent);
+  font-weight: 600;
+}
+
+/* A code block with a caption: <figure><figcaption/><pre/></figure> */
+.wiki-page-content :where(figure > figcaption:first-child) {
+  margin: 0 0 0.6rem;
+}
+
+.wiki-page-content :where(figure > pre) {
+  margin-bottom: 0;
+}
+
+/* --- Tables ------------------------------------------------------------- */
+
+/* Wrap tables in <div class="table-wrap"> so wide ones scroll on phones. */
+.wiki-page-content :where(.table-wrap) {
+  margin: 2.25rem 0;
+  overflow-x: auto;
+}
+
+.wiki-page-content :where(table) {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--type-small);
+  line-height: 1.6;
+}
+
+.wiki-page-content :where(table caption) {
+  caption-side: bottom;
+  text-align: left;
+}
+
+.wiki-page-content :where(th, td) {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--wiki-line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.wiki-page-content :where(thead th) {
+  color: var(--type-heading);
+  border-bottom: 1px solid rgba(201, 168, 255, 0.45);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.wiki-page-content :where(td code) {
+  white-space: nowrap;
+}
+
+/* Stand-in for an image on /style-guide. */
+.style-guide-placeholder {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 9;
+  color: var(--type-muted);
+  border: 1px dashed var(--wiki-line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.025);
+  font-size: var(--type-small);
+}

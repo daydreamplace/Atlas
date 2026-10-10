@@ -96,16 +96,11 @@ export function SectionNavigation({ pathname }: { pathname: string }) {
       <p className="snb-label">Section</p>
       <h2>{section.label}</h2>
       <ol>
-        {section.pages.map((page, index) => {
+        {section.pages.map((page) => {
           const isCurrent = page.id
             ? page.id === activeSectionId
             : page.path === pathname;
-          const content = (
-            <>
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              <strong>{page.label}</strong>
-            </>
-          );
+          const content = <strong>{page.label}</strong>;
 
           return (
             <li key={page.path}>

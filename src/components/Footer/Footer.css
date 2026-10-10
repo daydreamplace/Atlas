@@ -18,7 +18,7 @@
 .site-footer > .container {
   width: min(1310px, 100%);
   max-width: none;
-  padding-inline: clamp(1.25rem, 4vw, 4rem);
+  padding-inline: var(--page-gutter);
 }
 
 .site-footer a {

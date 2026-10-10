@@ -1,3 +1,6 @@
+// Titles at least this long get a smaller type size.
+const LONG_TITLE = 20;
+
 interface HeaderProps {
   title: string;
   lead: string;
@@ -17,7 +20,11 @@ export function Header({
       <div className="container h-100">
         <div className="row h-100 align-items-center">
           <div className="col-lg-12">
-            <h1 className="display-4 text-white mt-5 mb-2">{title}</h1>
+            <h1
+              className={`display-4 text-white mt-5 mb-2${title.length >= LONG_TITLE ? " is-long" : ""}`}
+            >
+              {title}
+            </h1>
             <p className="lead mb-5 text-white-50">{lead}</p>
           </div>
         </div>

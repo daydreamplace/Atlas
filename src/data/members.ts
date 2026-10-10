@@ -1,30 +1,151 @@
+// Team roster, from https://teams.igem.org/6479/roster (last updated
+// 2026-09-16). Keep this in sync with the official roster.
+
 export type TeamGroup = "Members" | "PI" | "Instructor" | "Advisor";
-export const teamGroups: TeamGroup[] = ["Members", "PI", "Instructor", "Advisor"];
-export type Member = { id: string; name: string; role: string; group: TeamGroup; statement: string; introduction: string; responsibilities: string[]; keywords: string[]; school?: string };
+
+export const teamGroups: TeamGroup[] = [
+  "Members",
+  "PI",
+  "Instructor",
+  "Advisor",
+];
+
+export type Member = {
+  id: string;
+  name: string;
+  group: TeamGroup;
+  /** Role on the team, as listed on the roster. */
+  role: string;
+  /** Position shown on the member's iGEM profile. */
+  title?: string;
+  affiliation?: string;
+  igemSince?: number;
+  /** Short bio written by the member. Shown in the profile when present. */
+  introduction?: string;
+};
 
 export const members: Member[] = [
-  { id:"member_01", name:"Hyeok Lee", role:"Wet Lab Lead", group:"Members", statement:"Turns questions into testable steps.", introduction:"Builds careful experiments and keeps the team moving from an interesting observation toward reproducible evidence.", responsibilities:["PHB biosynthesis","Pigment extraction","Protocol design"], keywords:["Wet lab","Biomaterials"] },
-  { id:"member_02", name:"Hyeok Lee", role:"Team Lead", group:"Members", statement:"Keeps every discipline in the same conversation.", introduction:"Coordinates the research calendar and connects wet lab, modeling, human practices, and the wiki team.", responsibilities:["Project direction","Team operations","Documentation"], keywords:["Leadership","Strategy"] },
-  { id:"member_03", name:"Hyeok Lee", role:"Design & Wiki", group:"Members", statement:"Makes complex science feel discoverable.", introduction:"Designs the team’s visual system and translates long-form research into an accessible editorial experience.", responsibilities:["Visual identity","Wiki experience","Science communication"], keywords:["Editorial","Interaction"] },
-  { id:"member_04", name:"Hyeok Lee", role:"Human Practices", group:"Members", statement:"Listens before the project decides.", introduction:"Frames stakeholder conversations and brings their perspectives back into the project’s priorities and constraints.", responsibilities:["Stakeholder mapping","Interviews","Education"], keywords:["HP","Community"] },
-  { id:"member_05", name:"Hyeok Lee", role:"Modeling", group:"Members", statement:"Finds the variables behind the color.", introduction:"Develops quantitative models and communicates their assumptions so experiments can meaningfully challenge them.", responsibilities:["Kinetic modeling","Data analysis","Visualization"], keywords:["Dry lab","Modeling"] },
-  { id:"member_06", name:"Hyeok Lee", role:"Hardware", group:"Members", statement:"Builds instruments around real constraints.", introduction:"Prototypes measurement tools and documents how each iteration changes accuracy, cost, and usability.", responsibilities:["Device prototyping","Calibration","CAD"], keywords:["Hardware","Measurement"] },
-  { id:"member_07", name:"Hyeok Lee", role:"Software & Data", group:"Members", statement:"Keeps the numbers reproducible, not just impressive.", introduction:"Builds the pipelines that turn raw measurements into figures the team can actually defend.", responsibilities:["Data pipelines","Analysis tooling","Version control"], keywords:["Dry lab","Software"] },
-  { id:"member_08", name:"Hyeok Lee", role:"Outreach & Education", group:"Members", statement:"Brings the project outside the lab.", introduction:"Plans workshops and public materials that make the team's work legible to people who aren't scientists.", responsibilities:["Workshop design","Public materials","Community events"], keywords:["Outreach","Education"] },
-  { id:"member_09", name:"Hyeok Lee", role:"Safety Officer", group:"Members", statement:"Makes sure enthusiasm never outruns protocol.", introduction:"Maintains lab safety documentation and checks new procedures before they reach the bench.", responsibilities:["Safety documentation","Risk assessment","Protocol review"], keywords:["Wet lab","Safety"] },
-  { id:"pi_01", name:"Hyeok Lee", role:"Principal Investigator", group:"PI", statement:"Challenges the team to defend every assumption.", introduction:"Provides scientific oversight and helps the team connect experimental ambition with responsible research practice.", responsibilities:["Scientific review","Research ethics","Lab supervision"], keywords:["PI","Synthetic biology"] },
-  { id:"pi_02", name:"Hyeok Lee", role:"Co-PI", group:"PI", statement:"Keeps the science and the schedule honest with each other.", introduction:"Shares oversight of the project's experimental direction and helps prioritize which questions are worth the team's time.", responsibilities:["Research direction","Milestone review","Cross-lab coordination"], keywords:["PI","Project oversight"] },
-  { id:"pi_03", name:"Hyeok Lee", role:"Research Advisor", group:"PI", statement:"Pushes the team toward the harder, better question.", introduction:"Reviews experimental design and results, offering an outside read on what evidence would actually be convincing.", responsibilities:["Experimental design review","Data interpretation","Literature grounding"], keywords:["PI","Research strategy"] },
-  { id:"pi_04", name:"Hyeok Lee", role:"Faculty Sponsor", group:"PI", statement:"Opens doors the team can't open on its own.", introduction:"Connects the project to lab space, equipment, and institutional support, and vouches for the team's safety practices.", responsibilities:["Institutional liaison","Resource access","Safety sign-off"], keywords:["PI","Sponsorship"] },
-  { id:"pi_05", name:"Hyeok Lee", role:"Lab Director", group:"PI", statement:"Makes sure the lab itself never becomes the bottleneck.", introduction:"Oversees lab operations and scheduling so wet lab work can move at the pace the project actually needs.", responsibilities:["Lab operations","Equipment scheduling","Training oversight"], keywords:["PI","Lab management"] },
-  { id:"instructor_01", name:"Hyeok Lee", role:"Instructor", group:"Instructor", statement:"Turns uncertainty into a learning plan.", introduction:"Supports experimental training, team facilitation, and the practical work needed to keep the project safe and resilient.", responsibilities:["Training","Safety","Team support"], keywords:["Mentoring","Lab practice"] },
-  { id:"instructor_02", name:"Hyeok Lee", role:"Teaching Assistant", group:"Instructor", statement:"Answers the question before it becomes a mistake.", introduction:"Runs hands-on protocol walkthroughs and stays close to the bench during a new member's first few experiments.", responsibilities:["Protocol walkthroughs","Bench mentoring","Onboarding"], keywords:["Mentoring","Training"] },
-  { id:"instructor_03", name:"Hyeok Lee", role:"Safety Instructor", group:"Instructor", statement:"Treats every shortcut as a question worth asking.", introduction:"Trains the team on lab safety procedures and keeps protocols current with institutional and biosafety requirements.", responsibilities:["Safety training","Protocol audits","Incident response"], keywords:["Safety","Lab practice"] },
-  { id:"instructor_04", name:"Hyeok Lee", role:"Lab Instructor", group:"Instructor", statement:"Makes the equipment make sense before it makes noise.", introduction:"Teaches instrument operation and troubleshooting so experiments aren't derailed by unfamiliar hardware.", responsibilities:["Instrument training","Troubleshooting","Documentation"], keywords:["Instrumentation","Training"] },
-  { id:"instructor_05", name:"Hyeok Lee", role:"Protocol Instructor", group:"Instructor", statement:"Writes the version of the steps that actually gets followed.", introduction:"Develops and revises standard protocols based on where new team members actually get stuck.", responsibilities:["Protocol writing","Revision tracking","Training materials"], keywords:["Protocols","Documentation"] },
-  { id:"advisor_01", name:"Hyeok Lee", role:"Design Advisor", group:"Advisor", statement:"Asks what the audience needs to notice first.", introduction:"Advises on communication, critique, and the translation of unfinished research into honest public-facing narratives.", responsibilities:["Creative critique","Accessibility","Storytelling"], keywords:["Design","Communication"] },
-  { id:"advisor_02", name:"Hyeok Lee", role:"Science Advisor", group:"Advisor", statement:"Keeps the story honest about what the data can carry.", introduction:"Reviews public-facing claims against the underlying evidence and flags where the narrative is running ahead of the science.", responsibilities:["Scientific accuracy review","Claim verification","External review"], keywords:["Advisor","Science communication"] },
-  { id:"advisor_03", name:"Hyeok Lee", role:"Comms Advisor", group:"Advisor", statement:"Finds the sentence a non-scientist would actually read.", introduction:"Shapes how the project talks about itself to people outside the lab, from the wiki to public outreach materials.", responsibilities:["Messaging","Outreach materials","Audience testing"], keywords:["Advisor","Communication"] },
-  { id:"advisor_04", name:"Hyeok Lee", role:"Industry Advisor", group:"Advisor", statement:"Asks what happens after the competition ends.", introduction:"Brings an outside perspective on real-world application, manufacturing constraints, and where the project could go next.", responsibilities:["Application feasibility","Market context","Partnership introductions"], keywords:["Advisor","Industry"] },
-  { id:"advisor_05", name:"Hyeok Lee", role:"Ethics Advisor", group:"Advisor", statement:"Asks the uncomfortable question early, not after launch.", introduction:"Reviews the project's human practices work and raises ethical considerations before they become public concerns.", responsibilities:["Ethics review","Human practices guidance","Risk flagging"], keywords:["Advisor","Ethics"] },
+  // Student members
+  {
+    id: "ellie-saeyoon-kim",
+    name: "Ellie Saeyoon Kim",
+    group: "Members",
+    role: "Student Leader",
+    title: "Student",
+    affiliation: "Saint Paul Preparatory Seoul",
+    igemSince: 2026,
+  },
+  {
+    id: "anna-lee",
+    name: "Anna Lee",
+    group: "Members",
+    role: "Student Member",
+    title: "Student",
+    affiliation: "Chadwick International School",
+    igemSince: 2026,
+  },
+  {
+    id: "annie",
+    name: "Annie",
+    group: "Members",
+    role: "Student Member",
+    title: "Student",
+    affiliation: "SIE central",
+    igemSince: 2026,
+  },
+  {
+    id: "ayden-kim",
+    name: "Ayden Kim",
+    group: "Members",
+    role: "Student Member",
+    title: "Student",
+    affiliation: "Westminster School",
+    igemSince: 2026,
+  },
+  {
+    id: "daniel-jeongmin-kwon",
+    name: "Daniel Jeongmin Kwon",
+    group: "Members",
+    role: "Student Member",
+    title: "Student",
+    affiliation: "Korean International School",
+    igemSince: 2026,
+  },
+  {
+    id: "seongbin-cho",
+    name: "Seongbin (Ben) Cho",
+    group: "Members",
+    role: "Student Member",
+    title: "Student",
+    affiliation: "Avon Old Farms School",
+    igemSince: 2026,
+  },
+  {
+    id: "wonwoo",
+    name: "Wonwoo",
+    group: "Members",
+    role: "Student Member",
+    title: "Student",
+    affiliation: "Saint Paul Preparatory Seoul",
+    igemSince: 2026,
+  },
+
+  // PIs
+  {
+    id: "jongwoo-kim",
+    name: "Jongwoo Kim",
+    group: "PI",
+    role: "Primary PI",
+    affiliation: "Seoul-Korea",
+    igemSince: 2019,
+  },
+  {
+    id: "chris-song",
+    name: "Chris Song",
+    group: "PI",
+    role: "Secondary PI",
+    title: "Instructor",
+    affiliation: "PSI academy",
+    igemSince: 2022,
+  },
+
+  // Instructors
+  {
+    id: "katherine-h",
+    name: "Katherine H.",
+    group: "Instructor",
+    role: "Instructor",
+    title: "Instructor",
+    affiliation: "PSI",
+    igemSince: 2026,
+  },
+  {
+    id: "wonhyunsuk",
+    name: "wonhyunsuk",
+    group: "Instructor",
+    role: "Instructor",
+    title: "Student",
+    affiliation: "Hanyang University",
+    igemSince: 2026,
+  },
+  {
+    id: "youbin-park",
+    name: "Youbin Park",
+    group: "Instructor",
+    role: "Instructor",
+    title: "Undergraduate",
+    affiliation: "Hongik University",
+    igemSince: 2026,
+  },
+
+  // Advisors
+  {
+    id: "lee-hyeok",
+    name: "Lee Hyeok",
+    group: "Advisor",
+    role: "Advisor",
+    title: "Undergraduate",
+    affiliation: "Hongik University",
+    igemSince: 2026,
+  },
 ];
