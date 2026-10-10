@@ -1,4 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../../styles/tokens.css";
+import "../../styles/fonts.css";
 import "./App.css";
 import "../../styles/global.css";
 import "../../styles/home.css";
@@ -8,6 +10,7 @@ import { useEffect } from "react";
 import { Navbar } from "../../components/Navbar";
 import { NotFound } from "../../components/NotFound";
 import { Footer } from "../../components/Footer";
+import { LoadingScreen } from "../../components/LoadingScreen";
 import { WikiPageBackground } from "../../components/WikiPageBackground";
 
 const App = () => {
@@ -24,6 +27,9 @@ const App = () => {
 
   return (
     <>
+      {/* Initial splash screen (every full page load) */}
+      <LoadingScreen />
+
       {/* Navigation */}
       <Navbar />
 

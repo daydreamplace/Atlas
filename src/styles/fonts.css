@@ -1,4 +1,4 @@
-/* Site-wide font: Pretendard (SIL Open Font License 1.1).
+/* Pretendard (SIL Open Font License 1.1).
    https://github.com/orioncactus/pretendard
 
    iGEM forbids external CDNs, so the font must be uploaded to
@@ -15,24 +15,11 @@
     format("woff2-variations");
 }
 
-/* Must load after Bootstrap so these override its :root variables. */
+/* Use as `font-family: var(--font-sans)`. Currently used by the GNB and the
+   footer; the rest of the site uses --wiki-sans. */
 :root {
   --font-sans:
     "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
     system-ui, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic",
     sans-serif;
-  --bs-font-sans-serif: var(--font-sans);
-  --bs-body-font-family: var(--font-sans);
-}
-
-/* Slightly tighter tracking site-wide (-2.5%); code keeps normal spacing. */
-body {
-  letter-spacing: -0.025em;
-}
-
-pre,
-code,
-kbd,
-samp {
-  letter-spacing: normal;
 }

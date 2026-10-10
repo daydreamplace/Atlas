@@ -9,6 +9,12 @@
     0 0 10px rgba(139, 69, 223, 0.88), 0 0 28px rgba(139, 69, 223, 0.48);
   --wiki-serif: "Times New Roman", Times, serif;
   --wiki-sans: Arial, Helvetica, sans-serif;
+
+  /* Height of the fixed GNB bar (logo row). Everything that sits below the
+     GNB — body offset, sticky SNB, anchor scroll offsets — derives from it. */
+  --gnb-height: 70px;
+  /* Height of the SNB strip when it sticks under the GNB on small screens. */
+  --snb-strip-height: 0px;
 }
 
 * {
@@ -23,7 +29,7 @@ html {
 body {
   min-width: 320px;
   margin: 0;
-  padding-top: 70px;
+  padding-top: var(--gnb-height);
   background: #101211;
   font-family: var(--wiki-sans);
   font-size: 16px;
@@ -73,20 +79,20 @@ textarea {
 
 /* GNB — structure and labels still come from pages.ts. */
 .site-navigation.navbar {
-  min-height: 70px;
+  min-height: var(--gnb-height);
   padding-block: 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.14);
   background: rgba(7, 9, 10, 0.82);
   box-shadow: none;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  font-family: var(--wiki-sans);
+  font-family: var(--font-sans);
 }
 
 .site-navigation > .container {
   width: min(1440px, 100%);
   max-width: none;
-  min-height: 70px;
+  min-height: var(--gnb-height);
   padding-inline: clamp(1.2rem, 3.6vw, 3.5rem);
 }
 
@@ -103,22 +109,21 @@ textarea {
 }
 
 .site-navigation .navbar-nav {
-  min-height: 70px;
+  min-height: var(--gnb-height);
   align-items: stretch;
   margin-left: auto;
 }
 
 .site-navigation .nav-link {
-  min-height: 70px;
+  min-height: var(--gnb-height);
   display: flex;
   align-items: center;
   padding: 0 clamp(0.7rem, 1.25vw, 1.15rem) !important;
   border-bottom: 1px solid transparent;
   color: #b9bebf;
-  font-size: 0.64rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
 }
 
 .site-navigation .nav-link:hover,
@@ -147,9 +152,9 @@ textarea {
   padding: 0.82rem 1rem;
   color: #aeb5b7;
   border-left: 2px solid transparent;
-  font-size: 0.72rem;
-  letter-spacing: 0.045em;
-  text-transform: uppercase;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
 }
 
 .site-navigation .dropdown-item:hover,
@@ -165,8 +170,19 @@ textarea {
 }
 
 .site-navigation .navbar-toggler {
+  padding: 0.4rem 0.55rem;
   border-color: rgba(255, 255, 255, 0.18);
   border-radius: 0;
+}
+
+/* Replace Bootstrap's thick grey focus shadow with a keyboard-only ring. */
+.site-navigation .navbar-toggler:focus {
+  box-shadow: none;
+}
+
+.site-navigation .navbar-toggler:focus-visible {
+  outline: 2px solid var(--wiki-accent);
+  outline-offset: 2px;
 }
 
 @media (min-width: 992px) {
@@ -182,7 +198,7 @@ textarea {
 
 /* Shared detail-page stage. The homepage intentionally keeps its own design. */
 .wiki-page-background {
-  min-height: calc(100vh - 70px);
+  min-height: calc(100vh - var(--gnb-height));
   color: var(--wiki-ink);
   background:
     radial-gradient(
@@ -370,7 +386,7 @@ textarea {
 
 .snb {
   position: sticky;
-  top: 98px;
+  top: calc(var(--gnb-height) + 28px);
   align-self: start;
   padding-top: 0.7rem;
   font-family: var(--wiki-sans);
@@ -550,7 +566,8 @@ textarea {
 
 .member-group {
   margin-top: 5rem;
-  scroll-margin-top: 96px;
+  /* Clear the GNB (and the SNB strip on small screens) when jumped to. */
+  scroll-margin-top: calc(var(--gnb-height) + var(--snb-strip-height) + 26px);
 }
 
 .member-group:first-child {
@@ -975,87 +992,47 @@ textarea {
   }
 }
 
-/* Footer data is untouched; only its presentation changes. */
-.site-footer {
-  position: relative;
-  margin-bottom: 0;
-  padding-top: clamp(4rem, 7vw, 6rem) !important;
-  border-top: 1px solid var(--wiki-line);
-  color: #dfe4e6 !important;
-  background:
-    radial-gradient(
-      ellipse at 16% 0%,
-      rgba(110, 69, 178, 0.1),
-      transparent 33%
-    ),
-    #080a0c !important;
-  font-family: var(--wiki-sans);
-}
-
-.site-footer .container {
-  width: min(1310px, 100%);
-  max-width: none;
-  padding-inline: clamp(1.25rem, 4vw, 4rem);
-}
-
-.site-footer h4 {
-  margin-bottom: 1rem !important;
-  color: #f0f2f3;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-}
-
-.site-footer p,
-.site-footer li,
-.site-footer a {
-  color: #8f999d;
-  font-size: 0.8rem;
-}
-
-.site-footer ul {
-  margin: 0 !important;
-  padding: 0 !important;
-  list-style: none;
-}
-
-.site-footer a {
-  text-decoration: none;
-}
-
-.site-footer a:hover,
-.site-footer a:focus-visible {
-  color: #c9a8ff;
-}
-
-.site-footer hr {
-  margin-top: 3rem;
-  border-color: var(--wiki-line);
-  opacity: 1;
-}
+/* Footer styles live in components/Footer/Footer.css. */
 
 @media (max-width: 991.98px) {
+  /* The logo row is exactly --gnb-height whether the menu is open or not;
+     the opened menu is added below it and scrolls if it is too tall. */
   .site-navigation.navbar {
-    padding-block: 0.75rem;
+    padding-block: 0;
   }
 
-  .site-navigation > .container,
+  .site-navigation > .container {
+    align-content: flex-start;
+  }
+
+  .site-navigation .navbar-brand {
+    height: var(--gnb-height);
+    display: flex;
+    align-items: center;
+    padding-block: 0;
+  }
+
   .site-navigation .navbar-nav {
     min-height: 0;
   }
 
   .site-navigation .navbar-collapse {
-    margin-top: 0.75rem;
+    max-height: calc(100dvh - var(--gnb-height));
+    overflow-y: auto;
+    overscroll-behavior: contain;
     padding: 0.5rem 0 1rem;
     border-top: 1px solid var(--wiki-line);
   }
 
   .site-navigation .nav-link {
     min-height: 46px;
-    padding-inline: 0.25rem !important;
+    padding: 0 1rem !important;
     border-bottom: 0;
-    border-left: 1px solid transparent;
+    border-left: 2px solid transparent;
+  }
+
+  .site-navigation .dropdown-item {
+    padding-left: 2rem;
   }
 
   .site-navigation .nav-link.active,
@@ -1084,13 +1061,10 @@ textarea {
 }
 
 @media (max-width: 767.98px) {
-  body {
-    padding-top: 64px;
-  }
-
-  .site-navigation.navbar,
-  .site-navigation > .container {
-    min-height: 64px;
+  :root {
+    --gnb-height: 64px;
+    /* 42px link + 2 × 0.75rem padding + 1px border */
+    --snb-strip-height: 67px;
   }
 
   .wiki-page-background .bg-hero {
@@ -1117,7 +1091,7 @@ textarea {
 
   .snb {
     z-index: 20;
-    top: 64px;
+    top: var(--gnb-height);
     margin: 0 -1rem 3rem;
     padding: 0.75rem 1rem;
     overflow-x: auto;

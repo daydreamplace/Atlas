@@ -72,7 +72,11 @@ export function SectionNavigation({ pathname }: { pathname: string }) {
       teamNavigationSection.pages.forEach((page) => {
         if (!page.id) return;
         const element = document.getElementById(page.id);
-        if (element && element.getBoundingClientRect().top <= 140) {
+        if (!element) return;
+        // Match the CSS scroll-margin-top so a group counts as current as
+        // soon as an SNB click scrolls it into place, at any screen size.
+        const offset = parseFloat(getComputedStyle(element).scrollMarginTop);
+        if (element.getBoundingClientRect().top <= (offset || 0) + 8) {
           nextId = page.id;
         }
       });

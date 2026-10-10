@@ -1,51 +1,24 @@
-/* Night background lit from the top-right, like the loading screen.
-   Radial layers fade to transparent inside their own size, so no hard edges. */
+/* Background follows the site's dark theme (see --wiki-* in global.css). */
 .site-footer {
   position: relative;
-  padding: 4.5rem 0 3rem;
-  overflow: hidden;
+  padding: clamp(4rem, 7vw, 6rem) 0 3rem;
+  border-top: 1px solid var(--wiki-line);
   color: rgba(255, 255, 255, 0.78);
-  background-color: var(--psi-night-800);
-  background-image:
+  background:
     radial-gradient(
-      ellipse 55% 90% at 100% 0%,
-      rgba(255, 255, 255, 0.16) 0%,
-      rgba(226, 212, 255, 0.07) 40%,
-      rgba(226, 212, 255, 0) 100%
+      ellipse at 16% 0%,
+      rgba(110, 69, 178, 0.1),
+      transparent 33%
     ),
-    radial-gradient(
-      ellipse 70% 60% at 50% 40%,
-      rgba(139, 108, 240, 0.16) 0%,
-      rgba(139, 108, 240, 0) 100%
-    ),
-    linear-gradient(
-      180deg,
-      var(--psi-night-600) 0%,
-      var(--psi-night-700) 45%,
-      var(--psi-night-900) 100%
-    );
-}
-
-/* Lamp hotspot just off the top-right corner. */
-.site-footer::before {
-  content: "";
-  position: absolute;
-  top: -120px;
-  right: -120px;
-  width: 280px;
-  height: 280px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle closest-side,
-    rgba(255, 255, 255, 0.55) 0%,
-    rgba(232, 220, 255, 0.18) 45%,
-    rgba(232, 220, 255, 0) 100%
-  );
-  pointer-events: none;
+    #080a0c;
+  font-family: var(--font-sans);
+  letter-spacing: -0.025em;
 }
 
 .site-footer > .container {
-  position: relative; /* above the hotspot */
+  width: min(1310px, 100%);
+  max-width: none;
+  padding-inline: clamp(1.25rem, 4vw, 4rem);
 }
 
 .site-footer a {
