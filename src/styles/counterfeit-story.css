@@ -375,8 +375,13 @@
     grid-row: 2;
     display: grid;
     grid-template-columns: minmax(31rem, 0.88fr) minmax(0, 1.12fr);
+    grid-template-areas:
+      "title body"
+      "note body";
+    grid-template-rows: auto 1fr;
     align-items: start;
-    gap: clamp(3rem, 6vw, 7rem);
+    column-gap: clamp(3rem, 6vw, 7rem);
+    row-gap: 0;
     width: 100%;
     max-width: none;
     padding-inline: clamp(0.5rem, 3vw, 3rem);
@@ -387,15 +392,23 @@
   }
 
   .counterfeit-story .counterfeit-story__title {
+    grid-area: title;
     max-width: min(37rem, calc(100vw - 4rem));
     font-size: clamp(2.2rem, 3vw, 2.5rem);
   }
 
   .counterfeit-story .counterfeit-story__body {
+    grid-area: body;
     width: 100%;
     max-width: 66ch;
     margin: 0;
     font-size: clamp(1rem, 1.05vw, 1.14rem);
+  }
+
+  .counterfeit-story .home-hand-note {
+    grid-area: note;
+    align-self: start;
+    margin-top: clamp(1.15rem, 2vw, 1.6rem);
   }
 
   .counterfeit-story__map-stage {
