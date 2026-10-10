@@ -1,9 +1,11 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Pages from "../pages";
 
 type SectionPage = {
   label: string;
   path: string;
+  id?: string;
 };
 
 type NavigationSection = {
@@ -41,10 +43,47 @@ const navigationSections: NavigationSection[] = Pages.flatMap((item) => {
   return [];
 });
 
+const teamNavigationSection: NavigationSection = {
+  label: "Team",
+  pages: ["Members", "PI", "Instructor", "Advisor"].map((label) => ({
+    id: `group-${label.toLowerCase()}`,
+    label,
+    path: `/team#group-${label.toLowerCase()}`,
+  })),
+};
+
 export function SectionNavigation({ pathname }: { pathname: string }) {
-  const section = navigationSections.find((candidate) =>
-    candidate.pages.some((page) => page.path === pathname),
+  const isTeamPage = pathname === "/team";
+  const section = isTeamPage
+    ? teamNavigationSection
+    : navigationSections.find((candidate) =>
+        candidate.pages.some((page) => page.path === pathname),
+      );
+  const [activeSectionId, setActiveSectionId] = useState(
+    teamNavigationSection.pages[0].id,
   );
+
+  useEffect(() => {
+    if (!isTeamPage) return;
+
+    const updateActiveSection = () => {
+      let nextId = teamNavigationSection.pages[0].id;
+
+      teamNavigationSection.pages.forEach((page) => {
+        if (!page.id) return;
+        const element = document.getElementById(page.id);
+        if (element && element.getBoundingClientRect().top <= 140) {
+          nextId = page.id;
+        }
+      });
+
+      setActiveSectionId(nextId);
+    };
+
+    updateActiveSection();
+    window.addEventListener("scroll", updateActiveSection, { passive: true });
+    return () => window.removeEventListener("scroll", updateActiveSection);
+  }, [isTeamPage]);
 
   if (!section) return null;
 
@@ -54,18 +93,36 @@ export function SectionNavigation({ pathname }: { pathname: string }) {
       <h2>{section.label}</h2>
       <ol>
         {section.pages.map((page, index) => {
-          const isCurrent = page.path === pathname;
+          const isCurrent = page.id
+            ? page.id === activeSectionId
+            : page.path === pathname;
+          const content = (
+            <>
+              <span>{String(index + 1).padStart(2, "0")}</span>
+              <strong>{page.label}</strong>
+            </>
+          );
 
           return (
             <li key={page.path}>
-              <Link
-                to={page.path}
-                className={isCurrent ? "active" : undefined}
-                aria-current={isCurrent ? "page" : undefined}
-              >
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <strong>{page.label}</strong>
-              </Link>
+              {page.id ? (
+                <a
+                  href={`#${page.id}`}
+                  className={isCurrent ? "active" : undefined}
+                  aria-current={isCurrent ? "location" : undefined}
+                  onClick={() => setActiveSectionId(page.id)}
+                >
+                  {content}
+                </a>
+              ) : (
+                <Link
+                  to={page.path}
+                  className={isCurrent ? "active" : undefined}
+                  aria-current={isCurrent ? "page" : undefined}
+                >
+                  {content}
+                </Link>
+              )}
             </li>
           );
         })}

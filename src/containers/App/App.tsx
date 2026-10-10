@@ -1,11 +1,11 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import "../../styles/global.css";
+import "../../styles/home.css";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { getPathMapping } from "../../utils";
 import { useEffect } from "react";
 import { Navbar } from "../../components/Navbar";
-import { Header } from "../../components/Header";
 import { NotFound } from "../../components/NotFound";
 import { Footer } from "../../components/Footer";
 import { WikiPageBackground } from "../../components/WikiPageBackground";
@@ -37,10 +37,7 @@ const App = () => {
               element={
                 path === "/" ? (
                   <main id="main-content" className="home-page">
-                    <Header title={title || ""} lead={lead || ""} />
-                    <div className="container">
-                      <Component />
-                    </div>
+                    <Component />
                   </main>
                 ) : (
                   <WikiPageBackground

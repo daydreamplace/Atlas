@@ -16,7 +16,7 @@ export function WikiPageBackground({
   pathname,
 }: WikiPageBackgroundProps) {
   const isTeamPage = pathname === "/team";
-  const showSectionNavigation = Boolean(pathname && !isTeamPage);
+  const showSectionNavigation = Boolean(pathname);
   const layoutClassName = [
     "container",
     "wiki-documentation-grid",
