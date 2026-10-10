@@ -5,10 +5,15 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import Pages from "../pages.ts";
+import { useAutoHideGnb } from "./useAutoHideGnb";
 
 export function Navbar() {
   const { pathname } = useLocation();
   const [openDropdown, setOpenDropdown] = useState<number | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const { hidden, reveal } = useAutoHideGnb({
+    menuOpen: menuOpen || openDropdown !== null,
+  });
   const pages = Pages.map((item, pageIndex) => {
     if ("folder" in item && item.folder) {
       const folderItems = item.folder.map((subpage, subpageIndex) => {
@@ -20,7 +25,10 @@ export function Navbar() {
               to={subpage.path}
               className={pathname === subpage.path ? "active" : undefined}
               aria-current={pathname === subpage.path ? "page" : undefined}
-              onClick={() => setOpenDropdown(null)}
+              onClick={() => {
+                setOpenDropdown(null);
+                setMenuOpen(false);
+              }}
             >
               {subpage.name}
             </NavDropdown.Item>
@@ -49,6 +57,7 @@ export function Navbar() {
           to={item.path}
           className={pathname === item.path ? "active" : undefined}
           aria-current={pathname === item.path ? "page" : undefined}
+          onClick={() => setMenuOpen(false)}
         >
           {item.name}
         </Nav.Link>
@@ -57,24 +66,40 @@ export function Navbar() {
   });
 
   return (
-    <BootstrapNavbar
-      expand="lg"
-      className="site-navigation"
-      fixed="top"
-      variant="dark"
-    >
-      <a className="skip-link" href="#main-content">
-        Skip to content
-      </a>
-      <Container>
-        <BootstrapNavbar.Brand as={Link} to="/">
-          {import.meta.env.VITE_TEAM_NAME}
-        </BootstrapNavbar.Brand>
-        <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
-        <BootstrapNavbar.Collapse id="basic-navbar-nav">
-          <Nav className="left-aligned">{pages}</Nav>
-        </BootstrapNavbar.Collapse>
-      </Container>
-    </BootstrapNavbar>
+    <>
+      <BootstrapNavbar
+        expand="lg"
+        className={`site-navigation${hidden ? " is-hidden" : ""}`}
+        fixed="top"
+        variant="dark"
+        expanded={menuOpen}
+        onToggle={setMenuOpen}
+      >
+        <a className="skip-link" href="#main-content">
+          Skip to content
+        </a>
+        <Container>
+          <BootstrapNavbar.Brand as={Link} to="/">
+            {import.meta.env.VITE_TEAM_NAME}
+          </BootstrapNavbar.Brand>
+          <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
+          <BootstrapNavbar.Collapse id="basic-navbar-nav">
+            <Nav className="left-aligned">{pages}</Nav>
+          </BootstrapNavbar.Collapse>
+        </Container>
+      </BootstrapNavbar>
+
+      {/* Shown while the GNB is tucked away; brings it back. */}
+      <button
+        type="button"
+        className={`gnb-reveal${hidden ? " is-visible" : ""}`}
+        onClick={reveal}
+        aria-label="Show navigation"
+        tabIndex={hidden ? 0 : -1}
+        aria-hidden={!hidden}
+      >
+        <span aria-hidden="true" />
+      </button>
+    </>
   );
 }

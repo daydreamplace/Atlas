@@ -3,24 +3,52 @@ import { HeroMicrobeField } from "./HeroMicrobeField";
 
 export function HomeHeroSection() {
   const heroRef = useRef<HTMLElement>(null);
+  const lightRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const hero = heroRef.current;
-    if (!hero) return;
+    const light = lightRef.current;
+    const scene = light?.parentElement;
+    if (!hero || !light || !scene) return;
+
+    const clampToRange = (value: number, min: number, max: number) =>
+      min <= max ? Math.max(min, Math.min(max, value)) : (min + max) / 2;
 
     const handlePointerMove = (event: PointerEvent) => {
       if (event.pointerType === "touch") return;
-      const rect = hero.getBoundingClientRect();
-      const x = Math.max(
-        18,
-        Math.min(82, ((event.clientX - rect.left) / rect.width) * 100),
+      const heroRect = hero.getBoundingClientRect();
+      const sceneRect = scene.getBoundingClientRect();
+      const lightRect = light.getBoundingClientRect();
+
+      // Keep the transformed glow inside the clipped hero. Once the pointer
+      // crosses a safe edge, the glow's centre stays pinned to that edge.
+      const lightCenterX = lightRect.left + lightRect.width / 2;
+      const lightCenterY = lightRect.top + lightRect.height / 2;
+      const anchorX = sceneRect.left + light.offsetLeft;
+      const anchorY = sceneRect.top + light.offsetTop;
+      const transformOffsetX = lightCenterX - anchorX;
+      const transformOffsetY = lightCenterY - anchorY;
+
+      const safeAnchorX = clampToRange(
+        event.clientX,
+        heroRect.left + lightRect.width / 2 - transformOffsetX,
+        heroRect.right - lightRect.width / 2 - transformOffsetX,
       );
-      const y = Math.max(
-        18,
-        Math.min(78, ((event.clientY - rect.top) / rect.height) * 100),
+      const safeAnchorY = clampToRange(
+        event.clientY,
+        heroRect.top + lightRect.height / 2 - transformOffsetY,
+        heroRect.bottom - lightRect.height / 2 - transformOffsetY,
       );
+
+      const x = ((safeAnchorX - sceneRect.left) / sceneRect.width) * 100;
+      const y = ((safeAnchorY - sceneRect.top) / sceneRect.height) * 100;
       hero.style.setProperty("--light-x", `${x.toFixed(2)}%`);
       hero.style.setProperty("--light-y", `${y.toFixed(2)}%`);
+    };
+
+    const handlePointerLeave = () => {
+      hero.style.removeProperty("--light-x");
+      hero.style.removeProperty("--light-y");
     };
 
     const handleScroll = () => {
@@ -32,11 +60,13 @@ export function HomeHeroSection() {
     };
 
     hero.addEventListener("pointermove", handlePointerMove, { passive: true });
+    hero.addEventListener("pointerleave", handlePointerLeave);
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
 
     return () => {
       hero.removeEventListener("pointermove", handlePointerMove);
+      hero.removeEventListener("pointerleave", handlePointerLeave);
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
@@ -49,13 +79,27 @@ export function HomeHeroSection() {
       data-home-section="hero"
       aria-labelledby="home-hero-title"
     >
-      <h1 id="home-hero-title" className="home-visually-hidden">
-        Bio Color ID
-      </h1>
       <div className="home-scene-inner" aria-hidden="true">
         <HeroMicrobeField />
-        <div className="home-light-field" />
+        <div ref={lightRef} className="home-light-field" />
+        <div className="home-microbe-lens" />
       </div>
+      <div className="home-hero-section__copy">
+        <h1 id="home-hero-title" className="home-hero-section__title">
+          Bio Color ID
+        </h1>
+        <p className="home-hero-section__lead">
+          From the counterfeit problem to a new synthetic-biology-based
+          authentication platform
+        </p>
+      </div>
+      <a
+        className="home-hero-section__scroll"
+        href="#global-counterfeit-problem"
+      >
+        <span>Scroll to begin</span>
+        <i aria-hidden="true" />
+      </a>
     </section>
   );
 }

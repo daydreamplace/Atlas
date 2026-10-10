@@ -402,15 +402,17 @@
   opacity: 0.75;
 }
 .auth-sequence__serial-value {
-  font: 700 clamp(0.7rem, 1.6vw, 1.25rem)/1.5 monospace;
+  font: 700 clamp(0.7rem, 1.6vw, 1.25rem)/1.5 var(--wiki-sans);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
   border-bottom: 1px solid #79688a;
   white-space: nowrap;
 }
 .auth-sequence__serial-value::before {
-  content: "SERIAL NUMBER";
+  content: "Serial number";
   display: block;
-  font: 400 0.55em/2.5 var(--wiki-sans);
-  letter-spacing: 0.1em;
+  font: 500 0.6em/2.3 var(--wiki-sans);
+  letter-spacing: 0;
 }
 .auth-sequence__nfc-waves {
   display: flex;
@@ -521,23 +523,30 @@
   left: 18%;
   right: 18%;
   color: #3a333f;
-  font: 700 clamp(0.8rem, 1.8vw, 1.2rem)/1 monospace;
+  font: 700 clamp(0.8rem, 1.8vw, 1.2rem)/1 var(--wiki-sans);
+  font-variant-numeric: tabular-nums;
   text-align: center;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.04em;
 }
+/* Inside the phone stage, just under the device, so it shares the phone's
+   tilt. */
 .auth-sequence__surface-note {
   position: absolute;
-  z-index: 5;
-  right: 0;
-  bottom: 0;
-  width: 65%;
+  z-index: 7;
+  top: calc(97% + 0.9rem);
+  /* The device occupies the middle ~44% of the phone stage. */
+  left: 22%;
+  right: 22%;
   margin: 0;
   opacity: 0;
-  color: #c7b5d5;
+  color: #e6dcef;
   font:
-    400 clamp(1rem, 1.8vw, 1.4rem)/1.4 "Kalam",
+    700 clamp(1.05rem, 1.9vw, 1.45rem)/1.3 "Kalam",
     cursive;
-  text-align: right;
+  text-align: center;
+  text-shadow:
+    0 1px 2px rgba(9, 9, 13, 0.9),
+    0 0 18px rgba(9, 9, 13, 0.85);
   transform: translateY(0.6rem);
   transition:
     opacity 500ms,
@@ -736,67 +745,148 @@
 .auth-sequence__controls {
   position: relative;
   z-index: 8;
-  padding-top: 1.4rem;
-  border-top: 1px solid #b3a0c92e;
+  width: min(100%, 40rem);
+  margin-inline: auto;
+  padding-top: 1.25rem;
 }
+/* The phone can swing down behind the step labels; a dark fade behind the
+   labels and notes keeps them readable over the artwork. */
+.auth-sequence__controls::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -3rem -3rem -6rem;
+  background: linear-gradient(
+    180deg,
+    rgba(9, 9, 13, 0) 0%,
+    rgba(9, 9, 13, 0.85) 30%,
+    rgba(9, 9, 13, 0.9) 70%,
+    rgba(9, 9, 13, 0) 100%
+  );
+  /* Fade the sides too so the dimmed area has no visible edges. */
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 12%,
+    #000 88%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+/* Stepper: plain labels over one thin progress track that fills up to the
+   current step. --step-index / --step-count are set inline. */
 .auth-sequence__steps {
+  position: relative;
   display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 0.25rem;
+  grid-template-columns: repeat(var(--step-count), minmax(0, 1fr));
+  padding-bottom: 0.9rem;
+}
+.auth-sequence__steps::before,
+.auth-sequence__steps::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  border-radius: 2px;
+}
+.auth-sequence__steps::before {
+  right: 0;
+  background: #b3a0c92b;
+}
+.auth-sequence__steps::after {
+  width: calc((var(--step-index) + 0.5) / var(--step-count) * 100%);
+  background: linear-gradient(90deg, #7d6797, #c9b2e6);
+  box-shadow: 0 0 10px #a98bd066;
+  transition: width 450ms cubic-bezier(0.22, 0.7, 0.3, 1);
 }
 .auth-sequence__step-button {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.4rem;
   min-width: 0;
-  padding: 0.25rem 0 0.7rem;
+  padding: 0.35rem 0.15rem;
   border: 0;
   background: transparent;
-  color: #9b919f;
+  color: #8a8190;
   cursor: pointer;
-}
-.auth-sequence__step-button::after {
-  position: absolute;
-  content: "";
-  top: 0.99rem;
-  left: calc(50% + 1rem);
-  width: calc(100% - 1.75rem);
-  height: 1px;
-  background: #b3a0c940;
-}
-.auth-sequence__step-button:last-child::after {
-  content: none;
-}
-.auth-sequence__step-number {
-  display: grid;
-  place-items: center;
-  width: 1.5rem;
-  height: 1.5rem;
-  border: 1px solid #b3a0c94a;
-  border-radius: 50%;
-  font: 500 0.65rem/1 var(--wiki-sans);
+  transition: color 200ms ease;
 }
 .auth-sequence__step-label {
-  font: 500 clamp(0.62rem, 0.8vw, 0.75rem)/1.2 var(--wiki-sans);
+  display: block;
+  font: 500 clamp(0.66rem, 0.85vw, 0.8rem)/1.2 var(--wiki-sans);
   text-align: center;
+  white-space: nowrap;
+}
+.auth-sequence__step-button:hover {
+  color: #cfc4d8;
 }
 .auth-sequence__step-button[aria-pressed="true"] {
-  color: #eee5f4;
+  color: #f4edf8;
 }
-.auth-sequence__step-button[aria-pressed="true"] .auth-sequence__step-number {
-  background: #89739d;
-  border-color: #c2a7d9;
+.auth-sequence__step-button[aria-pressed="true"] .auth-sequence__step-label {
+  font-weight: 600;
 }
 .auth-sequence__step-button:focus-visible {
   outline: 2px solid #c2a7df;
-  outline-offset: 3px;
+  outline-offset: 2px;
+  border-radius: 4px;
 }
-.auth-sequence__disclaimer {
-  margin: 1rem 0 0;
-  color: #918895;
+
+/* Collapsed secondary notes under the stepper. The opened panel floats
+   above the button so opening it never shifts the layout. */
+.auth-sequence__notes {
+  position: relative;
+  z-index: 9;
+  width: fit-content;
+  margin: 0.85rem auto 0;
+  color: #7f7784;
   font: 400 0.7rem/1.5 var(--wiki-sans);
+}
+.auth-sequence__notes summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #8a8190;
+  cursor: pointer;
+  list-style: none;
+}
+.auth-sequence__notes summary::-webkit-details-marker {
+  display: none;
+}
+.auth-sequence__notes summary::before {
+  content: "i";
+  display: grid;
+  place-items: center;
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid #8a819066;
+  border-radius: 50%;
+  font: italic 600 0.6rem/1 var(--wiki-serif);
+}
+.auth-sequence__notes summary:hover {
+  color: #cfc4d8;
+}
+.auth-sequence__notes summary:focus-visible {
+  outline: 2px solid #c2a7df;
+  outline-offset: 2px;
+}
+.auth-sequence__notes-panel {
+  position: absolute;
+  bottom: calc(100% + 0.6rem);
+  left: 50%;
+  width: min(30rem, 86vw);
+  padding: 0.85rem 1rem;
+  border: 1px solid #b3a0c933;
+  border-radius: 10px;
+  background: rgba(14, 12, 20, 0.96);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  color: #b9b0bf;
+  translate: -50% 0;
+}
+.auth-sequence__notes p {
+  margin: 0;
+}
+.auth-sequence__notes p + p {
+  margin-top: 0.45rem;
+  color: #918895;
 }
 
 .auth-sequence__artwork[data-sequence-paused="true"] * {
@@ -808,6 +898,21 @@
 }
 
 @media (min-width: 1021px) {
+  /* Artwork height, capped so the artwork plus the steps fit one screen. */
+  .home-page .authentication-story {
+    --auth-art-h: min(clamp(32rem, 44vw, 41rem), calc(100svh - 10rem));
+  }
+  .auth-sequence__artwork {
+    height: var(--auth-art-h);
+  }
+  /* The phone is sized from the column width, so cap the column relative to
+     the artwork height; otherwise wide screens blow the phone up past the
+     artwork and over the steps. */
+  .auth-sequence__demo {
+    justify-self: center;
+    width: 100%;
+    max-width: calc(var(--auth-art-h) * 1.02);
+  }
   .home-page .authentication-story .authentication-story__inner {
     grid-template-columns: minmax(24rem, 0.82fr) minmax(31rem, 1.18fr);
     align-items: center;
@@ -835,7 +940,8 @@
     margin-inline: auto;
   }
   .auth-sequence__artwork {
-    height: clamp(33rem, 82vw, 40rem);
+    --auth-artwork-height: clamp(33rem, 82vw, 40rem);
+    height: var(--auth-artwork-height);
   }
 }
 
@@ -848,7 +954,8 @@
     gap: 2.8rem;
   }
   .auth-sequence__artwork {
-    height: 39rem;
+    --auth-artwork-height: 39rem;
+    height: var(--auth-artwork-height);
   }
   .auth-sequence__phone-stage {
     top: 12%;
@@ -931,19 +1038,11 @@
     font-size: 0.67rem;
   }
   .auth-sequence__surface-note {
-    width: 51%;
-    bottom: 3%;
-    font-size: 1.08rem;
-    text-align: center;
-  }
-  .auth-sequence__steps {
-    gap: 0.15rem;
+    font-size: 1rem;
   }
   .auth-sequence__step-label {
-    font-size: 0.57rem;
-  }
-  .auth-sequence__disclaimer {
-    font-size: 0.66rem;
+    font-size: 0.6rem;
+    white-space: normal;
   }
 }
 
@@ -1063,5 +1162,74 @@
   }
   50% {
     opacity: 1;
+  }
+}
+
+/* Single-column layouts pin the bottom of the section (artwork + steps) while
+   scrolling through the steps; keep that part within one screen. */
+@media (max-width: 1020px) {
+  .scroll-steps-track[data-scroll-driven="true"] .auth-sequence__artwork {
+    height: min(var(--auth-artwork-height, 39rem), calc(100svh - 12.5rem));
+  }
+  /* Breathing room under the steps while the section is held on screen. */
+  .authentication-story
+    .scroll-steps-track[data-scroll-driven="true"]
+    > .scroll-steps-pin {
+    padding-bottom: 2rem;
+  }
+}
+
+/* Phones, final step: the four methods sit in a 2 × 2 grid in the space left
+   of the phone (titles only), instead of a tall column that would overlap
+   once the artwork is shortened to fit the screen. */
+@media (max-width: 619px) {
+  .auth-sequence__artwork[data-sequence-step="verified"] .auth-sequence__token {
+    width: 24%;
+  }
+  .auth-sequence__artwork[data-sequence-step="verified"]
+    .auth-sequence__token--qr {
+    top: 10%;
+    left: 0;
+  }
+  .auth-sequence__artwork[data-sequence-step="verified"]
+    .auth-sequence__token--hologram {
+    top: 10%;
+    left: 26%;
+    width: 24%;
+  }
+  .auth-sequence__artwork[data-sequence-step="verified"]
+    .auth-sequence__token--serial {
+    top: 43%;
+    left: 0;
+    width: 24%;
+  }
+  .auth-sequence__artwork[data-sequence-step="verified"]
+    .auth-sequence__token--nfc {
+    top: 38%;
+    left: 26%;
+    width: 24%;
+  }
+  .auth-sequence__artwork[data-sequence-step="verified"]
+    .auth-sequence__token-number {
+    font-size: 0.5rem;
+  }
+  .auth-sequence__artwork[data-sequence-step="verified"]
+    .auth-sequence__token-caption
+    strong {
+    font-size: 0.9rem;
+  }
+  .auth-sequence__artwork[data-sequence-step="verified"]
+    .auth-sequence__token-caption
+    span {
+    display: none;
+  }
+}
+
+/* Wider phones/tablets and up: give the note room to stay on one line. */
+@media (min-width: 620px) {
+  .auth-sequence__surface-note {
+    left: 8%;
+    right: 8%;
+    white-space: nowrap;
   }
 }

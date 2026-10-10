@@ -3,29 +3,21 @@ import "../../styles/counterfeit-story.css";
 import { AuthenticityStamp } from "./AuthenticityStamp";
 import { SupplyRoute } from "./SupplyRoute";
 import { useInteractiveScene } from "../../hooks/useInteractiveScene";
+import { getMainPageAssetUrl } from "../../utils/wikiAssets";
+import { HandNote } from "./SectionExtras";
 
 interface CounterfeitStorySectionProps {
   readonly section: HomeSectionContent;
 }
 
-const COUNTERFEIT_ASSET_PATH = "images/main-page/counterfeit";
-
-function getBaseAwareImageUrl(fileName: string): string {
-  const baseUrl = import.meta.env.BASE_URL.endsWith("/")
-    ? import.meta.env.BASE_URL
-    : `${import.meta.env.BASE_URL}/`;
-
-  return `${baseUrl}${COUNTERFEIT_ASSET_PATH}/${fileName}`;
-}
-
 const counterfeitAssets = {
-  worldMap: getBaseAwareImageUrl("world-map.webp"),
-  aircraft: getBaseAwareImageUrl("aircraft.webp"),
-  cargoShip: getBaseAwareImageUrl("cargo-ship.webp"),
-  parcel: getBaseAwareImageUrl("parcel.webp"),
-  market: getBaseAwareImageUrl("market.webp"),
-  productSamples: getBaseAwareImageUrl("product-samples.webp"),
-  researchPaper: getBaseAwareImageUrl("research-paper.webp"),
+  worldMap: getMainPageAssetUrl("counterfeit/world-map.webp"),
+  aircraft: getMainPageAssetUrl("counterfeit/aircraft.webp"),
+  cargoShip: getMainPageAssetUrl("counterfeit/cargo-ship.webp"),
+  parcel: getMainPageAssetUrl("counterfeit/parcel.webp"),
+  market: getMainPageAssetUrl("counterfeit/market.webp"),
+  productSamples: getMainPageAssetUrl("counterfeit/product-samples.webp"),
+  researchPaper: getMainPageAssetUrl("counterfeit/research-paper.webp"),
 } as const;
 
 export function CounterfeitStorySection({
@@ -55,6 +47,7 @@ export function CounterfeitStorySection({
           <p className="home-story-section__body counterfeit-story__body">
             {section.body}
           </p>
+          <HandNote sectionNumber={section.number} />
         </div>
 
         <div

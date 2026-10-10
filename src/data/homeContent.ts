@@ -11,6 +11,9 @@ export interface HomeSectionContent {
   readonly imagePath?: string;
 }
 
+const SECTION_ASSET_BASE =
+  "https://static.igem.wiki/teams/6479/wiki/main-page/sections";
+
 export const HOME_SECTIONS = [
   {
     number: 1,
@@ -23,7 +26,7 @@ identical to authentic products, making them difficult for ordinary consumers to
 goods expands across borders, it threatens brand credibility, undermines fair competition, and highlights the urgent need
 for more reliable authentication technologies.`,
     layout: "image-right",
-    imagePath: "images/main-page/sections/01-counterfeit-problem.webp",
+    imagePath: `${SECTION_ASSET_BASE}/01-counterfeit-problem.webp`,
   },
   {
     number: 2,
@@ -37,7 +40,7 @@ items can harm skin health, mislead consumers, and damage the reputation that Ko
 performance. The more K-beauty spreads across the world, the more important it becomes to protect authenticity and preserve
 consumer confidence.`,
     layout: "image-left",
-    imagePath: "images/main-page/sections/02-why-k-beauty.webp",
+    imagePath: `${SECTION_ASSET_BASE}/02-why-k-beauty.webp`,
   },
   {
     number: 3,
@@ -51,7 +54,7 @@ embedded into the material itself. While they help verify authenticity, they can
 As products become more complex and counterfeiting more sophisticated, there is a growing need for stronger,
 built-in authentication approaches that go beyond the surface.`,
     layout: "image-right",
-    imagePath: "images/main-page/sections/03-existing-authentication.webp",
+    imagePath: `${SECTION_ASSET_BASE}/03-existing-authentication.webp`,
   },
   {
     number: 4,
@@ -94,7 +97,7 @@ Because the identity emerges from the product's own material, authentication bec
 This approach is not only more secure, but also sustainable, using renewable biological processes to create innovative materials
 for a more trustworthy and resilient future.`,
     layout: "image-left",
-    imagePath: "images/main-page/sections/04-biological-answer.webp",
+    imagePath: `${SECTION_ASSET_BASE}/04-biological-answer.webp`,
   },
   {
     number: 6,
@@ -106,7 +109,7 @@ This identity is not just a visible color but an information-rich material finge
 emerges from the biological production process and is embedded in the material itself, it is more
 meaningful, measurable, and harder to imitate than ordinary surface labels.`,
     layout: "image-right",
-    imagePath: "images/main-page/sections/05-meet-bio-color-id.webp",
+    imagePath: `${SECTION_ASSET_BASE}/05-meet-bio-color-id.webp`,
   },
   {
     number: 7,
@@ -118,7 +121,7 @@ The PHB platform is biodegradable and sustainable, while its optical properties 
 by light-based systems, making the material both functional and meaningful as a next-generation
 authentication tag.`,
     layout: "image-left",
-    imagePath: "images/main-page/sections/06-unique-color-signature.webp",
+    imagePath: `${SECTION_ASSET_BASE}/06-unique-color-signature.webp`,
   },
   {
     number: 8,
@@ -131,7 +134,7 @@ A dedicated mobile app analyzes the captured image, comparing its spectral signa
 Through computational analysis, the app can distinguish genuine tags from counterfeit products, providing reliable
 authentication beyond what is possible with simple visual inspection.`,
     layout: "image-right",
-    imagePath: "images/main-page/sections/08-bio-color-id-reader.webp",
+    imagePath: `${SECTION_ASSET_BASE}/08-bio-color-id-reader.webp`,
   },
   {
     number: 9,
@@ -143,7 +146,7 @@ it can support safer products, stronger consumer trust, and smarter anti-counter
 Starting in K-beauty and pharmaceuticals, this platform could grow into a broader authentication standard with applications
 across many industries, helping brands, regulators, and consumers rely on a more secure and meaningful way to verify authenticity.`,
     layout: "image-left",
-    imagePath: "images/main-page/sections/07-color-to-identity.webp",
+    imagePath: `${SECTION_ASSET_BASE}/09-authentication-standard.webp`,
   },
   {
     number: 10,
