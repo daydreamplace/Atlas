@@ -3,17 +3,28 @@ import Nav from "react-bootstrap/Nav";
 import BootstrapNavbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Pages from "../pages.ts";
 import { useAutoHideGnb } from "./useAutoHideGnb";
 
 export function Navbar() {
   const { pathname } = useLocation();
+  const [theme, setTheme] = useState<"light" | "dark">(() => {
+    const savedTheme = window.localStorage.getItem("psi-theme");
+    return savedTheme === "dark" ? "dark" : "light";
+  });
   const [openDropdown, setOpenDropdown] = useState<number | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const { hidden, reveal } = useAutoHideGnb({
     menuOpen: menuOpen || openDropdown !== null,
   });
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+    window.localStorage.setItem("psi-theme", theme);
+  }, [theme]);
+
   const pages = Pages.map((item, pageIndex) => {
     if ("folder" in item && item.folder) {
       const folderItems = item.folder.map((subpage, subpageIndex) => {
@@ -82,6 +93,25 @@ export function Navbar() {
           <BootstrapNavbar.Brand as={Link} to="/">
             {import.meta.env.VITE_TEAM_NAME}
           </BootstrapNavbar.Brand>
+          <button
+            type="button"
+            className="theme-toggle"
+            onClick={() =>
+              setTheme((current) => (current === "light" ? "dark" : "light"))
+            }
+            aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+            aria-pressed={theme === "dark"}
+            title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+          >
+            <span className="theme-toggle__track" aria-hidden="true">
+              <span className="theme-toggle__thumb">
+                {theme === "light" ? "☀" : "☾"}
+              </span>
+            </span>
+            <span className="theme-toggle__label">
+              {theme === "light" ? "Light" : "Dark"}
+            </span>
+          </button>
           <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
           <BootstrapNavbar.Collapse id="basic-navbar-nav">
             <Nav className="left-aligned">{pages}</Nav>
