@@ -8,6 +8,10 @@
       type="image/x-icon"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      document.documentElement.dataset.theme =
+        localStorage.getItem("psi-theme") === "dark" ? "dark" : "light";
+    </script>
     <title>%VITE_TEAM_NAME% - iGEM %VITE_TEAM_YEAR%</title>
   </head>
   <body>
