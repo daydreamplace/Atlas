@@ -2,102 +2,95 @@ import { useEffect, useRef } from "react";
 
 interface Microbe {
   readonly spriteIndex: number;
-  readonly orbit: number;
-  readonly orbitStretch: number;
+  readonly originX: number;
+  readonly originY: number;
+  readonly depth: number;
   readonly size: number;
   readonly speed: number;
   readonly phase: number;
   readonly drift: number;
-  readonly opacity: number;
+  readonly tilt: number;
 }
 
 const TAU = Math.PI * 2;
-const ATLAS_COLUMNS = 4;
-const ATLAS_ROWS = 3;
+const LENS_RADIUS = 80;
+const SPRITES = [
+  "cocci-cluster-v3.png",
+  "bacillus-short-v2.png",
+  "amoeboid-cell-v3.png",
+  "bacillus-flagella-v2.png",
+  "cocci-chain-v3.png",
+  "bacillus-curved-v2.png",
+  "oval-cell-v3.png",
+  "bacillus-dividing-v2.png",
+] as const;
 
 function createMicrobes(count: number): Microbe[] {
   return Array.from({ length: count }, (_, index) => {
-    const depth = (index % 9) / 8;
-
+    const depth = Math.random();
     return {
-      spriteIndex: index % (ATLAS_COLUMNS * ATLAS_ROWS),
-      orbit: 0.18 + Math.random() * 0.58,
-      orbitStretch: 0.84 + Math.random() * 0.36,
-      size: 7 + depth * 8 + Math.random() * 5,
-      speed: (0.045 + Math.random() * 0.07) * (index % 8 === 0 ? -1 : 1),
-      phase: Math.random() * TAU,
+      spriteIndex: index % SPRITES.length,
+      originX: -0.08 + Math.random() * 1.16,
+      originY: -0.08 + Math.random() * 1.16,
+      depth,
+      // Keep organisms legible without turning them into foreground objects.
+      // The reference motion uses small-to-medium specimens with only a few
+      // nearer particles growing beyond the background scale.
+      size: (14 + depth * 30 + Math.random() * 6) * 0.8,
+      speed: 0.032 + depth * 0.018 + Math.random() * 0.014,
+      phase: Math.random(),
       drift: Math.random() * TAU,
-      opacity: 0.14 + depth * 0.16,
+      tilt: (Math.random() - 0.5) * 1.3,
     };
-  });
+  }).sort((a, b) => a.depth - b.depth);
 }
 
-function removeAtlasBackground(image: HTMLImageElement) {
-  const processed = document.createElement("canvas");
-  processed.width = image.naturalWidth;
-  processed.height = image.naturalHeight;
-  const context = processed.getContext("2d", { willReadFrequently: true });
-  if (!context) return image;
-
-  context.drawImage(image, 0, 0);
-  const imageData = context.getImageData(
-    0,
-    0,
-    processed.width,
-    processed.height,
-  );
-  const pixels = imageData.data;
-
-  for (let index = 0; index < pixels.length; index += 4) {
-    const red = pixels[index];
-    const green = pixels[index + 1];
-    const blue = pixels[index + 2];
-    const brightness = red * 0.22 + green * 0.55 + blue * 0.23;
-    const spread = Math.max(red, green, blue) - Math.min(red, green, blue);
-    const detail = Math.max(0, brightness - 68) + spread * 0.42;
-    const extractedAlpha = Math.max(0, Math.min(255, (detail - 8) * 3.2));
-    pixels[index + 3] = Math.min(pixels[index + 3], extractedAlpha);
-  }
-
-  context.clearRect(0, 0, processed.width, processed.height);
-  context.putImageData(imageData, 0, 0);
-  return processed;
+function flowPosition(
+  microbe: Microbe,
+  elapsed: number,
+  width: number,
+  height: number,
+  focusX: number,
+  focusY: number,
+) {
+  const progress = (((microbe.phase + elapsed * microbe.speed) % 1) + 1) % 1;
+  const easedProgress = progress * progress * (3 - 2 * progress);
+  const projection = 0.52 + easedProgress * 0.72;
+  const sourceX = microbe.originX * width;
+  const sourceY = microbe.originY * height;
+  const drift = 2.5 + microbe.depth * 5;
+  const x =
+    focusX +
+    (sourceX - focusX) * projection +
+    Math.sin(elapsed * 0.42 + microbe.drift) * drift;
+  const y =
+    focusY +
+    (sourceY - focusY) * projection +
+    Math.cos(elapsed * 0.36 + microbe.drift) * drift;
+  return { x, y, progress };
 }
 
 function drawMicrobe(
   context: CanvasRenderingContext2D,
-  atlas: CanvasImageSource,
-  atlasWidth: number,
-  atlasHeight: number,
+  sprite: HTMLImageElement,
   microbe: Microbe,
   x: number,
   y: number,
   rotation: number,
-  pulse: number,
-  edgeFade: number,
+  opacity: number,
+  scale = 1,
+  sharp = false,
 ) {
-  const cellWidth = atlasWidth / ATLAS_COLUMNS;
-  const cellHeight = atlasHeight / ATLAS_ROWS;
-  const column = microbe.spriteIndex % ATLAS_COLUMNS;
-  const row = Math.floor(microbe.spriteIndex / ATLAS_COLUMNS);
-  const insetX = cellWidth * 0.025;
-  const insetY = cellHeight * 0.035;
-  const sourceWidth = cellWidth - insetX * 2;
-  const sourceHeight = cellHeight - insetY * 2;
-  const displayHeight = microbe.size * (0.82 + pulse * 0.16);
-  const displayWidth = displayHeight * (sourceWidth / sourceHeight);
-
+  const displayWidth = microbe.size * scale;
+  const displayHeight =
+    displayWidth * (sprite.naturalHeight / sprite.naturalWidth);
   context.save();
   context.translate(x, y);
   context.rotate(rotation);
-  context.globalAlpha = microbe.opacity * edgeFade * (0.82 + pulse * 0.18);
-  context.filter = microbe.opacity < 0.2 ? "blur(0.45px)" : "none";
+  context.globalAlpha = opacity;
+  context.filter = sharp || microbe.depth > 0.4 ? "none" : "blur(0.3px)";
   context.drawImage(
-    atlas,
-    column * cellWidth + insetX,
-    row * cellHeight + insetY,
-    sourceWidth,
-    sourceHeight,
+    sprite,
     -displayWidth / 2,
     -displayHeight / 2,
     displayWidth,
@@ -116,169 +109,317 @@ export function HeroMicrobeField() {
     if (!canvas || !hero || !context) return;
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const atlasImage = new Image();
-    let atlas: CanvasImageSource | null = null;
-    let atlasWidth = 0;
-    let atlasHeight = 0;
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+    hero.style.setProperty("--lens-diameter", `${LENS_RADIUS * 2}px`);
+    const sprites = SPRITES.map(() => new Image());
     let width = 0;
     let height = 0;
-    let pixelRatio = 1;
     let animationFrame = 0;
     let isVisible = true;
     let isPageVisible = !document.hidden;
     let lastTime = performance.now();
     let elapsed = 0;
-    const pointer = { x: 0.5, y: 0.5, active: false };
-    let microbes = createMicrobes(window.innerWidth < 680 ? 46 : 88);
-
-    const resize = () => {
-      const rect = hero.getBoundingClientRect();
-      width = Math.max(1, rect.width);
-      height = Math.max(1, rect.height);
-      pixelRatio = Math.min(1.6, window.devicePixelRatio || 1);
-      canvas.width = Math.round(width * pixelRatio);
-      canvas.height = Math.round(height * pixelRatio);
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
-      context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-      microbes = createMicrobes(width < 680 ? 46 : 88);
+    let disposed = false;
+    const pointer = {
+      x: 0.61,
+      y: 0.49,
+      velocityX: 0,
+      velocityY: 0,
+      inside: false,
+      active: false,
     };
+    const flowFocus = { x: 0.61, y: 0.49 };
+    let microbes: Microbe[] = [];
 
     const draw = (time: number) => {
       animationFrame = 0;
-      const delta = Math.min(0.04, (time - lastTime) / 1000);
+      const delta = Math.max(0, Math.min(0.04, (time - lastTime) / 1000));
       lastTime = time;
       if (!reduceMotion.matches) elapsed += delta;
 
       context.clearRect(0, 0, width, height);
       context.globalCompositeOperation = "screen";
+      const restingX = width <= 700 ? 0.52 : 0.61;
+      const restingY = width <= 700 ? 0.52 : 0.49;
+      const lightX =
+        (pointer.inside
+          ? Math.max(0.18, Math.min(0.82, pointer.x))
+          : restingX) * width;
+      const lightY =
+        (pointer.inside
+          ? Math.max(0.18, Math.min(0.78, pointer.y))
+          : restingY) * height;
+      const lensX = pointer.x * width;
+      const lensY = pointer.y * height;
+      const focusTargetX = pointer.inside
+        ? restingX + (pointer.x - restingX) * 0.3
+        : restingX;
+      const focusTargetY = pointer.inside
+        ? restingY + (pointer.y - restingY) * 0.24
+        : restingY;
+      const focusEase = 1 - Math.exp(-delta * 5.4);
+      flowFocus.x += (focusTargetX - flowFocus.x) * focusEase;
+      flowFocus.y += (focusTargetY - flowFocus.y) * focusEase;
+      pointer.velocityX *= Math.exp(-delta * 6.2);
+      pointer.velocityY *= Math.exp(-delta * 6.2);
 
-      if (atlas) {
-        const centerX = width * (0.61 + (pointer.x - 0.5) * 0.032);
-        const centerY = height * (0.49 + (pointer.y - 0.5) * 0.024);
-        const orbitBase = Math.min(width, height);
-        const pointerX = pointer.x * width;
-        const pointerY = pointer.y * height;
+      for (const microbe of microbes) {
+        const sprite = sprites[microbe.spriteIndex];
+        if (!sprite.complete || !sprite.naturalWidth) continue;
+        let position = flowPosition(
+          microbe,
+          elapsed,
+          width,
+          height,
+          flowFocus.x * width,
+          flowFocus.y * height,
+        );
+        const previous = flowPosition(
+          microbe,
+          elapsed - 0.14,
+          width,
+          height,
+          flowFocus.x * width,
+          flowFocus.y * height,
+        );
+        if (pointer.inside) {
+          const dx = position.x - lensX;
+          const dy = position.y - lensY;
+          const distance = Math.hypot(dx, dy);
+          const reactionRadius = 190 + microbe.depth * 115;
+          const influence = Math.max(0, 1 - distance / reactionRadius);
 
-        for (const microbe of microbes) {
-          const angle = microbe.phase + elapsed * microbe.speed;
-          const breathing = Math.sin(elapsed * 0.34 + microbe.drift) * 0.02;
-          const radius = orbitBase * (microbe.orbit + breathing);
-          let x =
-            centerX + Math.cos(angle) * radius * 1.36 * microbe.orbitStretch;
-          let y =
-            centerY +
-            Math.sin(angle) * radius * 0.59 +
-            Math.sin(angle * 2.2 + microbe.drift) * height * 0.016;
-
-          if (pointer.active) {
-            const dx = x - pointerX;
-            const dy = y - pointerY;
-            const distance = Math.hypot(dx, dy);
-            const influence = Math.max(0, 1 - distance / 170);
-            if (influence > 0 && distance > 0) {
-              x += (dx / distance) * influence * 24;
-              y += (dy / distance) * influence * 24;
-            }
+          if (influence > 0 && distance > 0) {
+            const repel = influence * influence * (26 + microbe.depth * 52);
+            const eddy =
+              Math.sin(elapsed * 1.2 + microbe.drift) * influence * 18;
+            const wake = influence * (0.24 + position.progress * 0.22);
+            position = {
+              x: position.x + (dx / distance) * repel - (dy / distance) * eddy,
+              y: position.y + (dy / distance) * repel + (dx / distance) * eddy,
+              progress: position.progress,
+            };
+            position.x += pointer.velocityX * wake;
+            position.y += pointer.velocityY * wake;
           }
+        }
 
-          const edgeFade = Math.min(
+        const edgeFade = Math.max(
+          0,
+          Math.min(
             1,
-            x / 80,
-            (width - x) / 80,
-            y / 60,
-            (height - y) / 60,
-          );
-          if (edgeFade <= 0) continue;
+            position.x / 40,
+            (width - position.x) / 40,
+            position.y / 30,
+            (height - position.y) / 30,
+          ),
+        );
+        if (edgeFade <= 0) continue;
+        const lightDistance = Math.hypot(
+          (position.x - lightX) / Math.max(1, width * 0.2),
+          (position.y - lightY) / Math.max(1, height * 0.2),
+        );
+        const illumination = Math.max(0, 1 - lightDistance);
+        const opacity =
+          (0.15 +
+            microbe.depth * 0.2 +
+            position.progress * 0.2 +
+            illumination * 0.08) *
+          edgeFade;
+        const rotation =
+          Math.atan2(position.y - previous.y, position.x - previous.x) +
+          microbe.tilt +
+          Math.sin(elapsed * 0.28 + microbe.drift) * 0.12;
 
+        context.save();
+        if (pointer.active) {
+          context.beginPath();
+          context.rect(0, 0, width, height);
+          context.moveTo(lensX + LENS_RADIUS, lensY);
+          context.arc(lensX, lensY, LENS_RADIUS, 0, TAU);
+          context.clip("evenodd");
+        }
+
+        // Short translucent trails, never long neon tails or accumulated pixels.
+        if (!reduceMotion.matches && microbe.depth > 0.3) {
+          const tail = flowPosition(
+            microbe,
+            elapsed - 0.38,
+            width,
+            height,
+            flowFocus.x * width,
+            flowFocus.y * height,
+          );
+          const gradient = context.createLinearGradient(
+            tail.x,
+            tail.y,
+            position.x,
+            position.y,
+          );
+          gradient.addColorStop(0, "rgba(150, 128, 191, 0)");
+          gradient.addColorStop(1, `rgba(185, 166, 218, ${opacity * 0.5})`);
+          context.save();
+          context.strokeStyle = gradient;
+          context.lineWidth = 0.9 + microbe.depth * 1.25;
+          context.beginPath();
+          context.moveTo(tail.x, tail.y);
+          context.quadraticCurveTo(
+            previous.x,
+            previous.y,
+            position.x,
+            position.y,
+          );
+          context.stroke();
+          context.restore();
+        }
+        drawMicrobe(
+          context,
+          sprite,
+          microbe,
+          position.x,
+          position.y,
+          rotation,
+          opacity,
+          0.76 + position.progress * 0.3,
+        );
+        context.restore();
+
+        if (
+          pointer.active &&
+          Math.hypot(position.x - lensX, position.y - lensY) <
+            LENS_RADIUS + microbe.size
+        ) {
+          context.save();
+          context.beginPath();
+          context.arc(lensX, lensY, LENS_RADIUS, 0, TAU);
+          context.clip();
           drawMicrobe(
             context,
-            atlas,
-            atlasWidth,
-            atlasHeight,
+            sprite,
             microbe,
-            x,
-            y,
-            angle + Math.PI / 2,
-            (Math.sin(elapsed * 0.68 + microbe.drift) + 1) / 2,
-            edgeFade,
+            lensX + (position.x - lensX) * 1.65,
+            lensY + (position.y - lensY) * 1.65,
+            rotation,
+            Math.min(0.82, opacity * 1.6),
+            (0.76 + position.progress * 0.3) * 1.65,
+            true,
           );
+          context.restore();
         }
       }
-
       context.globalCompositeOperation = "source-over";
-      if (!reduceMotion.matches && isVisible && isPageVisible) {
+      if (!disposed && !reduceMotion.matches && isVisible && isPageVisible) {
         animationFrame = window.requestAnimationFrame(draw);
       }
     };
 
     const start = () => {
-      if (animationFrame || !isVisible || !isPageVisible) return;
+      if (disposed || animationFrame || !isVisible || !isPageVisible) return;
       lastTime = performance.now();
       animationFrame = window.requestAnimationFrame(draw);
     };
 
-    atlasImage.onload = () => {
-      atlas = removeAtlasBackground(atlasImage);
-      atlasWidth = atlasImage.naturalWidth;
-      atlasHeight = atlasImage.naturalHeight;
+    const redraw = () => {
       if (animationFrame) window.cancelAnimationFrame(animationFrame);
       animationFrame = 0;
-      if (reduceMotion.matches) draw(performance.now());
-      else start();
+      if (isVisible && isPageVisible) draw(performance.now());
     };
-    atlasImage.src = `${import.meta.env.BASE_URL}images/main-page/hero/microbe-atlas-ecoli-v1.png`;
+
+    const resize = () => {
+      const rect = hero.getBoundingClientRect();
+      width = Math.max(1, rect.width);
+      height = Math.max(1, rect.height);
+      const pixelRatio = Math.min(1.6, window.devicePixelRatio || 1);
+      canvas.width = Math.round(width * pixelRatio);
+      canvas.height = Math.round(height * pixelRatio);
+      context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+      const count =
+        width < 680 ? 42 : Math.min(154, Math.round((width * height) / 12000));
+      microbes = createMicrobes(count).map((microbe) => ({
+        ...microbe,
+        size: microbe.size * (width < 680 ? 0.78 : 1),
+      }));
+      redraw();
+    };
 
     const handlePointerMove = (event: PointerEvent) => {
-      if (event.pointerType === "touch") return;
+      if (event.pointerType === "touch" || !finePointer.matches) return;
       const rect = hero.getBoundingClientRect();
-      pointer.x = (event.clientX - rect.left) / rect.width;
-      pointer.y = (event.clientY - rect.top) / rect.height;
+      const nextX = (event.clientX - rect.left) / rect.width;
+      const nextY = (event.clientY - rect.top) / rect.height;
+      pointer.velocityX = (nextX - pointer.x) * rect.width;
+      pointer.velocityY = (nextY - pointer.y) * rect.height;
+      pointer.x = nextX;
+      pointer.y = nextY;
+      pointer.inside = true;
       pointer.active = true;
+      hero.style.setProperty("--lens-x", `${(pointer.x * 100).toFixed(2)}%`);
+      hero.style.setProperty("--lens-y", `${(pointer.y * 100).toFixed(2)}%`);
+      hero.dataset.microbeLens = String(pointer.active);
+      if (reduceMotion.matches) redraw();
     };
 
     const handlePointerLeave = () => {
+      pointer.inside = false;
       pointer.active = false;
+      pointer.velocityX = 0;
+      pointer.velocityY = 0;
+      hero.dataset.microbeLens = "false";
+      if (reduceMotion.matches) redraw();
     };
 
     const handleVisibility = () => {
       isPageVisible = !document.hidden;
       if (isPageVisible) start();
+      else if (animationFrame) {
+        window.cancelAnimationFrame(animationFrame);
+        animationFrame = 0;
+      }
     };
 
-    const handleMotionPreference = () => {
-      if (animationFrame) window.cancelAnimationFrame(animationFrame);
-      animationFrame = 0;
-      draw(performance.now());
-    };
+    sprites.forEach((sprite, index) => {
+      sprite.onload = () => {
+        if (!disposed) redraw();
+      };
+      sprite.src = `${import.meta.env.BASE_URL}images/main-page/hero/microbes/${SPRITES[index]}`;
+    });
 
     const resizeObserver = new ResizeObserver(resize);
     const visibilityObserver = new IntersectionObserver(
       ([entry]) => {
         isVisible = Boolean(entry?.isIntersecting);
         if (isVisible) start();
+        else if (animationFrame) {
+          window.cancelAnimationFrame(animationFrame);
+          animationFrame = 0;
+        }
       },
       { threshold: 0.02 },
     );
-
     resizeObserver.observe(hero);
     visibilityObserver.observe(hero);
     hero.addEventListener("pointermove", handlePointerMove, { passive: true });
     hero.addEventListener("pointerleave", handlePointerLeave);
     document.addEventListener("visibilitychange", handleVisibility);
-    reduceMotion.addEventListener("change", handleMotionPreference);
+    reduceMotion.addEventListener("change", redraw);
+    finePointer.addEventListener("change", handlePointerLeave);
     resize();
-    draw(performance.now());
 
     return () => {
+      disposed = true;
       if (animationFrame) window.cancelAnimationFrame(animationFrame);
-      atlasImage.onload = null;
+      sprites.forEach((sprite) => {
+        sprite.onload = null;
+      });
       resizeObserver.disconnect();
       visibilityObserver.disconnect();
       hero.removeEventListener("pointermove", handlePointerMove);
       hero.removeEventListener("pointerleave", handlePointerLeave);
       document.removeEventListener("visibilitychange", handleVisibility);
-      reduceMotion.removeEventListener("change", handleMotionPreference);
+      reduceMotion.removeEventListener("change", redraw);
+      finePointer.removeEventListener("change", handlePointerLeave);
+      hero.style.removeProperty("--lens-diameter");
+      delete hero.dataset.microbeLens;
     };
   }, []);
 

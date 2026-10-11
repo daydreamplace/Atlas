@@ -46,15 +46,15 @@
   --hero-scroll: 0;
   --light-x: 61%;
   --light-y: 49%;
-  --light-width: 86%;
-  --light-height: 82%;
+  --light-size: clamp(280px, 30vw, 480px);
   --light-rotate: -7deg;
-  --light-core: rgba(241, 236, 250, 0.34);
-  --light-violet: rgba(159, 112, 218, 0.19);
+  --light-core: rgba(250, 245, 255, 0.94);
+  --light-violet: rgba(170, 119, 235, 0.32);
   position: relative;
   isolation: isolate;
-  height: calc(100svh + var(--gnb-height));
-  min-height: calc(100svh + var(--gnb-height));
+  height: 100svh;
+  height: 100dvh;
+  min-height: 100svh;
   overflow: clip;
   margin-top: -70px;
   color: #f1edf7;
@@ -114,9 +114,16 @@
 .home-hero-section .home-scene-inner {
   position: relative;
   z-index: 2;
-  width: min(1440px, 100%);
+  width: 100%;
   min-height: inherit;
   margin-inline: auto;
+}
+
+/* Keep Section 1 below the complete hero viewport, including when the fixed
+   progress rail sits between both sections in the DOM. */
+.home-hero-section + .home-story-section,
+.home-hero-section ~ #global-counterfeit-problem {
+  margin-top: 0;
 }
 
 .home-hero-section .home-microbe-field {
@@ -127,38 +134,36 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
-  opacity: 0.82;
-  filter: saturate(0.86) contrast(1.08);
+  opacity: 0.92;
+  filter: saturate(0.82) brightness(1.15);
   mix-blend-mode: screen;
-  mask-image: radial-gradient(
-    ellipse 93% 88% at 60% 49%,
-    black 16%,
-    rgba(0, 0, 0, 0.96) 58%,
-    transparent 100%
-  );
 }
 
 .home-hero-section .home-light-field {
   position: absolute;
   z-index: 4;
-  top: var(--light-y);
-  left: var(--light-x);
-  width: var(--light-width);
-  height: var(--light-height);
-  transform: translate(-50%, calc(-50% + var(--hero-scroll) * 2.5rem))
+  top: 0;
+  left: 0;
+  width: var(--light-size);
+  aspect-ratio: 1;
+  transform: translate3d(
+      var(--light-position-x, 61vw),
+      var(--light-position-y, 49dvh),
+      0
+    )
+    translate(-50%, calc(-50% + var(--hero-scroll) * 2.5rem))
     rotate(var(--light-rotate)) scale(calc(1 + var(--hero-scroll) * 0.035));
-  transition:
-    top 420ms ease-out,
-    left 420ms ease-out;
+  will-change: transform;
   pointer-events: none;
-  border-radius: 48% 52% 46% 54% / 55% 43% 57% 45%;
-  filter: blur(17px);
+  border-radius: 50%;
+  filter: blur(8px);
   mix-blend-mode: screen;
   background: radial-gradient(
-    ellipse at 50% 48%,
+    circle at 50% 50%,
     var(--light-core) 0%,
-    rgba(218, 207, 235, 0.2) 22%,
-    var(--light-violet) 46%,
+    rgba(239, 223, 255, 0.68) 6%,
+    rgba(202, 167, 243, 0.38) 18%,
+    var(--light-violet) 32%,
     transparent 70%
   );
 }
@@ -166,14 +171,44 @@
 .home-hero-section .home-light-field::after {
   content: "";
   position: absolute;
-  inset: 18% 12%;
+  inset: 32%;
   border-radius: 50%;
-  filter: blur(30px);
+  filter: blur(6px);
   background: radial-gradient(
-    ellipse,
-    rgba(246, 243, 252, 0.16),
+    circle,
+    rgba(255, 251, 255, 0.72),
     transparent 66%
   );
+}
+
+.home-microbe-lens {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .home-hero-section {
+    cursor: var(--hero-magnifier-cursor, crosshair);
+  }
+
+  .home-hero-section[data-microbe-lens="true"] .home-microbe-lens {
+    position: absolute;
+    z-index: 5;
+    top: var(--lens-y);
+    left: var(--lens-x);
+    display: block;
+    width: var(--lens-diameter, 160px);
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    border: 1px solid rgba(220, 199, 250, 0.28);
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      transparent 55%,
+      rgba(195, 164, 235, 0.04)
+    );
+    box-shadow: inset 0 0 18px rgba(204, 174, 242, 0.055);
+  }
 }
 
 /* Research-artbook story: charcoal paper, graphite marks, and loose artwork. */
@@ -1031,13 +1066,14 @@
   .home-hero-section {
     --light-x: 52%;
     --light-y: 52%;
-    --light-width: 130%;
-    --light-height: 82%;
+    --light-size: 260px;
     margin-top: -64px;
   }
 
   .home-hero-section .home-light-field {
-    filter: blur(15px);
+    --light-position-x: 52vw;
+    --light-position-y: 52dvh;
+    filter: blur(8px);
   }
 }
 
@@ -1158,6 +1194,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .home-hero-section .home-light-field {
+    transition: none;
+  }
+
   .home-hero-section .home-light-field,
   .home-hero-section .home-light-field::after,
   .home-page .home-story-section--closing .home-story-section__title,
@@ -1207,6 +1247,7 @@
   left: 50%;
   width: min(92%, 52rem);
   translate: -50% -50%;
+  pointer-events: none;
   text-align: center;
   animation: home-hero-in 1200ms 300ms cubic-bezier(0.22, 0.7, 0.3, 1) both;
 }
