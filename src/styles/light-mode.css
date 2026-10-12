@@ -213,6 +213,10 @@
     linear-gradient(142deg, #faf8f1 0%, #f2edf3 54%, #f6f2e8 100%);
 }
 
+:root[data-theme="light"] .home-hero-section__fade {
+  background: linear-gradient(180deg, transparent, #f8f5ee 92%);
+}
+
 :root[data-theme="light"] .home-hero-section::before {
   opacity: 0.62;
   background-image: repeating-radial-gradient(
@@ -732,4 +736,8 @@
     overflow: hidden;
     clip: rect(0, 0, 0, 0);
   }
+}
+
+:root[data-theme="light"] .counterfeit-story[data-zoom-linked="true"] {
+  --scene-bg: #f8f5ee;
 }

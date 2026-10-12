@@ -11,6 +11,7 @@ import { getMainPageAssetUrl } from "../../utils/wikiAssets";
 import "../../styles/authentication-story.css";
 import { IllustratedPhone } from "./IllustratedPhone";
 import { NfcPaperMark } from "./NfcPaperMark";
+import { useStoryZoomLink } from "./storyZoomLink";
 import { useScrollSteps, useScrollStepsEnabled } from "./useScrollSteps";
 
 interface AuthenticationStorySectionProps {
@@ -167,6 +168,10 @@ export function AuthenticationStorySection({
 
   // On large screens the steps follow the scroll position instead of a timer.
   const isScrollDriven = useScrollStepsEnabled() && !prefersReducedMotion;
+  // Large screens: the skincare group from the section before arrives with a
+  // QR label that becomes this section's (see KBeautyStorySection); the text
+  // waits until the phone has scanned it.
+  const isZoomLinked = useStoryZoomLink() && isScrollDriven;
   const { stepIndex: scrollStepIndex, scrollToStep } = useScrollSteps({
     trackRef,
     pinRef,
@@ -174,6 +179,28 @@ export function AuthenticationStorySection({
     enabled: isScrollDriven,
     stepLength: 0.38,
   });
+
+  // How far the artwork has to move to sit in the middle of the pin, where
+  // it opens in the linked scene (styles/authentication-story.css).
+  useLayoutEffect(() => {
+    const pin = pinRef.current;
+    const demo = pin?.querySelector<HTMLElement>(".auth-sequence__demo");
+    if (!isZoomLinked || !pin || !demo) return;
+
+    const measure = () => {
+      const shift =
+        pin.offsetWidth / 2 - (demo.offsetLeft + demo.offsetWidth / 2);
+      pin.style.setProperty("--demo-center-shift", shift.toFixed(1));
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(pin);
+    observer.observe(demo);
+    return () => {
+      observer.disconnect();
+      pin.style.removeProperty("--demo-center-shift");
+    };
+  }, [isZoomLinked]);
 
   const setCurrentStep = useCallback((nextStepIndex: number) => {
     currentStepIndexRef.current = nextStepIndex;
@@ -388,6 +415,7 @@ export function AuthenticationStorySection({
       data-section-number={section.number}
       data-sequence-autoplay-used={hasAutoPlayed ? "true" : "false"}
       data-reduced-motion={prefersReducedMotion ? "true" : "false"}
+      data-zoom-linked={isZoomLinked ? "true" : "false"}
       aria-labelledby={titleId}
       {...sequenceData}
     >

@@ -1233,3 +1233,40 @@
     white-space: nowrap;
   }
 }
+
+/* --- Linked scene: sections 2 → 3 ---------------------------------------- */
+/* Large screens (components/home/storyZoomLink.ts): the skincare group from
+   the K-beauty section arrives in the middle of the screen and its QR label
+   grows into this section's QR label. So the section opens with only the
+   artwork, centred: the phone comes up to the label and scans it. Half-way
+   through the scan the artwork slides right to its usual place and the text
+   comes in from the left. Driven by `--scroll-progress` on the pin (seven
+   steps; the scan is the third, 0.29 → 0.43). */
+.authentication-story[data-zoom-linked="true"] .scroll-steps-pin {
+  --p: var(--scroll-progress, 1);
+  --settle-linear: clamp(0, calc((var(--p) - 0.34) / 0.08), 1);
+  --settle: calc(
+    var(--settle-linear) * var(--settle-linear) * (3 - 2 * var(--settle-linear))
+  );
+}
+
+.authentication-story[data-zoom-linked="true"] .auth-sequence__demo {
+  /* `--demo-center-shift` (px) is set by AuthenticationStorySection. */
+  translate: calc(var(--demo-center-shift, 0) * (1 - var(--settle)) * 1px) 0;
+  /* Waits until the skincare group has landed. */
+  opacity: clamp(0, calc(var(--p) / 0.045 - 0.5), 1);
+}
+
+.home-page
+  .authentication-story[data-zoom-linked="true"]
+  .authentication-story__content {
+  opacity: var(--settle);
+  translate: calc((1 - var(--settle)) * -5rem) 0;
+}
+
+/* The label waits in place and only fades in under the arriving one. */
+.authentication-story[data-zoom-linked="true"]
+  .auth-sequence__artwork[data-sequence-step="intro"]
+  .auth-sequence__token--qr {
+  transform: rotate(-6deg);
+}

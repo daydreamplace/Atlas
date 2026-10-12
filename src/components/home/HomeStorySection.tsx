@@ -1,10 +1,13 @@
 import { Fragment, useRef, type CSSProperties } from "react";
 import type { HomeSectionContent } from "../../data/homeContent";
+import { FOCUS_TOURS } from "../../data/homeTours";
 import { CounterfeitStorySection } from "./CounterfeitStorySection";
+import { FocusTourSection } from "./FocusTourSection";
 import { KBeautyStorySection } from "./KBeautyStorySection";
 import { AuthenticationStorySection } from "./AuthenticationStorySection";
 import { LimitationsStorySection } from "./LimitationsStorySection";
 import { HandNote, SectionExtras } from "./SectionExtras";
+import { StoryConnective } from "./StoryConnective";
 import { useMediaQuery } from "./useMediaQuery";
 import { useRevealOnScroll } from "./useRevealOnScroll";
 import { useScrollSteps } from "./useScrollSteps";
@@ -37,7 +40,34 @@ export function HomeStorySection({ section }: HomeStorySectionProps) {
   }
 
   if (section.number === 4) {
-    return <LimitationsStorySection section={section} />;
+    return (
+      <>
+        <StoryConnective word="However," />
+        <LimitationsStorySection section={section} />
+      </>
+    );
+  }
+
+  return <TourOrGenericStorySection section={section} />;
+}
+
+// Sections with a focus tour play it on large screens; elsewhere (and with
+// reduced motion) they are the plain text + artwork section.
+const FOCUS_TOUR_QUERY =
+  "(min-width: 1021px) and (min-height: 640px) and (prefers-reduced-motion: no-preference)";
+
+function TourOrGenericStorySection({ section }: HomeStorySectionProps) {
+  const tour = FOCUS_TOURS[section.number];
+  const isLargeScreen = useMediaQuery(FOCUS_TOUR_QUERY);
+
+  if (tour && isLargeScreen && section.imagePath) {
+    return (
+      <FocusTourSection
+        section={section}
+        tour={tour}
+        imageUrl={getBaseAwareImageUrl(section.imagePath)}
+      />
+    );
   }
 
   return <GenericStorySection section={section} />;

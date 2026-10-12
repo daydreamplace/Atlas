@@ -74,6 +74,7 @@ export function HomeHeroSection() {
       <div className="home-scene-inner" aria-hidden="true">
         <div ref={lightRef} className="home-light-field" />
       </div>
+      <div className="home-hero-section__fade" aria-hidden="true" />
       <div className="home-hero-section__copy">
         <h1 id="home-hero-title" className="home-hero-section__title">
           Bio Color ID

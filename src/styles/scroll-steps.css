@@ -1,5 +1,8 @@
 /* Used by components/home/useScrollSteps.ts. The hook sets the track height
-   and the pin's `top`; this only turns the pin sticky while it is active. */
-.scroll-steps-track[data-scroll-driven="true"] > .scroll-steps-pin {
+   and the pin's `top`; this only turns the pin sticky while it is active.
+   The class is doubled so this wins over a section's own `position` on its
+   pin whatever order the stylesheets load in. */
+.scroll-steps-track[data-scroll-driven="true"]
+  > .scroll-steps-pin.scroll-steps-pin {
   position: sticky;
 }

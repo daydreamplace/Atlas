@@ -1,0 +1,59 @@
+/* Linking word between two home sections (components/home/StoryConnective).
+   Scrubbed by `--reveal-progress` from useRevealOnScroll: the word rises in
+   first, then its underline is drawn. Visible as-is without JS. */
+.home-connective {
+  --p: var(--reveal-progress, 1);
+  --word-in: clamp(0, calc((var(--p) - 0.2) / 0.45), 1);
+  --line-in: clamp(0, calc((var(--p) - 0.55) / 0.4), 1);
+  --band-height: clamp(18rem, 62vh, 34rem);
+  --band-color: #09090d;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  height: var(--band-height);
+  /* The lower part fades out over the top of the next section, so the two
+     backgrounds run into each other without an edge. */
+  margin-bottom: calc(var(--band-height) * -0.3);
+  padding: 0 1.25rem calc(var(--band-height) * 0.12);
+  pointer-events: none;
+  background: linear-gradient(180deg, var(--band-color) 60%, transparent);
+}
+
+.home-page .home-connective__word {
+  position: relative;
+  margin: 0;
+  color: #c9a8ff;
+  font-family: "Kalam", "Segoe Print", cursive;
+  font-size: clamp(3.4rem, 11vw, 8.5rem);
+  font-weight: 700;
+  line-height: 1;
+  opacity: var(--word-in);
+  transform: translateY(calc((1 - var(--word-in)) * 2.5rem)) rotate(-3deg);
+}
+
+.home-connective__underline {
+  position: absolute;
+  top: 98%;
+  left: -2%;
+  width: 104%;
+  height: auto;
+  overflow: visible;
+}
+
+.home-connective__underline path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3.2;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - var(--line-in));
+}
+
+:root[data-theme="light"] .home-connective {
+  --band-color: #f8f5ee;
+}
+
+:root[data-theme="light"] .home-page .home-connective__word {
+  color: #7650a8;
+}

@@ -109,6 +109,8 @@
       transparent 52%
     ),
     linear-gradient(180deg, transparent, rgba(4, 5, 9, 0.78));
+  /* Gone by the bottom edge of the hero (it hangs 14% below it). */
+  mask-image: linear-gradient(180deg, #000 8%, transparent 54%);
 }
 
 .home-hero-section .home-scene-inner {
@@ -117,6 +119,17 @@
   width: min(1440px, 100%);
   min-height: inherit;
   margin-inline: auto;
+}
+
+/* The hero runs into the first story section instead of ending on an edge:
+   everything in it, the light included, sinks into that section's colour. */
+.home-hero-section__fade {
+  position: absolute;
+  z-index: 3;
+  inset: auto 0 0;
+  height: 44%;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent, #09090d 92%);
 }
 
 .home-hero-section .home-light-field {
@@ -1180,7 +1193,7 @@
   z-index: 5;
   top: 50%;
   left: 50%;
-  width: min(92%, 52rem);
+  width: min(94%, 82rem);
   translate: -50% -50%;
   text-align: center;
   animation: home-hero-in 1200ms 300ms cubic-bezier(0.22, 0.7, 0.3, 1) both;
@@ -1190,21 +1203,25 @@
   margin: 0;
   color: #f6f1fb;
   font-family: var(--wiki-serif);
-  font-size: clamp(3rem, 9vw, 7rem);
+  font-size: clamp(3.6rem, 13.5vw, 12rem);
   font-weight: 500;
   line-height: 1;
   letter-spacing: -0.035em;
   text-shadow: 0 10px 50px rgba(4, 5, 9, 0.6);
+  /* Drifts towards the reader and dissolves as the story scrolls in. */
+  opacity: calc(1 - var(--hero-scroll) * 1.7);
+  scale: calc(1 + var(--hero-scroll) * 0.14);
 }
 
 .home-hero-section__lead {
-  max-width: 34rem;
-  margin: 1.4rem auto 0;
+  max-width: 42rem;
+  margin: 1.6rem auto 0;
   color: #cfc6da;
   font-family: var(--wiki-sans);
-  font-size: clamp(1rem, 1.4vw, 1.2rem);
+  font-size: clamp(1.05rem, 1.7vw, 1.45rem);
   line-height: 1.6;
   text-wrap: balance;
+  opacity: calc(1 - var(--hero-scroll) * 2.2);
 }
 
 .home-hero-section__scroll {

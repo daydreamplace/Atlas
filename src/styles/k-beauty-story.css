@@ -488,3 +488,113 @@
     margin-inline: auto;
   }
 }
+
+/* --- Linked scene: sections 1 → 2 ---------------------------------------- */
+/* Large screens (components/home/storyZoomLink.ts): the section is pulled up
+   over the end of the pinned world map and held at the top of the screen
+   while it fades in, so the zoom on Korea lands on Korea on the globe. Both
+   pins release together and the page scrolls on from here. */
+.home-page .home-story-section.k-beauty-story[data-zoom-linked="true"] {
+  z-index: 1;
+  display: block;
+  margin-top: calc((1 + var(--zoom-link-entrance)) * -100vh);
+  padding-block: 0;
+  opacity: clamp(0, calc(var(--scroll-progress, 0) / 0.7), 1);
+}
+
+.k-beauty-story[data-zoom-linked="true"] .k-beauty-story__pin {
+  min-height: 100vh;
+  padding-block: clamp(5rem, 8vh, 7rem);
+}
+
+.home-page .home-story-section.k-beauty-story[data-zoom-linked="true"] {
+  /* The skincare group leaves through the bottom of the section. */
+  overflow: clip visible;
+}
+
+/* The story reads downwards: Seoul → the world → counterfeit parcels, with
+   the skincare group travelling past all of it. */
+.home-page .k-beauty-story[data-zoom-linked="true"] .k-beauty-story__inner {
+  --inner-width: min(100vw - 2 * clamp(1rem, 4vw, 4.5rem), 1560px);
+  --origin-top: max(37rem, 72vh);
+  min-height: max(
+    calc(var(--origin-top) + var(--inner-width) * 0.24),
+    calc(var(--inner-width) * 0.66 + 4rem)
+  );
+}
+
+.k-beauty-story[data-zoom-linked="true"] .k-beauty-story__origin {
+  top: var(--origin-top);
+  bottom: auto;
+  width: 34%;
+}
+
+.k-beauty-story[data-zoom-linked="true"] .k-beauty-story__parcel-cluster {
+  top: calc(var(--inner-width) * 0.46);
+  bottom: auto;
+  width: 26%;
+}
+
+/* Lane the skincare group travels in; KBeautyStorySection sets its top and
+   height so that it ends inside the next section. */
+.k-beauty-story__follow-lane {
+  position: absolute;
+  z-index: 5;
+  right: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.k-beauty-story__follow-view {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.k-beauty-story__follow-product {
+  --width: min(30vw, 56vh);
+  --t: var(--follow, 0);
+  /* Smoothstep, so it sets off and settles gently. */
+  --eased: calc(var(--t) * var(--t) * (3 - 2 * var(--t)));
+  position: absolute;
+  top: calc(73vh - var(--width) * 0.462);
+  left: calc(61vw - var(--width) / 2);
+  width: var(--width);
+  aspect-ratio: 1305 / 1206;
+  /* Swings a little on the way, upright again on arrival. */
+  transform: translate(
+      calc(var(--follow-x, 0) * var(--eased) * 1px),
+      calc(var(--follow-y, 0) * var(--eased) * 1px)
+    )
+    scale(calc(1 + (var(--follow-scale, 1) - 1) * var(--eased)))
+    rotate(calc(var(--eased) * (1 - var(--eased)) * -20deg));
+  will-change: transform;
+}
+
+.k-beauty-story__follow-skincare {
+  width: 100%;
+  height: 100%;
+  opacity: calc(1 - var(--product-out, 0));
+  filter: drop-shadow(0 20px 18px rgba(0, 0, 0, 0.3));
+}
+
+/* QR label taped to the squeeze tube (PRODUCT_QR in KBeautyStorySection).
+   Once the group has landed in the middle of the screen, the label leaves
+   for the next section's QR label, growing to its size. */
+.k-beauty-story__follow-qr {
+  --g: var(--qr-grow, 0);
+  --grown: calc(var(--g) * var(--g) * (3 - 2 * var(--g)));
+  position: absolute;
+  top: calc(44% - 8.5% * 1305 / 1206);
+  left: calc(78% - 8.5%);
+  width: 17%;
+  height: auto;
+  aspect-ratio: 1;
+  opacity: calc(1 - var(--qr-out, 0));
+  transform: translate(
+      calc(var(--qr-x, 0) * var(--grown) * 1px),
+      calc(var(--qr-y, 0) * var(--grown) * 1px)
+    )
+    rotate(-6deg) scale(calc(1 + (var(--qr-scale, 1) - 1) * var(--grown)));
+  filter: drop-shadow(0 4px 5px rgba(0, 0, 0, 0.28));
+}

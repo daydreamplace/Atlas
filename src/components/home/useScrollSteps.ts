@@ -56,6 +56,8 @@ interface ScrollStepsOptions {
    * ("top") stays in view.
    */
   readonly align?: "top" | "bottom";
+  /** Element that receives `--scroll-progress` (defaults to the pin). */
+  readonly progressRef?: RefObject<HTMLElement | null>;
 }
 
 // Height-only resizes smaller than this (e.g. a mobile browser's address bar
@@ -69,6 +71,7 @@ export function useScrollSteps({
   enabled,
   stepLength = 0.4,
   align = "bottom",
+  progressRef,
 }: ScrollStepsOptions) {
   const [stepIndex, setStepIndex] = useState(0);
 
@@ -76,6 +79,7 @@ export function useScrollSteps({
     const track = trackRef.current;
     const pin = pinRef.current;
     if (!enabled || !track || !pin) return;
+    const progressTarget = progressRef?.current ?? pin;
 
     const lockHolder = Symbol("scroll-steps");
     let frame = 0;
@@ -98,7 +102,7 @@ export function useScrollSteps({
       const clamped = Math.min(Math.max(progress, 0), 0.9999);
       setStepIndex(Math.floor(clamped * stepCount));
       // Continuous progress for CSS-driven sequences.
-      pin.style.setProperty("--scroll-progress", clamped.toFixed(4));
+      progressTarget.style.setProperty("--scroll-progress", clamped.toFixed(4));
 
       if (progress > 0 && progress < 1) lockGnb(lockHolder);
       else unlockGnb(lockHolder);
@@ -135,10 +139,10 @@ export function useScrollSteps({
       window.removeEventListener("scroll", requestUpdate);
       unlockGnb(lockHolder);
       pin.style.top = "";
-      pin.style.removeProperty("--scroll-progress");
+      progressTarget.style.removeProperty("--scroll-progress");
       track.style.height = "";
     };
-  }, [align, enabled, pinRef, stepCount, stepLength, trackRef]);
+  }, [align, enabled, pinRef, progressRef, stepCount, stepLength, trackRef]);
 
   /** Scroll so that the given step is showing (used by the step buttons). */
   const scrollToStep = useCallback(

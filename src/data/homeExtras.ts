@@ -76,6 +76,22 @@ export const BIO_COLOR_ID_FEATURES = [
   { title: "Light-readable", text: "Read by light-based systems." },
 ] as const;
 
+/** Section 8: how the reader works. */
+export const READER_STEPS = [
+  {
+    title: "Illuminate",
+    text: "Several wavelengths of light shine on the tag.",
+  },
+  {
+    title: "Capture",
+    text: "An iPhone above the reader images the tag from the top.",
+  },
+  {
+    title: "Compare",
+    text: "The app compares the spectral signature with reference data.",
+  },
+] as const;
+
 /** Section 9: where the standard leads. */
 export const STANDARD_OUTCOMES = [
   "Consumer trust",
