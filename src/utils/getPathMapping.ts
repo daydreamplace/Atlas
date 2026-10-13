@@ -31,3 +31,18 @@ export const getPathMapping = () => {
     return map;
   }, {});
 };
+
+/** Other addresses of each page (`aliases` in pages.ts) → its real path. */
+export const getPathAliases = () => {
+  const aliases: { [alias: string]: string } = {};
+  pages
+    .flatMap((item) => ("folder" in item && item.folder ? item.folder : [item]))
+    .forEach((page) => {
+      if (!("path" in page) || !page.path) return;
+      const { path } = page;
+      page.aliases?.forEach((alias) => {
+        aliases[alias] = path;
+      });
+    });
+  return aliases;
+};

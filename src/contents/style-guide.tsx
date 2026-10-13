@@ -16,7 +16,12 @@ export function StyleGuide() {
         sentences.
       </p>
 
+      <p className="text-eyebrow">Eyebrow (.text-eyebrow)</p>
       <h2>Section title (h2)</h2>
+      <p className="text-meta">
+        Meta line (<code>.text-meta</code>) for a date, author or place under a
+        heading.
+      </p>
       <p>
         Body text (<code>&lt;p&gt;</code>). This is the default for everything
         written on a page: 16px with generous line height so long explanations
@@ -66,6 +71,17 @@ export function StyleGuide() {
         <li>Second step</li>
       </ol>
 
+      <h2>Terms</h2>
+      <dl>
+        <dt>Term (dt)</dt>
+        <dd>
+          Definition (<code>&lt;dd&gt;</code>). Use a definition list for
+          abbreviations and glossary entries.
+        </dd>
+        <dt>Second term</dt>
+        <dd>Second definition.</dd>
+      </dl>
+
       <h2>Quote</h2>
       <blockquote>
         <p>
@@ -85,6 +101,49 @@ export function StyleGuide() {
           Start with the figure number, then say what the reader should see.
         </figcaption>
       </figure>
+
+      <figure className="is-narrow">
+        <div className="style-guide-placeholder" aria-hidden="true">
+          Narrow image
+        </div>
+        <figcaption>
+          <strong>Figure 2.</strong> Add <code>className="is-narrow"</code> to a
+          figure that should not fill the column, such as a portrait photo or a
+          small diagram.
+        </figcaption>
+      </figure>
+      <figure>
+        <div className="figure-grid">
+          <div className="style-guide-placeholder" aria-hidden="true">
+            Image A
+          </div>
+          <div className="style-guide-placeholder" aria-hidden="true">
+            Image B
+          </div>
+        </div>
+        <figcaption>
+          <strong>Figure 3.</strong> Several images under one caption go in a{" "}
+          <code>.figure-grid</code>: two columns by default, or{" "}
+          <code>{'style={{ "--figure-columns": 3 }}'}</code> for three.
+        </figcaption>
+      </figure>
+
+      <h2>Collapsible block</h2>
+      <details>
+        <summary>Summary line (details &gt; summary)</summary>
+        <p>
+          Use a collapsible block for long protocols and notebook entries that
+          not every reader needs to open.
+        </p>
+        <ol>
+          <li>Content inside uses the same text styles.</li>
+          <li>Second step.</li>
+        </ol>
+      </details>
+      <details>
+        <summary>A second, closed block</summary>
+        <p>More content.</p>
+      </details>
 
       <h2>Code</h2>
       <p>
@@ -140,8 +199,15 @@ export function StyleGuide() {
       </div>
 
       <h2>References</h2>
+      <p>
+        Cite a source in running text with a numbered marker
+        <sup>
+          <a href="#ref-1">1</a>
+        </sup>{" "}
+        that links to the matching entry by its <code>id</code>.
+      </p>
       <ol className="references">
-        <li>
+        <li id="ref-1">
           Author, A., &amp; Author, B. (Year). Title of the article.{" "}
           <em>Journal Name</em>, volume(issue), pages. https://doi.org/…
         </li>

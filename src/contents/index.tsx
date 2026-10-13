@@ -1,11 +1,13 @@
 export { Home } from "./home.tsx";
 // Team
 export { Members } from "./members.tsx";
+export { Attributions } from "./attributions.tsx";
 // Project
 export { Description } from "./description.tsx";
 export { Engineering } from "./engineering.tsx";
 export { Results } from "./results.tsx";
 export { Contribution } from "./contribution.tsx";
+export { Parts } from "./parts.tsx";
 // Wet Lab
 export { Experiments } from "./experiments.tsx";
 export { Notebook } from "./notebook.tsx";

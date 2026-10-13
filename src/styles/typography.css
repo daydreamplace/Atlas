@@ -2,8 +2,13 @@
 
    Everything inside <div class="wiki-page-content"> is styled from plain
    HTML: write <h2>, <p>, <figure>, <table> … and it looks right. A few
-   classes cover the rest (.text-lead, .text-caption, .text-accent,
-   .references, .table-wrap). See the live examples at /style-guide.
+   classes cover the rest (.text-lead, .text-eyebrow, .text-meta,
+   .text-caption, .text-accent, .references, .table-wrap, .figure-grid).
+   See the live examples at /style-guide.
+
+   Every size, weight, line height and gap comes from the --type-* tokens
+   below. Change a token to restyle the whole wiki; do not hard-code these
+   values in page files.
 
    Selectors use :where() so they stay low-specificity: component styles
    (e.g. the member archive) override them without !important. */
@@ -16,28 +21,64 @@
     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
     monospace;
 
-  /* Colours on the dark page */
+  /* Colours on the dark page (light mode: styles/light-mode.css) */
   --type-heading: #f2f3f5;
   --type-body: #b4bec2;
   --type-strong: #ebeff1;
+  --type-lead-color: #d6dcdf;
   --type-muted: #8a9399;
   --type-accent: #c9a8ff;
+  --type-code: #e6dcff;
+  --type-highlight: rgba(139, 69, 223, 0.32);
+  --type-surface: rgba(255, 255, 255, 0.05);
 
-  /* Sizes */
-  --type-h2: clamp(1.75rem, 1.2rem + 1.6vw, 2.5rem);
-  --type-h3: clamp(1.25rem, 1.1rem + 0.5vw, 1.45rem);
-  --type-h4: 1.0625rem;
+  /* Sizes, largest to smallest */
+  --type-page-title: clamp(2rem, 0.9rem + 5.5vw, 5.8rem); /* h1 in the hero */
+  --type-page-title-long: clamp(1.85rem, 0.8rem + 4.2vw, 4.5rem);
+  --type-h2: clamp(1.75rem, 1.2rem + 1.6vw, 2.5rem); /* section */
+  --type-h3: clamp(1.25rem, 1.1rem + 0.5vw, 1.45rem); /* subsection */
+  --type-h4: 1.0625rem; /* minor heading */
+  --type-quote: clamp(1.15rem, 1rem + 0.6vw, 1.35rem);
   --type-lead: clamp(1.0625rem, 1rem + 0.3vw, 1.2rem);
   --type-body-size: 1rem;
-  --type-small: 0.875rem;
-  --type-caption: 0.8125rem;
+  --type-small: 0.875rem; /* tables, references, notes */
+  --type-caption: 0.8125rem; /* figure and table captions */
+  --type-eyebrow: 0.75rem; /* label above a heading */
+
+  /* Weights */
+  --type-weight-regular: 400;
+  --type-weight-semibold: 600;
+  --type-weight-bold: 700;
+
+  /* Line heights */
+  --type-leading-tight: 1.2; /* large headings */
+  --type-leading-snug: 1.35; /* small headings */
+  --type-leading-compact: 1.6; /* captions, tables */
+  --type-leading-lead: 1.7;
+  --type-leading-body: 1.8;
+
+  /* Letter spacing */
+  --type-tracking-h2: -0.025em;
+  --type-tracking-h3: -0.015em;
+  --type-tracking-eyebrow: 0.14em;
+
+  /* Vertical rhythm: space above a heading, around a block, after a paragraph */
+  --type-space-section: 4.5rem;
+  --type-space-subsection: 3rem;
+  --type-space-minor: 2.25rem;
+  --type-space-block: 2.75rem; /* figures, tables, quotes */
+  --type-space-paragraph: 1.25rem;
+
+  /* Longest comfortable line of running text */
+  --type-measure: 46rem;
+  --type-radius: 8px;
 }
 
 .wiki-page-content {
   color: var(--type-body);
   font-family: var(--type-sans);
   font-size: var(--type-body-size);
-  line-height: 1.8;
+  line-height: var(--type-leading-body);
   overflow-wrap: break-word;
 }
 
@@ -53,28 +94,28 @@
 
 /* Section title */
 .wiki-page-content :where(h2) {
-  margin: 4.5rem 0 1.25rem;
+  margin: var(--type-space-section) 0 var(--type-space-paragraph);
   font-size: var(--type-h2);
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.025em;
+  font-weight: var(--type-weight-bold);
+  line-height: var(--type-leading-tight);
+  letter-spacing: var(--type-tracking-h2);
 }
 
 /* Subsection title */
 .wiki-page-content :where(h3) {
-  margin: 3rem 0 0.85rem;
+  margin: var(--type-space-subsection) 0 0.85rem;
   font-size: var(--type-h3);
-  font-weight: 600;
-  line-height: 1.35;
-  letter-spacing: -0.015em;
+  font-weight: var(--type-weight-semibold);
+  line-height: var(--type-leading-snug);
+  letter-spacing: var(--type-tracking-h3);
 }
 
 /* Minor heading inside a subsection */
 .wiki-page-content :where(h4) {
-  margin: 2.25rem 0 0.6rem;
+  margin: var(--type-space-minor) 0 0.6rem;
   font-size: var(--type-h4);
-  font-weight: 700;
-  line-height: 1.45;
+  font-weight: var(--type-weight-bold);
+  line-height: var(--type-leading-snug);
 }
 
 .wiki-page-content > :where(:first-child),
@@ -85,15 +126,15 @@
 /* --- Body text ---------------------------------------------------------- */
 
 .wiki-page-content :where(p) {
-  margin: 0 0 1.25rem;
+  margin: 0 0 var(--type-space-paragraph);
 }
 
 /* Opening paragraph of a page or section */
 .wiki-page-content :where(.text-lead) {
   margin-bottom: 2rem;
-  color: #d6dcdf;
+  color: var(--type-lead-color);
   font-size: var(--type-lead);
-  line-height: 1.7;
+  line-height: var(--type-leading-lead);
 }
 
 .wiki-page-content :where(.text-small) {
@@ -102,7 +143,7 @@
 
 .wiki-page-content :where(strong, b) {
   color: var(--type-strong);
-  font-weight: 700;
+  font-weight: var(--type-weight-bold);
 }
 
 .wiki-page-content :where(em, i) {
@@ -112,7 +153,7 @@
 /* Key term in the accent colour */
 .wiki-page-content :where(.text-accent) {
   color: var(--type-accent);
-  font-weight: 600;
+  font-weight: var(--type-weight-semibold);
 }
 
 /* Highlighted phrase (replaces last year's background highlight) */
@@ -120,14 +161,14 @@
   padding: 0.05em 0.3em;
   color: var(--type-strong);
   border-radius: 3px;
-  background: rgba(139, 69, 223, 0.32);
+  background: var(--type-highlight);
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
 
 /* Variables and symbols in running text: <var>k</var><sub>IN</sub> */
 .wiki-page-content :where(var) {
-  color: #e6dcff;
+  color: var(--type-code);
   font-family: var(--type-serif);
   font-size: 1.08em;
   font-style: italic;
@@ -197,11 +238,11 @@
 /* --- Quotes ------------------------------------------------------------- */
 
 .wiki-page-content :where(blockquote) {
-  margin: 3rem 0;
+  margin: var(--type-space-block) 0;
   padding: 0.25rem 0 0.25rem 1.6rem;
   color: #edf1f2;
   border-left: 2px solid var(--wiki-accent);
-  font: 400 clamp(1.15rem, 1rem + 0.6vw, 1.35rem) / 1.55 var(--type-serif);
+  font: var(--type-weight-regular) var(--type-quote) / 1.55 var(--type-serif);
 }
 
 .wiki-page-content :where(blockquote p:last-of-type) {
@@ -223,10 +264,10 @@
 /* Inline code */
 .wiki-page-content :where(:not(pre) > code) {
   padding: 0.12em 0.4em;
-  color: #e6dcff;
+  color: var(--type-code);
   border: 1px solid var(--wiki-line);
   border-radius: 4px;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--type-surface);
   overflow-wrap: anywhere;
 }
 
@@ -251,7 +292,7 @@
 /* --- Figures and captions ----------------------------------------------- */
 
 .wiki-page-content :where(figure) {
-  margin: 2.75rem 0;
+  margin: var(--type-space-block) 0;
 }
 
 .wiki-page-content :where(figure img, figure video, figure svg) {
@@ -259,7 +300,7 @@
   max-width: 100%;
   height: auto;
   margin-inline: auto;
-  border-radius: 8px;
+  border-radius: var(--type-radius);
 }
 
 /* <figcaption><strong>Figure 1.</strong> What the figure shows.</figcaption> */
@@ -267,7 +308,7 @@
   margin-top: 0.85rem;
   color: var(--type-muted);
   font-size: var(--type-caption);
-  line-height: 1.6;
+  line-height: var(--type-leading-compact);
 }
 
 .wiki-page-content :where(figcaption strong, table caption strong) {
@@ -289,7 +330,7 @@
 
 /* Wrap tables in <div class="table-wrap"> so wide ones scroll on phones. */
 .wiki-page-content :where(.table-wrap) {
-  margin: 2.25rem 0;
+  margin: var(--type-space-block) 0;
   overflow-x: auto;
 }
 
@@ -297,7 +338,7 @@
   width: 100%;
   border-collapse: collapse;
   font-size: var(--type-small);
-  line-height: 1.6;
+  line-height: var(--type-leading-compact);
 }
 
 .wiki-page-content :where(table caption) {
@@ -323,6 +364,143 @@
   white-space: nowrap;
 }
 
+/* --- Reading width ------------------------------------------------------ */
+
+/* Running text written straight into a page keeps a comfortable line
+   length; figures, tables and code may use the full column. */
+.wiki-page-content
+  > :where(h2, h3, h4, p, ul, ol, dl, blockquote, details, .text-eyebrow) {
+  max-width: var(--type-measure);
+}
+
+/* --- Labels ------------------------------------------------------------- */
+
+/* Small label above a heading: <p class="text-eyebrow">Cycle 1</p><h2>…</h2> */
+.wiki-page-content :where(.text-eyebrow) {
+  margin: var(--type-space-section) 0 0.6rem;
+  color: var(--type-accent);
+  font-size: var(--type-eyebrow);
+  font-weight: var(--type-weight-semibold);
+  line-height: var(--type-leading-snug);
+  letter-spacing: var(--type-tracking-eyebrow);
+  text-transform: uppercase;
+}
+
+.wiki-page-content :where(.text-eyebrow + h2, .text-eyebrow + h3) {
+  margin-top: 0;
+}
+
+/* Date, author or place under a heading: <p class="text-meta">…</p> */
+.wiki-page-content :where(.text-meta) {
+  margin-bottom: var(--type-space-paragraph);
+  color: var(--type-muted);
+  font-size: var(--type-small);
+  line-height: var(--type-leading-compact);
+}
+
+.wiki-page-content :where(h2 + .text-meta, h3 + .text-meta, h4 + .text-meta) {
+  margin-top: -0.35rem;
+}
+
+/* Citation marker in running text: <sup><a href="#ref-1">1</a></sup> */
+.wiki-page-content :where(sup a) {
+  padding-inline: 0.1em;
+  font-weight: var(--type-weight-semibold);
+  text-decoration: none;
+}
+
+/* The reference a citation marker jumps to. */
+.wiki-page-content :where(.references li) {
+  scroll-margin-top: calc(var(--gnb-height) + var(--snb-strip-height) + 1.5rem);
+}
+
+/* --- Terms and definitions ---------------------------------------------- */
+
+/* <dl><dt>Term</dt><dd>What it means.</dd></dl> */
+.wiki-page-content :where(dl) {
+  margin: 0 0 1.5rem;
+}
+
+.wiki-page-content :where(dt) {
+  color: var(--type-strong);
+  font-weight: var(--type-weight-semibold);
+}
+
+.wiki-page-content :where(dd) {
+  margin: 0 0 0.85rem;
+}
+
+/* --- Figure layouts ----------------------------------------------------- */
+
+/* A figure that should not fill the column: <figure class="is-narrow"> */
+.wiki-page-content :where(figure.is-narrow) {
+  max-width: 32rem;
+  margin-inline: auto;
+}
+
+/* Several images under one caption:
+   <figure><div class="figure-grid">…imgs…</div><figcaption/></figure>
+   Two columns by default; set style="--figure-columns: 3" for three. */
+.wiki-page-content :where(.figure-grid) {
+  display: grid;
+  grid-template-columns: repeat(var(--figure-columns, 2), minmax(0, 1fr));
+  gap: 0.75rem;
+  align-items: start;
+}
+
+@media (max-width: 575.98px) {
+  .wiki-page-content :where(.figure-grid) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* --- Collapsible block -------------------------------------------------- */
+
+/* <details><summary>Protocol title</summary> …content… </details> */
+.wiki-page-content :where(details) {
+  margin: 0 0 0.75rem;
+  border: 1px solid var(--wiki-line);
+  border-radius: var(--type-radius);
+  background: var(--type-surface);
+}
+
+.wiki-page-content :where(summary) {
+  padding: 0.85rem 1.1rem;
+  color: var(--type-heading);
+  font-size: var(--type-h4);
+  font-weight: var(--type-weight-semibold);
+  line-height: var(--type-leading-snug);
+  cursor: pointer;
+}
+
+.wiki-page-content :where(summary)::marker {
+  color: var(--type-accent);
+}
+
+.wiki-page-content :where(details[open] > summary) {
+  border-bottom: 1px solid var(--wiki-line);
+}
+
+.wiki-page-content :where(details > :not(summary)) {
+  margin-inline: 1.1rem;
+}
+
+.wiki-page-content :where(details > summary + *) {
+  margin-top: 1rem;
+}
+
+/* --- Embedded forms ----------------------------------------------------- */
+
+/* The Project Attributions form on /attributions. */
+.attribution-form {
+  display: block;
+  width: 100%;
+  min-height: 70vh;
+  border: 0;
+  border-radius: var(--type-radius);
+  background: #fff;
+}
+
 /* Stand-in for an image on /style-guide. */
 .style-guide-placeholder {
   display: grid;
@@ -330,7 +508,7 @@
   aspect-ratio: 16 / 9;
   color: var(--type-muted);
   border: 1px dashed var(--wiki-line);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.025);
+  border-radius: var(--type-radius);
+  background: var(--type-surface);
   font-size: var(--type-small);
 }

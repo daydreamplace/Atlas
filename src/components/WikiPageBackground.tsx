@@ -1,6 +1,8 @@
-import type { ReactNode } from "react";
+import { useRef, type ReactNode } from "react";
 import { Header } from "./Header";
 import { SectionNavigation } from "./SectionNavigation";
+import { usePageSections } from "./usePageSections";
+import { TEAM_MEMBERS_PATH } from "../pages";
 
 interface WikiPageBackgroundProps {
   children: ReactNode;
@@ -15,8 +17,11 @@ export function WikiPageBackground({
   lead,
   pathname,
 }: WikiPageBackgroundProps) {
-  const isTeamPage = pathname === "/team";
-  const showSectionNavigation = Boolean(pathname);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const sections = usePageSections(contentRef);
+  const isTeamPage = pathname === TEAM_MEMBERS_PATH;
+  // A table of contents needs at least two places to go.
+  const showSectionNavigation = sections.length > 1;
   const layoutClassName = [
     "container",
     "wiki-documentation-grid",
@@ -34,10 +39,12 @@ export function WikiPageBackground({
     >
       <Header title={title} lead={lead} withInspectionLight />
       <div className={layoutClassName}>
-        {showSectionNavigation && pathname ? (
-          <SectionNavigation pathname={pathname} />
+        {showSectionNavigation ? (
+          <SectionNavigation title={title} sections={sections} />
         ) : null}
-        <div className="wiki-page-content">{children}</div>
+        <div ref={contentRef} className="wiki-page-content">
+          {children}
+        </div>
       </div>
     </main>
   );

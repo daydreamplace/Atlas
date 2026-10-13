@@ -4,8 +4,8 @@ import "./App.css";
 import "../../styles/global.css";
 import "../../styles/home.css";
 import "../../styles/typography.css";
-import { Route, Routes, useLocation } from "react-router-dom";
-import { getPathMapping } from "../../utils";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { getPathAliases, getPathMapping } from "../../utils";
 import { useEffect } from "react";
 import { Navbar } from "../../components/Navbar";
 import { NotFound } from "../../components/NotFound";
@@ -17,6 +17,7 @@ import { WikiPageBackground } from "../../components/WikiPageBackground";
 const App = () => {
   const { pathname: currentPath } = useLocation();
   const pathMapping = getPathMapping();
+  const pathAliases = getPathAliases();
 
   // Set Page Title
   const title =
@@ -70,6 +71,14 @@ const App = () => {
             />
           ),
         )}
+        {/* Older and shorthand addresses redirect to the page's real path. */}
+        {Object.entries(pathAliases).map(([alias, path]) => (
+          <Route
+            key={alias}
+            path={alias}
+            element={<Navigate to={path} replace />}
+          />
+        ))}
         {/* Text style reference for the team; not linked from the GNB. */}
         <Route
           path="/style-guide"

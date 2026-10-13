@@ -19,6 +19,10 @@
   --type-strong: #352d3f;
   --type-muted: #817988;
   --type-accent: #6f489f;
+  --type-lead-color: #4f4856;
+  --type-code: #624287;
+  --type-highlight: rgba(150, 111, 191, 0.17);
+  --type-surface: rgba(118, 80, 168, 0.06);
 }
 
 :root[data-theme="light"] body {
@@ -594,23 +598,6 @@
 
 :root[data-theme="light"] .snb a:hover,
 :root[data-theme="light"] .snb a:focus-visible {
-  background: rgba(118, 80, 168, 0.06);
-}
-
-:root[data-theme="light"] .wiki-page-content :where(.text-lead) {
-  color: #4f4856;
-}
-
-:root[data-theme="light"] .wiki-page-content :where(mark) {
-  background: rgba(150, 111, 191, 0.17);
-}
-
-:root[data-theme="light"] .wiki-page-content :where(var),
-:root[data-theme="light"] .wiki-page-content :where(:not(pre) > code) {
-  color: #624287;
-}
-
-:root[data-theme="light"] .wiki-page-content :where(:not(pre) > code) {
   background: rgba(118, 80, 168, 0.06);
 }
 

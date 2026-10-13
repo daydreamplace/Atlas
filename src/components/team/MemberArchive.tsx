@@ -46,6 +46,7 @@ export function MemberArchive({ members }: { members: Member[] }) {
               className="member-group"
               id={`group-${group.toLowerCase()}`}
               data-group={group}
+              data-toc={group}
               key={group}
             >
               <header>

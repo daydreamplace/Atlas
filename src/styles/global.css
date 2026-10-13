@@ -548,7 +548,7 @@ textarea {
   max-width: 980px;
   margin-bottom: 1rem !important;
   color: rgba(238, 244, 247, 0.93) !important;
-  font-size: clamp(2rem, 0.9rem + 5.5vw, 5.8rem);
+  font-size: var(--type-page-title);
   font-weight: 700;
   line-height: 0.96;
   letter-spacing: -0.065em;
@@ -563,7 +563,7 @@ textarea {
 
 /* Set by <Header> for titles of 20+ characters. */
 .wiki-page-background .bg-hero h1.is-long {
-  font-size: clamp(1.85rem, 0.8rem + 4.2vw, 4.5rem);
+  font-size: var(--type-page-title-long);
 }
 
 .wiki-page-background .bg-hero .lead {
@@ -599,6 +599,10 @@ textarea {
   top: calc(var(--gnb-offset) + 28px);
   transition: top 300ms ease;
   align-self: start;
+  /* A long table of contents scrolls inside the SNB instead of running off
+     the bottom of the screen. */
+  max-height: calc(100vh - var(--gnb-offset) - 56px);
+  overflow-y: auto;
   padding-top: 0.7rem;
   font-family: var(--wiki-sans);
 }
@@ -1183,6 +1187,11 @@ textarea {
     grid-template-columns: 180px minmax(0, 1fr);
   }
 
+  /* Pages without an SNB (style guide, 404) keep one full-width column. */
+  .wiki-documentation-grid--single.container {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .contact-sheet {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1216,6 +1225,7 @@ textarea {
   .snb {
     z-index: 20;
     top: var(--gnb-offset);
+    max-height: none;
     margin: 0 calc(-1 * var(--page-gutter)) 3rem;
     padding: 0.75rem var(--page-gutter);
     overflow-x: auto;

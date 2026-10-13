@@ -1,127 +1,96 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import Pages from "../pages";
+import { useEffect, useRef, useState } from "react";
+import type { PageSection } from "./usePageSections";
 
-type SectionPage = {
-  label: string;
-  path: string;
-  id?: string;
-};
+interface SectionNavigationProps {
+  title: string;
+  sections: PageSection[];
+}
 
-type NavigationSection = {
-  label: string;
-  pages: SectionPage[];
-};
-
-const navigationSections: NavigationSection[] = Pages.flatMap((item) => {
-  if ("folder" in item && item.folder) {
-    const sectionPages = item.folder.flatMap((page) =>
-      page.path
-        ? [{ label: page.name || page.title || "Untitled", path: page.path }]
-        : [],
-    );
-
-    return sectionPages.length
-      ? [{ label: item.name || "Section", pages: sectionPages }]
-      : [];
-  }
-
-  if ("path" in item && item.path && item.path !== "/") {
-    return [
-      {
-        label: item.name || item.title || "Page",
-        pages: [
-          {
-            label: item.name || item.title || "Untitled",
-            path: item.path,
-          },
-        ],
-      },
-    ];
-  }
-
-  return [];
-});
-
-const teamNavigationSection: NavigationSection = {
-  label: "Team",
-  pages: ["Members", "PI", "Instructor", "Advisor"].map((label) => ({
-    id: `group-${label.toLowerCase()}`,
-    label,
-    path: `/team#group-${label.toLowerCase()}`,
-  })),
-};
-
-export function SectionNavigation({ pathname }: { pathname: string }) {
-  const isTeamPage = pathname === "/team";
-  const section = isTeamPage
-    ? teamNavigationSection
-    : navigationSections.find((candidate) =>
-        candidate.pages.some((page) => page.path === pathname),
-      );
-  const [activeSectionId, setActiveSectionId] = useState(
-    teamNavigationSection.pages[0].id,
-  );
+/** Table of contents for the current page: jumps to its section titles. */
+export function SectionNavigation({ title, sections }: SectionNavigationProps) {
+  const navRef = useRef<HTMLElement>(null);
+  const clickedIdRef = useRef<string | undefined>(undefined);
+  const [activeId, setActiveId] = useState<string | undefined>(sections[0]?.id);
 
   useEffect(() => {
-    if (!isTeamPage) return;
-
     const updateActiveSection = () => {
-      let nextId = teamNavigationSection.pages[0].id;
+      let nextId = sections[0]?.id;
 
-      teamNavigationSection.pages.forEach((page) => {
-        if (!page.id) return;
-        const element = document.getElementById(page.id);
+      sections.forEach(({ id }) => {
+        const element = document.getElementById(id);
         if (!element) return;
-        // Match the CSS scroll-margin-top so a group counts as current as
+        // Match the CSS scroll-margin-top so a section counts as current as
         // soon as an SNB click scrolls it into place, at any screen size.
         const offset = parseFloat(getComputedStyle(element).scrollMarginTop);
         if (element.getBoundingClientRect().top <= (offset || 0) + 8) {
-          nextId = page.id;
+          nextId = id;
         }
       });
 
-      setActiveSectionId(nextId);
+      // The last sections may be too short to ever reach the top: at the
+      // bottom of the page the one just clicked wins, otherwise the last.
+      const page = document.documentElement;
+      if (window.innerHeight + window.scrollY >= page.scrollHeight - 2) {
+        const clicked = sections.find(({ id }) => id === clickedIdRef.current);
+        nextId = clicked?.id ?? sections[sections.length - 1]?.id;
+      }
+
+      setActiveId(nextId);
     };
+
+    // Scrolling by hand ends the effect of the last click.
+    const forgetClick = () => {
+      clickedIdRef.current = undefined;
+    };
+    const manualScrollEvents = ["wheel", "touchmove", "keydown"] as const;
 
     updateActiveSection();
     window.addEventListener("scroll", updateActiveSection, { passive: true });
-    return () => window.removeEventListener("scroll", updateActiveSection);
-  }, [isTeamPage]);
+    window.addEventListener("resize", updateActiveSection);
+    manualScrollEvents.forEach((type) =>
+      window.addEventListener(type, forgetClick, { passive: true }),
+    );
+    return () => {
+      window.removeEventListener("scroll", updateActiveSection);
+      window.removeEventListener("resize", updateActiveSection);
+      manualScrollEvents.forEach((type) =>
+        window.removeEventListener(type, forgetClick),
+      );
+    };
+  }, [sections]);
 
-  if (!section) return null;
+  // On small screens the SNB is a horizontal strip: keep the current section
+  // in view as the reader scrolls down the page.
+  useEffect(() => {
+    const nav = navRef.current;
+    const link = nav?.querySelector<HTMLElement>("a.active");
+    if (!nav || !link || nav.scrollWidth <= nav.clientWidth) return;
+    nav.scrollTo({
+      left: link.offsetLeft - (nav.clientWidth - link.offsetWidth) / 2,
+      behavior: "smooth",
+    });
+  }, [activeId]);
 
   return (
-    <nav className="snb" aria-label={`${section.label} section navigation`}>
-      <p className="snb-label">Section</p>
-      <h2>{section.label}</h2>
+    <nav ref={navRef} className="snb" aria-label="On this page">
+      <p className="snb-label">On this page</p>
+      <h2>{title}</h2>
       <ol>
-        {section.pages.map((page) => {
-          const isCurrent = page.id
-            ? page.id === activeSectionId
-            : page.path === pathname;
-          const content = <strong>{page.label}</strong>;
-
+        {sections.map(({ id, label }) => {
+          const isCurrent = id === activeId;
           return (
-            <li key={page.path}>
-              {page.id ? (
-                <a
-                  href={`#${page.id}`}
-                  className={isCurrent ? "active" : undefined}
-                  aria-current={isCurrent ? "location" : undefined}
-                  onClick={() => setActiveSectionId(page.id)}
-                >
-                  {content}
-                </a>
-              ) : (
-                <Link
-                  to={page.path}
-                  className={isCurrent ? "active" : undefined}
-                  aria-current={isCurrent ? "page" : undefined}
-                >
-                  {content}
-                </Link>
-              )}
+            <li key={id}>
+              <a
+                href={`#${id}`}
+                className={isCurrent ? "active" : undefined}
+                aria-current={isCurrent ? "location" : undefined}
+                onClick={() => {
+                  clickedIdRef.current = id;
+                  setActiveId(id);
+                }}
+              >
+                <strong>{label}</strong>
+              </a>
             </li>
           );
         })}
