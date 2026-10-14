@@ -43,7 +43,7 @@ export function AuthenticityStamp({ variant }: AuthenticityStampProps) {
           <rect x="7" y="71" width="206" height="55" rx="4" />
           <rect x="12" y="76" width="196" height="45" rx="2" />
           <text x="110" y="109" textAnchor="middle">
-            {isFake ? "NEAR" : "FAR"}
+            {isFake ? "FAKE" : "AUTHENTIC"}
           </text>
         </g>
       </g>

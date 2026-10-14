@@ -1,11 +1,12 @@
 // Everything you may want to tweak for the splash screen lives here.
 
-const LOADING_ASSET_BASE = "https://static.igem.wiki/teams/6479/wiki/loading";
+const LOADING_ASSET_BASE =
+  "https://static.igem.wiki/teams/6479/wiki/loading";
 
 /** Drawings that alternate in a loop. */
 export const COSMETICS_FRAMES = [
-  `${import.meta.env.BASE_URL}images/atlas/loading-a.svg`,
-  `${import.meta.env.BASE_URL}images/atlas/loading-b.svg`,
+  `${LOADING_ASSET_BASE}/cosmetics-1.webp`,
+  `${LOADING_ASSET_BASE}/cosmetics-2.webp`,
 ];
 
 /** Progress bar images, from empty to full, in equal steps. */

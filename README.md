@@ -6,11 +6,15 @@ An interactive, microbe-inspired web portfolio exploring form, motion, and spati
 
 - A Canvas microbe field with cursor repulsion, a movable light, and a magnifying lens.
 - Depth-dependent movement, size, sharpness, and contrast, with stationary typography.
-- The original ten-section homepage composition, with Atlas-themed copy and replacement illustrations.
+- The original ten-section homepage composition, with Atlas-themed copy and the original illustrations.
 - Linked map-to-field transitions, viewfinder sequences, and artwork focus tours, preserving the original scroll interactions.
 - Responsive navigation and locally hosted fonts and images.
 
 This is a visual design and frontend study. It does not present scientific experiments, validation, research findings, or institutional affiliations as the author's work.
+
+## Visual direction
+
+Preserve the original ten-section structure and scroll interactions. Keep the original hero microbe artwork, lighting, repulsion, and stationary typography. The yellow Oxford-style legal pad, its binding, ruled typography, paper illustrations, and pinned sequence are core visual features. Current adaptation work is limited to branding and copy; change the visual elements only when explicitly requested.
 
 ## Development
 
