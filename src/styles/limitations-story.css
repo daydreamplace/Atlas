@@ -1,0 +1,1020 @@
+/* Caveat and Nothing You Could Do, SIL OFL 1.1; local draft assets, no font CDN. */
+@font-face {
+  font-family: "Caveat";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/fonts/caveat/Caveat-wght.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Nothing You Could Do";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/nothing-you-could-do/NothingYouCouldDo-Regular.ttf")
+    format("truetype");
+}
+
+.home-page .home-story-section.limitations-story {
+  --limitations-ink: #29242b;
+  --limitations-pencil: #524a56;
+  --limitations-red: #954853;
+  min-height: auto;
+  padding-block: clamp(4.5rem, 8vw, 7rem);
+  overflow: clip;
+}
+
+/* One uninterrupted sheet: the animation occupies space inside the pad. */
+.limitations-story__stage {
+  --limitations-pad-rule-step: 2rem;
+  --limitations-pad-binding-depth: clamp(4.6rem, 7vw, 5.3rem);
+  --limitations-pad-edge-inline: clamp(0.72rem, 1.5vw, 1.1rem);
+  --limitations-pad-bottom-depth: clamp(1.2rem, 2.4vw, 1.8rem);
+  --limitations-pad-margin-position: clamp(3.25rem, 5.6vw, 4.35rem);
+  --limitations-pad-content-left: clamp(5.25rem, 8.2vw, 6.6rem);
+  --limitations-pad-content-right: clamp(1.35rem, 2.4vw, 2.1rem);
+  --limitations-pad-paper: linear-gradient(
+    180deg,
+    #20283a 0 8.3%,
+    #f2e39c 8.3% 100%
+  );
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+  width: min(1080px, 100%);
+  margin-inline: auto;
+}
+.limitations-story__stage::before {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  box-sizing: border-box;
+  border-style: solid;
+  border-color: transparent;
+  border-width: var(--limitations-pad-binding-depth)
+    var(--limitations-pad-edge-inline) var(--limitations-pad-bottom-depth);
+  border-image-source: var(--limitations-pad-paper);
+  border-image-slice: 120 42 80 42 fill;
+  border-image-width: var(--limitations-pad-binding-depth)
+    var(--limitations-pad-edge-inline) var(--limitations-pad-bottom-depth);
+  border-image-repeat: stretch;
+  transform: none;
+  filter: drop-shadow(0 1rem 1.45rem #0000003d);
+  pointer-events: none;
+}
+.limitations-story__stage::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: var(--limitations-pad-binding-depth) var(--limitations-pad-edge-inline)
+    var(--limitations-pad-bottom-depth);
+  background-image:
+    linear-gradient(
+      90deg,
+      transparent 0 var(--limitations-pad-margin-position),
+      #b1535f70 var(--limitations-pad-margin-position)
+        calc(var(--limitations-pad-margin-position) + 1px),
+      transparent calc(var(--limitations-pad-margin-position) + 1px)
+    ),
+    repeating-linear-gradient(
+      180deg,
+      transparent 0 calc(var(--limitations-pad-rule-step) - 1px),
+      #6387a359 calc(var(--limitations-pad-rule-step) - 1px)
+        var(--limitations-pad-rule-step)
+    );
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  pointer-events: none;
+}
+.home-page .limitations-story .home-story-section__content {
+  position: relative;
+  isolation: auto;
+  width: auto;
+  max-width: none;
+  margin: 0;
+  color: var(--limitations-ink);
+}
+.home-page .limitations-story .home-story-section__content::before,
+.home-page .limitations-story .home-story-section__content::after {
+  content: none;
+}
+.home-page .limitations-story .limitations-story__pad-heading {
+  padding: calc(var(--limitations-pad-binding-depth) + 1.35rem)
+    var(--limitations-pad-content-right) 1.35rem
+    var(--limitations-pad-content-left);
+}
+.home-page .limitations-story .limitations-story__pad-body {
+  padding: 1.65rem var(--limitations-pad-content-right)
+    clamp(3.7rem, 5vw, 4.8rem) var(--limitations-pad-content-left);
+}
+.home-page .limitations-story .home-story-section__title {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  color: #332c35;
+  font-family: "Caveat", cursive;
+  font-size: clamp(3rem, 6.7vw, 5.2rem);
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+.home-page .limitations-story .home-story-section__body {
+  width: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  overflow: visible;
+  color: #403942;
+  font-family: "Caveat", cursive;
+  font-size: clamp(1.28rem, 1.75vw, 1.55rem);
+  font-weight: 500;
+  line-height: var(--limitations-pad-rule-step);
+  letter-spacing: 0.004em;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
+  text-wrap: wrap;
+  text-wrap-style: auto;
+}
+
+.limitations-story__slideshow {
+  margin: 0 clamp(1rem, 4vw, 3.5rem);
+}
+.limitations-story__viewport {
+  position: relative;
+  /* --limitations-viewport-height is set when the whole pad is pinned and the
+     illustration area has to shrink to fit the screen. */
+  height: var(--limitations-viewport-height, clamp(19rem, 32vw, 24rem));
+  overflow: hidden;
+  isolation: isolate;
+}
+.limitations-story__slide {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+.limitations-story__slide[data-active="true"] {
+  visibility: visible;
+  opacity: 1;
+  animation: limitations-slide-in 580ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+/* The art is laid out for a 24rem-tall area. When the pinned pad shrinks the
+   area (--limitations-viewport-height), narrow the art in proportion so it
+   scales down instead of being cropped. */
+.limitations-story__risk {
+  position: absolute;
+  inset: 0;
+  width: min(39rem, 100%, var(--limitations-viewport-height, 100vw) * 39 / 24);
+  height: 100%;
+  margin: auto;
+}
+.limitations-story__risk--hologram {
+  width: min(43rem, 100%, var(--limitations-viewport-height, 100vw) * 43 / 24);
+}
+.limitations-story__asset {
+  display: block;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  filter: drop-shadow(0 8px 9px #24202b26);
+}
+.limitations-story__mark,
+.limitations-story__package-label {
+  position: absolute;
+  color: #3d3542;
+  filter: drop-shadow(0 4px 4px #24202b20);
+}
+.limitations-story__mark > svg,
+.limitations-story__package-label > svg,
+.limitations-story__mark > img,
+.limitations-story__package-label > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.limitations-story__mark--qr-source {
+  top: 12%;
+  left: 2%;
+  width: 38%;
+  aspect-ratio: 1;
+  transform: rotate(-5deg);
+}
+.limitations-story__qr-copy-sheet {
+  top: 14%;
+  right: 4%;
+  width: 38%;
+  aspect-ratio: 1;
+}
+.limitations-story__qr-copy-sheet--back-two {
+  transform: translate(6%, -8%) rotate(9deg);
+}
+.limitations-story__qr-copy-sheet--back-one {
+  transform: translate(1%, -3%) rotate(-5deg);
+}
+.limitations-story__mark--qr-copy {
+  transform: rotate(7deg);
+}
+.limitations-story__transfer {
+  position: absolute;
+  display: block;
+  width: clamp(3rem, 5vw, 4.5rem);
+  height: auto;
+  overflow: visible;
+  color: #6c536e;
+}
+.limitations-story__transfer--qr {
+  top: 36%;
+  left: 44%;
+  transform: rotate(-5deg);
+}
+.limitations-story__annotation,
+.limitations-story__question {
+  font-family: "Nothing You Could Do", "Caveat", cursive;
+}
+.limitations-story__annotation {
+  position: absolute;
+  color: var(--limitations-red);
+  font-size: clamp(1.1rem, 2.2vw, 1.75rem);
+  line-height: 1.2;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.2em;
+}
+.limitations-story__annotation--qr {
+  right: 12%;
+  bottom: 6%;
+  transform: rotate(-3deg);
+}
+.limitations-story__mark--hologram-source {
+  top: 9%;
+  left: 3%;
+  width: 37%;
+  aspect-ratio: 1;
+  transform: rotate(-8deg);
+  opacity: 1;
+}
+.limitations-story__mark--hologram-reused {
+  top: 9%;
+  right: 3%;
+  width: 37%;
+  aspect-ratio: 1;
+  transform: rotate(13deg);
+}
+.limitations-story__annotation--hologram {
+  right: 9%;
+  bottom: 6%;
+  transform: rotate(2deg);
+}
+.limitations-story__transfer--hologram {
+  top: 35%;
+  left: 44%;
+  transform: rotate(-8deg);
+}
+.limitations-story__risk--serial {
+  width: min(49rem, 100%, var(--limitations-viewport-height, 100vw) * 49 / 24);
+}
+.limitations-story__mark--serial-source,
+.limitations-story__mark--serial-copy {
+  top: 22%;
+  width: 30%;
+  aspect-ratio: 1;
+}
+.limitations-story__mark--serial-source {
+  left: 0;
+  transform: rotate(-9deg);
+}
+.limitations-story__mark--serial-copy {
+  right: 0;
+  transform: rotate(8deg);
+}
+.limitations-story__serial-number {
+  position: absolute;
+  top: 57%;
+  left: 19%;
+  width: 62%;
+  color: #3d3542;
+  font: 700 clamp(0.6rem, 1.3vw, 1rem)/1 var(--wiki-sans);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+.limitations-story__clone-operator {
+  position: absolute;
+  top: 7%;
+  left: 31%;
+  width: 38%;
+  transform: rotate(-2deg);
+}
+.limitations-story__transfer--serial {
+  top: 57%;
+  left: 70%;
+  width: clamp(2.4rem, 3.6vw, 3.25rem);
+}
+.limitations-story__annotation--serial {
+  right: 0;
+  bottom: 3%;
+  left: 0;
+  text-align: center;
+  transform: rotate(-2deg);
+}
+
+.limitations-story__comparison {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 12% minmax(0, 1fr);
+  align-items: center;
+  justify-items: center;
+  width: min(45rem, 100%, var(--limitations-viewport-height, 100vw) * 45 / 24);
+  height: 100%;
+  margin: auto;
+  padding: 2.5rem 0 3.2rem;
+}
+/* Proportional padding so the comparison also scales with a shorter area. */
+.limitations-story
+  > .scroll-steps-track[data-scroll-driven="true"]
+  .limitations-story__comparison {
+  padding: calc(var(--limitations-viewport-height, 24rem) * 0.1) 0
+    calc(var(--limitations-viewport-height, 24rem) * 0.13);
+}
+.limitations-story__question {
+  position: absolute;
+  top: 0.3rem;
+  right: 0;
+  left: 0;
+  color: #534655;
+  font-size: clamp(1rem, 2vw, 1.55rem);
+  font-weight: 400;
+  line-height: 1.25;
+  text-align: center;
+}
+.limitations-story__comparison-object {
+  position: relative;
+  width: min(100%, 17rem);
+  height: 100%;
+  max-height: 17rem;
+}
+.limitations-story__comparison-object--packaging {
+  grid-column: 1;
+}
+.limitations-story__comparison-object--product {
+  grid-column: 3;
+}
+.limitations-story__carton--comparison,
+.limitations-story__product-jar {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.limitations-story__carton--comparison {
+  transform: rotate(-3deg);
+}
+.limitations-story__product-jar {
+  transform: rotate(2.5deg);
+}
+.limitations-story__package-label--qr {
+  top: 43%;
+  left: 31%;
+  width: 16%;
+  aspect-ratio: 1;
+  transform: rotate(-7deg);
+}
+.limitations-story__package-label--nfc {
+  top: 51%;
+  right: 34%;
+  width: 16%;
+  aspect-ratio: 1;
+  transform: rotate(5deg);
+}
+.limitations-story__not-equal {
+  grid-column: 2;
+  display: block;
+  width: clamp(3rem, 6vw, 5rem);
+  height: auto;
+  overflow: visible;
+  color: #994f5e;
+  transform: rotate(-5deg);
+}
+.limitations-story__comparison-note {
+  position: absolute;
+  right: 0;
+  bottom: 0.4rem;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.22em;
+  color: #49334f;
+  font-family: "Caveat", cursive;
+  font-size: clamp(1.4rem, 3.2vw, 2.7rem);
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-align: center;
+  transform: rotate(-1deg);
+}
+.limitations-story__comparison-note-mark {
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 0.95em;
+  height: 0.78em;
+  overflow: visible;
+  color: #994f5e;
+}
+
+.limitations-story__controls {
+  position: relative;
+  margin: 0.6rem clamp(0.7rem, 2.5vw, 2.5rem) 0;
+  padding: 0.7rem 0;
+}
+/* Stepper: handwritten labels over a pencil track that is inked up to the
+   current slide. --step-index / --step-count are set inline. */
+.limitations-story__steps {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--step-count), minmax(0, 1fr));
+  padding-bottom: 0.55rem;
+}
+.limitations-story__steps::before,
+.limitations-story__steps::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  border-radius: 2px;
+}
+.limitations-story__steps::before {
+  right: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    #6b536555 0 6px,
+    transparent 6px 11px
+  );
+}
+.limitations-story__steps::after {
+  width: calc((var(--step-index) + 0.5) / var(--step-count) * 100%);
+  background: #5a3f63;
+  transition: width 450ms cubic-bezier(0.22, 0.7, 0.3, 1);
+}
+.limitations-story__step-button {
+  min-width: 0;
+  padding: 0.2rem 0.25rem;
+  border: 0;
+  background: transparent;
+  color: #7b6677;
+  cursor: pointer;
+  transition: color 200ms ease;
+}
+.limitations-story__step-label {
+  display: block;
+  font:
+    600 clamp(1.05rem, 1.5vw, 1.3rem)/1.1 "Caveat",
+    cursive;
+  text-align: center;
+  white-space: nowrap;
+}
+.limitations-story__step-button:hover {
+  color: #4f3a55;
+}
+.limitations-story__step-button[aria-pressed="true"] {
+  color: #2f2533;
+}
+.limitations-story__step-button[aria-pressed="true"]
+  .limitations-story__step-label {
+  font-weight: 700;
+}
+.limitations-story__step-button:focus-visible {
+  outline: 2px solid #74547f;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Finite illustration actions; the conclusion never advances or loops. */
+.limitations-story[data-limitations-running="true"]
+  .limitations-story__slide[data-active="true"]
+  .limitations-story__mark--qr-copy,
+.limitations-story[data-limitations-running="true"]
+  .limitations-story__slide[data-active="true"]
+  .limitations-story__mark--serial-copy {
+  animation: limitations-copy-in 1100ms 400ms ease both;
+}
+.limitations-story[data-limitations-running="true"]
+  .limitations-story__slide[data-active="true"]
+  .limitations-story__mark--hologram-reused {
+  animation: limitations-hologram-transfer 1400ms 450ms ease both;
+}
+.limitations-story[data-limitations-running="true"]
+  .limitations-story__slide[data-active="true"]
+  .limitations-story__mark--hologram-source {
+  animation: limitations-hologram-peel 1100ms 450ms ease both;
+}
+.limitations-story[data-limitations-paused="true"]
+  .limitations-story__viewport
+  * {
+  animation-play-state: paused !important;
+}
+.limitations-story[data-reduced-motion="true"] .limitations-story__viewport * {
+  animation: none !important;
+}
+
+@media (max-width: 620px) {
+  .home-page .home-story-section.limitations-story {
+    padding: 4.5rem 0.9rem;
+  }
+  .limitations-story__stage {
+    --limitations-pad-rule-step: 1.875rem;
+    --limitations-pad-binding-depth: 4.25rem;
+    --limitations-pad-edge-inline: 0.58rem;
+    --limitations-pad-bottom-depth: 1.15rem;
+    --limitations-pad-margin-position: 1.35rem;
+    --limitations-pad-content-left: 2.65rem;
+    --limitations-pad-content-right: 1rem;
+  }
+  .home-page .limitations-story .limitations-story__pad-heading {
+    padding: calc(var(--limitations-pad-binding-depth) + 1.05rem)
+      var(--limitations-pad-content-right) 1.1rem
+      var(--limitations-pad-content-left);
+  }
+  .home-page .limitations-story .limitations-story__pad-body {
+    padding: 1.3rem var(--limitations-pad-content-right) 3.4rem
+      var(--limitations-pad-content-left);
+  }
+  .home-page .limitations-story .home-story-section__title {
+    font-size: clamp(2.35rem, 12vw, 3.15rem);
+    line-height: 0.92;
+  }
+  .home-page .limitations-story .home-story-section__body {
+    max-width: none;
+    font-size: clamp(1.18rem, 6vw, 1.36rem);
+  }
+  .limitations-story__slideshow {
+    margin-inline: 0.8rem;
+  }
+  .limitations-story__viewport {
+    height: var(--limitations-viewport-height, 17rem);
+  }
+  .limitations-story__mark--qr-source {
+    top: 22%;
+    left: 0;
+    width: 42%;
+  }
+  .limitations-story__qr-copy-sheet {
+    top: 23%;
+    right: 2%;
+    width: 42%;
+  }
+  .limitations-story__transfer--qr {
+    top: 38%;
+    left: 44%;
+  }
+  .limitations-story__annotation--qr {
+    right: 8%;
+    bottom: 11%;
+  }
+  .limitations-story__mark--hologram-source {
+    top: 22%;
+    left: 0;
+    width: 42%;
+  }
+  .limitations-story__mark--hologram-reused {
+    top: 22%;
+    right: 0;
+    width: 42%;
+  }
+  .limitations-story__annotation--hologram {
+    right: 7%;
+    bottom: 8%;
+  }
+  .limitations-story__mark--serial-source,
+  .limitations-story__mark--serial-copy {
+    top: 30%;
+    width: 31%;
+  }
+  .limitations-story__mark--serial-source {
+    left: 0;
+  }
+  .limitations-story__mark--serial-copy {
+    right: 0;
+  }
+  .limitations-story__clone-operator {
+    top: 19%;
+    left: 28%;
+    width: 44%;
+  }
+  .limitations-story__serial-number {
+    font-size: clamp(0.37rem, 1.65vw, 0.55rem);
+  }
+  .limitations-story__transfer--serial {
+    top: 57%;
+    width: 2.3rem;
+  }
+  .limitations-story__annotation--serial {
+    right: 0;
+    bottom: 10%;
+  }
+  .limitations-story__comparison {
+    padding: 2.5rem 0 3rem;
+  }
+  .limitations-story__comparison-object {
+    height: auto;
+    aspect-ratio: 1;
+  }
+  .limitations-story__comparison-note {
+    bottom: 0.8rem;
+    font-size: clamp(1.25rem, 6.2vw, 1.65rem);
+    letter-spacing: 0;
+  }
+  .limitations-story__question {
+    font-size: 0.95rem;
+  }
+  .limitations-story__controls {
+    margin-inline: 0.3rem;
+  }
+  .limitations-story__step-label {
+    font-size: 0.98rem;
+    white-space: normal;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .limitations-story__viewport * {
+    animation: none !important;
+  }
+}
+
+/* Scroll-driven tear stack: each approved-copy segment lives on its own sheet. */
+.home-page .home-story-section.limitations-tear-sequence {
+  --limitations-sheet-paper: #efe2aa;
+  min-height: 185svh;
+  align-items: flex-start;
+}
+
+.limitations-tear-sequence .limitations-story__stage {
+  position: sticky;
+  top: calc(var(--gnb-height) + 0.75rem);
+  width: min(1120px, 100%);
+  padding-top: var(--limitations-pad-binding-depth);
+}
+
+.limitations-tear-sequence .limitations-story__stage::after {
+  background-color: var(--limitations-sheet-paper);
+}
+
+.limitations-story__tear-instruction {
+  display: inline-block;
+  margin-top: 0.55rem;
+  color: #67576a;
+  font:
+    400 clamp(0.9rem, 1.3vw, 1.05rem) / 1.2 "Nothing You Could Do",
+    "Caveat",
+    cursive;
+  transform: rotate(-1deg);
+}
+
+.limitations-story__sheet-stack {
+  position: relative;
+  height: clamp(39rem, 74vh, 47rem);
+  margin: 0 var(--limitations-pad-edge-inline)
+    var(--limitations-pad-bottom-depth);
+  perspective: 1400px;
+  isolation: isolate;
+  cursor: grab;
+  outline: none;
+}
+
+.limitations-story__sheet-stack:active {
+  cursor: grabbing;
+}
+
+.limitations-story__sheet-stack:focus-visible {
+  outline: 2px dashed #74547f;
+  outline-offset: 0.35rem;
+}
+
+.limitations-story__sheet-page {
+  --sheet-tilt: calc((var(--sheet-index) - 1.5) * 0.22deg);
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto minmax(15rem, 49%) minmax(0, 1fr);
+  overflow: hidden;
+  padding: 1.25rem var(--limitations-pad-content-right) 1.4rem
+    var(--limitations-pad-content-left);
+  color: var(--limitations-ink);
+  transform-origin: 50% 0;
+  clip-path: polygon(
+    0 1.4%,
+    4% 0.4%,
+    8% 1.8%,
+    13% 0.2%,
+    18% 1.5%,
+    24% 0.5%,
+    30% 1.7%,
+    36% 0.3%,
+    43% 1.5%,
+    50% 0.2%,
+    57% 1.6%,
+    64% 0.4%,
+    72% 1.7%,
+    80% 0.2%,
+    87% 1.4%,
+    94% 0.3%,
+    100% 1.5%,
+    100% 100%,
+    0 100%
+  );
+  background-image:
+    linear-gradient(
+      90deg,
+      transparent 0 var(--limitations-pad-margin-position),
+      #b1535f70 var(--limitations-pad-margin-position)
+        calc(var(--limitations-pad-margin-position) + 1px),
+      transparent calc(var(--limitations-pad-margin-position) + 1px)
+    ),
+    repeating-linear-gradient(
+      180deg,
+      transparent 0 calc(var(--limitations-pad-rule-step) - 1px),
+      #6387a359 calc(var(--limitations-pad-rule-step) - 1px)
+        var(--limitations-pad-rule-step)
+    );
+  background-color: var(--limitations-sheet-paper);
+  box-shadow: 0 0.9rem 1.4rem #3a2d3026;
+  transition:
+    transform 920ms cubic-bezier(0.22, 0.72, 0.24, 1),
+    opacity 720ms ease,
+    filter 720ms ease;
+}
+
+.limitations-story__sheet-page[data-sheet-state="stacked"] {
+  z-index: calc(20 - var(--sheet-index));
+  transform: translateY(calc(var(--sheet-index) * 0.35rem))
+    rotate(var(--sheet-tilt));
+}
+
+.limitations-story__sheet-page[data-sheet-state="current"] {
+  z-index: 30;
+  opacity: 1;
+  transform: none;
+}
+
+.limitations-story__sheet-page[data-sheet-state="torn"] {
+  z-index: 40;
+  opacity: 0;
+  filter: blur(1.5px);
+  pointer-events: none;
+  transform: translate(34vw, 88vh) rotate(17deg) skewY(-1.5deg);
+}
+
+.limitations-story__sheet-page::after {
+  position: absolute;
+  top: 0;
+  left: 6%;
+  width: 88%;
+  height: 1.1rem;
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, #eadca7 0 1px, transparent 1.5px);
+  background-size: 1rem 0.65rem;
+}
+
+.limitations-story__sheet-page[data-sheet-state="torn"]::after {
+  animation: limitations-paper-fibers 720ms ease-out both;
+}
+
+.limitations-story__sheet-visual {
+  position: relative;
+  min-height: 0;
+}
+
+.limitations-story__sheet-heading {
+  position: relative;
+  z-index: 4;
+  min-height: clamp(4.5rem, 8vw, 6.5rem);
+}
+
+.limitations-story__sheet-heading h2,
+.limitations-story__sheet-heading h3 {
+  width: max-content;
+  max-width: 100%;
+  margin: 0;
+  color: #332c35;
+  font-family: "Caveat", cursive;
+  font-size: clamp(2.6rem, 5.3vw, 4.5rem);
+  font-weight: 700;
+  line-height: 0.94;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.limitations-story__sheet-copy {
+  position: relative;
+  z-index: 3;
+  align-self: start;
+  width: 100%;
+  margin: 0;
+  padding-top: 0.55rem;
+  color: #403942;
+  font:
+    500 clamp(1.08rem, 1.45vw, 1.32rem) / var(--limitations-pad-rule-step)
+      "Caveat",
+    cursive;
+  letter-spacing: 0.004em;
+  text-wrap: pretty;
+}
+
+.limitations-story__sheet-page[data-sheet-state="current"]
+  .limitations-story__copied-piece {
+  animation: limitations-copy-in 1050ms 180ms ease both;
+}
+
+.limitations-story__sheet-page[data-sheet="hologram"][data-sheet-state="current"]
+  .limitations-story__mark--hologram-source {
+  animation: limitations-hologram-peel 1100ms 250ms ease both;
+}
+
+.limitations-story__sheet-page[data-sheet="hologram"][data-sheet-state="current"]
+  .limitations-story__mark--hologram-reused {
+  animation: limitations-hologram-transfer 1400ms 250ms ease both;
+}
+
+@media (max-width: 620px) {
+  .home-page .home-story-section.limitations-tear-sequence {
+    min-height: 205svh;
+  }
+
+  .limitations-tear-sequence .limitations-story__stage {
+    top: calc(var(--gnb-height) + 0.35rem);
+  }
+
+  .limitations-story__sheet-stack {
+    height: 40rem;
+  }
+
+  .limitations-story__sheet-page {
+    grid-template-rows: auto minmax(14rem, 43%) minmax(0, 1fr);
+    padding-top: 0.85rem;
+    padding-right: 0.85rem;
+    padding-bottom: 0.9rem;
+    padding-left: var(--limitations-pad-content-left);
+  }
+
+  .limitations-story__sheet-copy {
+    padding-top: 0.35rem;
+    font-size: clamp(0.98rem, 4.5vw, 1.12rem);
+    line-height: 1.55;
+  }
+
+  .limitations-story__tear-instruction {
+    font-size: 0.84rem;
+  }
+
+  .limitations-story__sheet-heading {
+    min-height: 4.2rem;
+  }
+
+  .limitations-story__sheet-heading h2,
+  .limitations-story__sheet-heading h3 {
+    font-size: clamp(2rem, 10vw, 2.75rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-page .home-story-section.limitations-tear-sequence {
+    min-height: auto;
+  }
+
+  .limitations-tear-sequence .limitations-story__stage {
+    position: relative;
+    top: auto;
+  }
+
+  .limitations-story__sheet-stack {
+    display: grid;
+    height: auto;
+    gap: 1.2rem;
+  }
+
+  .limitations-story__sheet-page,
+  .limitations-story__sheet-page[data-sheet-state] {
+    position: relative;
+    min-height: 35rem;
+    opacity: 1;
+    filter: none;
+    transform: none;
+    transition: none;
+  }
+}
+
+@keyframes limitations-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(2rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes limitations-paper-fibers {
+  0% {
+    opacity: 0.8;
+    transform: translateY(0) scaleX(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(2.4rem) scaleX(1.12);
+  }
+}
+@keyframes limitations-copy-in {
+  from {
+    opacity: 0;
+    transform: translate(-45%, 10%) rotate(-5deg);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(5deg);
+  }
+}
+@keyframes limitations-hologram-transfer {
+  0% {
+    opacity: 0;
+    transform: translate(-150%, 0) rotate(-8deg);
+  }
+  35% {
+    opacity: 1;
+    transform: translate(-75%, -12%) rotate(-25deg);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(13deg);
+  }
+}
+@keyframes limitations-hologram-peel {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.55;
+  }
+}
+
+/* Scroll-driven mode pins the pad to the screen, so trim the vertical
+   padding to leave as much room as possible for the illustration. */
+.home-page
+  .limitations-story[data-scroll-driven="true"]
+  .limitations-story__pad-heading {
+  padding-top: calc(var(--limitations-pad-binding-depth) + 0.75rem);
+  padding-bottom: 0.5rem;
+}
+.home-page
+  .limitations-story[data-scroll-driven="true"]
+  .limitations-story__pad-body {
+  padding-top: 1rem;
+  padding-bottom: calc(var(--limitations-pad-bottom-depth) + 1.25rem);
+}
+.limitations-story[data-scroll-driven="true"] .limitations-story__controls {
+  margin-top: 0.25rem;
+  padding-block: 0.45rem;
+}
+
+/* Hand-written notes inside the art also follow a shortened art area. */
+.limitations-story
+  > .scroll-steps-track[data-scroll-driven="true"]
+  .limitations-story__annotation {
+  font-size: min(
+    clamp(1.1rem, 2.2vw, 1.75rem),
+    var(--limitations-viewport-height, 24rem) * 0.075
+  );
+}
+.limitations-story
+  > .scroll-steps-track[data-scroll-driven="true"]
+  .limitations-story__question {
+  font-size: min(
+    clamp(1rem, 2vw, 1.55rem),
+    var(--limitations-viewport-height, 24rem) * 0.065
+  );
+}
+.limitations-story
+  > .scroll-steps-track[data-scroll-driven="true"]
+  .limitations-story__comparison-note {
+  font-size: min(
+    clamp(1.4rem, 3.2vw, 2.7rem),
+    var(--limitations-viewport-height, 24rem) * 0.11
+  );
+}

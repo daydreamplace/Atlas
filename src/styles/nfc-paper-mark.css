@@ -1,0 +1,52 @@
+.nfc-paper-mark {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.nfc-paper-mark__paper,
+.nfc-paper-mark__mark {
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.nfc-paper-mark__paper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 10px #0003);
+}
+
+.nfc-paper-mark__mark {
+  position: absolute;
+  z-index: 1;
+  top: 54%;
+  left: 50%;
+  width: 40%;
+  height: auto;
+  overflow: visible;
+  opacity: 1;
+  mix-blend-mode: normal;
+  transform: translate(-50%, -50%);
+}
+
+/* Keep the NFC symbol upright in both S3 sequence states. */
+.auth-sequence__artwork[data-sequence-step="nfc"]
+  .auth-sequence__token.auth-sequence__token--nfc,
+.auth-sequence__artwork[data-sequence-step="verified"]
+  .auth-sequence__token.auth-sequence__token--nfc {
+  transform: none;
+}
+
+/* The paper carries the shadow; the NFC symbol remains unrotated/unshadowed. */
+.limitations-story__package-label.limitations-story__package-label--nfc {
+  width: clamp(3.5rem, 16%, 4.5rem);
+  aspect-ratio: 1;
+  filter: none;
+  transform: none;
+}

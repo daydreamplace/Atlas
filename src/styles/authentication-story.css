@@ -1,0 +1,1272 @@
+.home-page .home-story-section.authentication-story {
+  --authentication-ink: #f0ebf2;
+  --authentication-copy: #cdc5d0;
+  --authentication-lavender: #b3a0c9;
+  min-height: auto;
+  align-items: stretch;
+  padding: clamp(5rem, 8vw, 7.5rem) clamp(1rem, 4vw, 4.5rem);
+  overflow: clip;
+  background:
+    radial-gradient(
+      ellipse 64% 56% at 72% 42%,
+      rgba(114, 126, 207, 0.08),
+      rgba(101, 80, 151, 0.034) 44%,
+      transparent 72%
+    ),
+    #09090d;
+}
+
+.home-page .home-story-section.authentication-story::before {
+  z-index: 0;
+  opacity: 0.28;
+  background-image: repeating-radial-gradient(
+    circle at 72% 45%,
+    #e0d8e409 0 0.7px,
+    transparent 0.8px 6px
+  );
+}
+
+.home-page .home-story-section.authentication-story::after {
+  content: none;
+}
+
+.home-page .authentication-story .authentication-story__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: clamp(3.2rem, 8vw, 5.5rem);
+  width: min(100%, 1560px);
+  margin-inline: auto;
+}
+
+.home-page .authentication-story .authentication-story__content {
+  position: relative;
+  z-index: 6;
+  width: 100%;
+  max-width: 42rem;
+}
+
+.home-page .authentication-story .authentication-story__title {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  color: var(--authentication-ink);
+  font-size: clamp(1.9rem, 8.8vw, 2.5rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.home-page .authentication-story .authentication-story__body {
+  width: 100%;
+  max-width: 62ch;
+  max-height: none;
+  margin: clamp(1.55rem, 3vw, 2.25rem) 0 0;
+  overflow: visible;
+  color: var(--authentication-copy);
+  font-size: 1rem;
+  line-height: 1.72;
+  column-count: 1 !important;
+  text-wrap: pretty;
+}
+
+.auth-sequence__demo {
+  min-width: 0;
+}
+.auth-sequence__artwork {
+  position: relative;
+  height: clamp(32rem, 44vw, 41rem);
+  isolation: isolate;
+}
+.auth-sequence__motion-layer {
+  position: absolute;
+  inset: 0;
+}
+.auth-sequence__asset {
+  display: block;
+  height: auto;
+  max-width: none;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.auth-sequence__phone-stage {
+  position: absolute;
+  z-index: 4;
+  top: 2%;
+  right: -18%;
+  width: 80%;
+  aspect-ratio: 1;
+  transform: rotate(3deg);
+  transition:
+    transform 750ms cubic-bezier(0.2, 0.75, 0.25, 1),
+    opacity 650ms;
+}
+.auth-sequence__hand {
+  position: absolute;
+  z-index: 6;
+  top: 49%;
+  left: 54.5%;
+  width: 52%;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(0.8rem, 0.9rem) rotate(1deg);
+  transition:
+    transform 750ms cubic-bezier(0.2, 0.75, 0.25, 1),
+    opacity 260ms;
+}
+.auth-sequence__phone-ui {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 12%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 350ms;
+}
+.auth-sequence__phone-ui--intro {
+  font:
+    700 clamp(0.9rem, 2vw, 1.4rem)/1.2 "Kalam",
+    cursive;
+  letter-spacing: 0.08em;
+}
+.auth-sequence__phone-ui--camera {
+  padding: 0;
+  color: #4e4754;
+  background:
+    repeating-linear-gradient(
+      173deg,
+      transparent 0 5px,
+      #766b8010 6px,
+      transparent 7px 11px
+    ),
+    linear-gradient(145deg, #f5f0e8, #e9e2e9 72%, #ddd3e2);
+  font-family: "Kalam", cursive;
+}
+.auth-camera__header {
+  position: absolute;
+  z-index: 3;
+  top: 4%;
+  right: 8%;
+  left: 8%;
+  display: flex;
+  align-items: center;
+  gap: 5%;
+  font-size: clamp(0.56rem, 5.5cqi, 0.92rem);
+  font-weight: 700;
+  transform: rotate(-1deg);
+}
+.auth-camera__header svg {
+  width: 10%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0.7px 0.5px 0 #8f8099);
+}
+.auth-camera__header small {
+  margin-left: auto;
+  padding: 0.12em 0.5em 0;
+  border: 1px solid #8f8099;
+  border-radius: 47% 53% 45% 55%;
+  color: #74647f;
+  font-size: 0.62em;
+  letter-spacing: 0.05em;
+  transform: rotate(3deg);
+}
+.auth-camera__viewfinder {
+  position: absolute;
+  inset: 13% 7% 19%;
+  overflow: hidden;
+  border: 2px solid #716778;
+  border-radius: 4% 2% 5% 3%;
+  background:
+    repeating-linear-gradient(
+      7deg,
+      transparent 0 8px,
+      #766b8012 9px,
+      transparent 10px 15px
+    ),
+    #d8d0d7;
+  box-shadow:
+    1.5px 1px 0 #a89aae,
+    -1px 1.5px 0 #6d64741f;
+  transform: rotate(0.5deg);
+}
+.auth-camera__viewfinder::before,
+.auth-camera__viewfinder::after {
+  position: absolute;
+  z-index: 1;
+  content: "";
+  width: 36%;
+  height: 2px;
+  background: #8f809944;
+  transform: rotate(-9deg);
+}
+.auth-camera__viewfinder::before {
+  top: 9%;
+  left: -5%;
+}
+.auth-camera__viewfinder::after {
+  right: -7%;
+  bottom: 11%;
+}
+.auth-camera__qr {
+  position: absolute;
+  top: 50%;
+  left: -8%;
+  display: block;
+  width: 116%;
+  max-width: none;
+  height: auto;
+  object-fit: contain;
+  transform: translateY(-50%) rotate(-6deg);
+  filter: saturate(0.88) contrast(0.95) sepia(0.06);
+  user-select: none;
+  pointer-events: none;
+}
+.auth-camera__focus-frame {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 13%;
+  width: 74%;
+  aspect-ratio: 1;
+  color: #738d75;
+  transform: translateY(-50%);
+}
+.auth-camera__focus-frame > i {
+  position: absolute;
+  width: 14%;
+  height: 14%;
+  border: 3px solid currentColor;
+  filter: drop-shadow(1px 0.5px 0 #eff0df);
+}
+.auth-camera__focus-frame > i:nth-child(1) {
+  top: 0;
+  left: 0;
+  border-right: 0;
+  border-bottom: 0;
+  border-top-left-radius: 12%;
+}
+.auth-camera__focus-frame > i:nth-child(2) {
+  top: 0;
+  right: 0;
+  border-left: 0;
+  border-bottom: 0;
+  border-top-right-radius: 12%;
+  transform: rotate(1deg);
+}
+.auth-camera__focus-frame > i:nth-child(3) {
+  bottom: 0;
+  left: 0;
+  border-right: 0;
+  border-top: 0;
+  border-bottom-left-radius: 12%;
+  transform: rotate(-1deg);
+}
+.auth-camera__focus-frame > i:nth-child(4) {
+  bottom: 0;
+  right: 0;
+  border-left: 0;
+  border-top: 0;
+  border-bottom-right-radius: 12%;
+  transform: rotate(0.7deg);
+}
+.auth-camera__scan-line {
+  position: absolute;
+  z-index: 2;
+  top: 4%;
+  left: 0;
+  right: 0;
+  height: 4px;
+  border-top: 1px solid #f5f0df;
+  border-bottom: 2px dashed #778f75;
+  background: transparent;
+  opacity: 0;
+  transform: rotate(-1deg);
+}
+.auth-camera__aim-hint,
+.auth-camera__scanning-hint {
+  position: absolute;
+  top: 8%;
+  right: 4%;
+  left: 4%;
+  color: #5b5261;
+  font-size: clamp(0.56rem, 5cqi, 0.82rem);
+  font-weight: 700;
+  text-align: center;
+  opacity: 0;
+  text-shadow: 1px 1px 0 #f4efe5;
+}
+.auth-camera__zoom {
+  position: absolute;
+  bottom: 5%;
+  left: 43%;
+  display: grid;
+  place-items: center;
+  width: 14%;
+  aspect-ratio: 1;
+  border: 1.5px solid #74697c;
+  border-radius: 46% 54% 48% 52%;
+  background: #efe9e4c9;
+  font-size: clamp(0.5rem, 4.2cqi, 0.75rem);
+  font-weight: 700;
+  transform: rotate(-3deg);
+}
+.auth-camera__result {
+  position: absolute;
+  z-index: 4;
+  right: 5%;
+  bottom: 22%;
+  left: 5%;
+  display: flex;
+  align-items: center;
+  gap: 7%;
+  padding: 6%;
+  border: 1.5px solid #708873;
+  border-radius: 2% 4% 3% 5%;
+  background:
+    repeating-linear-gradient(
+      -8deg,
+      transparent 0 6px,
+      #70887312 7px,
+      transparent 8px 12px
+    ),
+    #edf0df;
+  box-shadow:
+    2px 2px 0 #86778d33,
+    -1px 1px 0 #ffffffa8;
+  color: #485f4b;
+  opacity: 0;
+  clip-path: polygon(1% 3%, 99% 0, 98% 96%, 73% 98%, 49% 96%, 25% 99%, 2% 96%);
+  transform: rotate(-1deg);
+}
+.auth-camera__result svg {
+  flex: 0 0 14%;
+  width: 14%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.auth-camera__result span {
+  display: grid;
+  gap: 0.3em;
+}
+.auth-camera__result strong {
+  font-size: clamp(0.58rem, 5.6cqi, 0.92rem);
+  line-height: 1.2;
+  font-weight: 700;
+}
+.auth-camera__result small {
+  font-family: var(--wiki-sans);
+  font-size: clamp(0.42rem, 3.8cqi, 0.66rem);
+  line-height: 1.25;
+}
+.auth-camera__footer {
+  position: absolute;
+  right: 0;
+  bottom: 3%;
+  left: 0;
+  display: grid;
+  justify-items: center;
+  gap: 2.3cqi;
+  color: #655b6b;
+  font-size: clamp(0.48rem, 4cqi, 0.68rem);
+  font-weight: 700;
+}
+.auth-camera__shutter {
+  width: 13cqi;
+  aspect-ratio: 1;
+  border: 2px solid #716778;
+  border-radius: 48% 52% 46% 54%;
+  background: #e8e0e8;
+  box-shadow:
+    inset 0 0 0 3px #f5f0e8,
+    1px 1px 0 #9c8ba5;
+  transform: rotate(4deg);
+}
+.auth-camera__footer small {
+  font-family: var(--wiki-sans);
+  font-size: 0.86em;
+  opacity: 0.75;
+}
+.auth-sequence__serial-value {
+  font: 700 clamp(0.7rem, 1.6vw, 1.25rem)/1.5 var(--wiki-sans);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  border-bottom: 1px solid #79688a;
+  white-space: nowrap;
+}
+.auth-sequence__serial-value::before {
+  content: "Serial number";
+  display: block;
+  font: 500 0.6em/2.3 var(--wiki-sans);
+  letter-spacing: 0;
+}
+.auth-sequence__nfc-waves {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1;
+}
+.auth-sequence__nfc-waves i {
+  position: absolute;
+  width: 25%;
+  height: 25%;
+  border: 3px solid #8c789c;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  border-radius: 50%;
+  transform: rotate(45deg);
+}
+.auth-sequence__nfc-waves i:nth-child(2) {
+  width: 45%;
+  height: 45%;
+}
+.auth-sequence__nfc-waves i:nth-child(3) {
+  width: 65%;
+  height: 65%;
+}
+.auth-sequence__verified-tick {
+  width: 75%;
+  max-width: 7rem;
+  overflow: visible;
+}
+.auth-sequence__verified-tick circle {
+  fill: #64866b;
+}
+.auth-sequence__verified-tick path {
+  fill: none;
+  stroke: #f5f1e8;
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.auth-sequence__verified-copy {
+  display: grid;
+  gap: 0.4rem;
+  text-align: center;
+}
+.auth-sequence__verified-copy strong {
+  font:
+    700 clamp(1rem, 2vw, 1.55rem)/1.1 "Kalam",
+    cursive;
+}
+.auth-sequence__verified-copy small {
+  font: 400 0.66rem/1 var(--wiki-sans);
+  opacity: 0.7;
+}
+
+.auth-sequence__token {
+  position: absolute;
+  z-index: 3;
+  top: 14%;
+  left: 0;
+  width: 49%;
+  margin: 0;
+  opacity: 0;
+  transform: translate(-2rem, 1rem) rotate(-9deg) scale(0.78);
+  transition:
+    opacity 450ms,
+    transform 700ms cubic-bezier(0.2, 0.75, 0.25, 1),
+    top 700ms,
+    left 700ms,
+    width 700ms;
+}
+.auth-sequence__token-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 12px #0004);
+}
+.auth-sequence__token-art {
+  position: relative;
+}
+.auth-sequence__token-caption {
+  margin-top: 0.4rem;
+  color: #ddd3e3;
+  text-align: center;
+}
+.auth-sequence__token-caption strong {
+  display: block;
+  font:
+    700 clamp(1.1rem, 2.25vw, 1.65rem)/1.2 "Kalam",
+    cursive;
+}
+.auth-sequence__token-caption span {
+  display: block;
+  max-width: 23ch;
+  margin: 0.35rem auto 0;
+  color: #ada2b5;
+  font: 400 clamp(0.75rem, 1.2vw, 0.95rem)/1.4 var(--wiki-sans);
+}
+.auth-sequence__token--serial .auth-sequence__token-image {
+  aspect-ratio: 2.1;
+  object-fit: cover;
+}
+.auth-sequence__token-number {
+  position: absolute;
+  top: 74%;
+  left: 18%;
+  right: 18%;
+  color: #3a333f;
+  font: 700 clamp(0.8rem, 1.8vw, 1.2rem)/1 var(--wiki-sans);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+/* Inside the phone stage, just under the device, so it shares the phone's
+   tilt. */
+.auth-sequence__surface-note {
+  position: absolute;
+  z-index: 7;
+  top: calc(97% + 0.9rem);
+  /* The device occupies the middle ~44% of the phone stage. */
+  left: 22%;
+  right: 22%;
+  margin: 0;
+  opacity: 0;
+  color: #e6dcef;
+  font:
+    700 clamp(1.05rem, 1.9vw, 1.45rem)/1.3 "Kalam",
+    cursive;
+  text-align: center;
+  text-shadow:
+    0 1px 2px rgba(9, 9, 13, 0.9),
+    0 0 18px rgba(9, 9, 13, 0.85);
+  transform: translateY(0.6rem);
+  transition:
+    opacity 500ms,
+    transform 500ms;
+}
+
+/* Each step changes the relevant authentication objects. */
+.auth-sequence__artwork[data-sequence-step="intro"]
+  .auth-sequence__phone-stage {
+  transform: translate(-24%, 7%) rotate(-8deg);
+}
+.auth-sequence__artwork[data-sequence-step="intro"]
+  .auth-sequence__phone-ui--intro {
+  opacity: 1;
+  visibility: visible;
+}
+.auth-sequence__artwork:is(
+    [data-sequence-step="qr-reveal"],
+    [data-sequence-step="qr-scan"]
+  )
+  .auth-sequence__token--qr {
+  opacity: 1;
+  transform: rotate(-6deg);
+}
+.auth-sequence__artwork[data-sequence-step="qr-scan"]
+  .auth-sequence__phone-stage {
+  transform: translate(-9%, 1%) rotate(-4deg);
+}
+.auth-sequence__artwork:is(
+    [data-sequence-step="qr-reveal"],
+    [data-sequence-step="qr-scan"]
+  )
+  .auth-sequence__phone-ui--camera {
+  opacity: 1;
+  visibility: visible;
+}
+.auth-sequence__artwork[data-sequence-step="qr-reveal"] .auth-camera__qr {
+  transform: translate(12%, -42%) rotate(7deg) scale(1.18);
+}
+.auth-sequence__artwork[data-sequence-step="qr-reveal"] .auth-camera__aim-hint {
+  opacity: 1;
+}
+.auth-sequence__artwork[data-sequence-step="qr-reveal"]
+  .auth-camera__focus-frame {
+  color: #6f6477;
+}
+.auth-sequence__artwork[data-sequence-step="qr-scan"] .auth-camera__result {
+  opacity: 1;
+}
+.auth-sequence__artwork[data-sequence-step="qr-scan"][data-sequence-running="true"]
+  .auth-camera__qr {
+  animation: auth-camera-frame var(--auth-sequence-step-duration) ease-out both;
+}
+.auth-sequence__artwork[data-sequence-step="qr-scan"][data-sequence-running="true"]
+  .auth-camera__focus-frame {
+  animation: auth-camera-focus var(--auth-sequence-step-duration) linear both;
+}
+.auth-sequence__artwork[data-sequence-step="qr-scan"][data-sequence-running="true"]
+  .auth-camera__scan-line {
+  animation: auth-camera-scan var(--auth-sequence-step-duration) linear both;
+}
+.auth-sequence__artwork[data-sequence-step="qr-scan"][data-sequence-running="true"]
+  .auth-camera__scanning-hint {
+  animation: auth-camera-scanning var(--auth-sequence-step-duration) linear both;
+}
+.auth-sequence__artwork[data-sequence-step="qr-scan"][data-sequence-running="true"]
+  .auth-camera__result {
+  animation: auth-camera-read var(--auth-sequence-step-duration) ease-out both;
+}
+.auth-sequence__artwork[data-sequence-step="hologram"]
+  .auth-sequence__token--hologram {
+  top: 10%;
+  left: 7%;
+  width: 55%;
+  opacity: 1;
+  transform: rotate(4deg);
+}
+.auth-sequence__artwork[data-sequence-step="hologram"]
+  .auth-sequence__phone-stage {
+  opacity: 0.25;
+  transform: translate(12%, 2%) rotate(8deg);
+}
+.auth-sequence__artwork[data-sequence-step="hologram"][data-sequence-running="true"]
+  .auth-sequence__token--hologram
+  img {
+  animation: auth-sequence-tilt 2.4s ease-in-out both;
+}
+.auth-sequence__artwork[data-sequence-step="serial"]
+  .auth-sequence__token--serial {
+  top: 28%;
+  left: -3%;
+  width: 61%;
+  opacity: 1;
+  transform: rotate(-4deg);
+}
+.auth-sequence__artwork[data-sequence-step="serial"]
+  .auth-sequence__phone-ui--serial {
+  opacity: 1;
+  visibility: visible;
+}
+.auth-sequence__artwork[data-sequence-step="serial"] .auth-sequence__hand {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+.auth-sequence__artwork[data-sequence-step="serial"][data-sequence-running="true"]
+  .auth-sequence__hand {
+  animation: auth-sequence-serial-tap 1.35s cubic-bezier(0.35, 0.7, 0.35, 1)
+    350ms 1 both;
+}
+.auth-sequence__artwork[data-sequence-step="nfc"] .auth-sequence__token--nfc {
+  top: 18%;
+  left: 5%;
+  width: 49%;
+  opacity: 1;
+  transform: rotate(7deg);
+}
+.auth-sequence__artwork[data-sequence-step="nfc"] .auth-sequence__phone-stage {
+  transform: translate(-7%, 2%) rotate(-3deg);
+}
+.auth-sequence__artwork[data-sequence-step="nfc"]
+  .auth-sequence__phone-ui--nfc {
+  opacity: 1;
+  visibility: visible;
+}
+.auth-sequence__artwork[data-sequence-step="nfc"][data-sequence-running="true"]
+  .auth-sequence__nfc-waves
+  i {
+  animation: auth-sequence-signal 1.1s ease-in-out 2;
+}
+.auth-sequence__artwork[data-sequence-step="nfc"]
+  .auth-sequence__nfc-waves
+  i:nth-child(2) {
+  animation-delay: 0.12s;
+}
+.auth-sequence__artwork[data-sequence-step="nfc"]
+  .auth-sequence__nfc-waves
+  i:nth-child(3) {
+  animation-delay: 0.24s;
+}
+.auth-sequence__artwork[data-sequence-step="verified"]
+  .auth-sequence__phone-ui--verified {
+  opacity: 1;
+  visibility: visible;
+}
+.auth-sequence__artwork[data-sequence-step="verified"] .auth-sequence__token {
+  opacity: 1;
+  transform: rotate(-4deg);
+}
+.auth-sequence__artwork[data-sequence-step="verified"]
+  .auth-sequence__token--qr {
+  top: 0;
+  left: 0;
+  width: 27%;
+}
+.auth-sequence__artwork[data-sequence-step="verified"]
+  .auth-sequence__token--hologram {
+  top: 3%;
+  left: 31%;
+  width: 25%;
+  transform: rotate(6deg);
+}
+.auth-sequence__artwork[data-sequence-step="verified"]
+  .auth-sequence__token--serial {
+  top: 50%;
+  left: -2%;
+  width: 34%;
+}
+.auth-sequence__artwork[data-sequence-step="verified"]
+  .auth-sequence__token--nfc {
+  top: 44%;
+  left: 34%;
+  width: 24%;
+  transform: rotate(5deg);
+}
+.auth-sequence__artwork[data-sequence-step="verified"]
+  .auth-sequence__token-caption
+  strong {
+  font-size: clamp(0.95rem, 1.6vw, 1.3rem);
+}
+.auth-sequence__artwork[data-sequence-step="verified"]
+  .auth-sequence__token-caption
+  span {
+  font-size: clamp(0.68rem, 0.95vw, 0.8rem);
+}
+.auth-sequence__artwork[data-sequence-step="verified"]
+  .auth-sequence__token-number {
+  font-size: clamp(0.65rem, 1vw, 0.8rem);
+}
+.auth-sequence__artwork[data-sequence-step="verified"]
+  .auth-sequence__surface-note {
+  opacity: 1;
+  transform: none;
+}
+
+.auth-sequence__controls {
+  position: relative;
+  z-index: 8;
+  width: min(100%, 40rem);
+  margin-inline: auto;
+  padding-top: 1.25rem;
+}
+/* The phone can swing down behind the step labels; a dark fade behind the
+   labels and notes keeps them readable over the artwork. */
+.auth-sequence__controls::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -3rem -3rem -6rem;
+  background: linear-gradient(
+    180deg,
+    rgba(9, 9, 13, 0) 0%,
+    rgba(9, 9, 13, 0.85) 30%,
+    rgba(9, 9, 13, 0.9) 70%,
+    rgba(9, 9, 13, 0) 100%
+  );
+  /* Fade the sides too so the dimmed area has no visible edges. */
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 12%,
+    #000 88%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+/* Stepper: plain labels over one thin progress track that fills up to the
+   current step. --step-index / --step-count are set inline. */
+.auth-sequence__steps {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--step-count), minmax(0, 1fr));
+  padding-bottom: 0.9rem;
+}
+.auth-sequence__steps::before,
+.auth-sequence__steps::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  border-radius: 2px;
+}
+.auth-sequence__steps::before {
+  right: 0;
+  background: #b3a0c92b;
+}
+.auth-sequence__steps::after {
+  width: calc((var(--step-index) + 0.5) / var(--step-count) * 100%);
+  background: linear-gradient(90deg, #7d6797, #c9b2e6);
+  box-shadow: 0 0 10px #a98bd066;
+  transition: width 450ms cubic-bezier(0.22, 0.7, 0.3, 1);
+}
+.auth-sequence__step-button {
+  min-width: 0;
+  padding: 0.35rem 0.15rem;
+  border: 0;
+  background: transparent;
+  color: #8a8190;
+  cursor: pointer;
+  transition: color 200ms ease;
+}
+.auth-sequence__step-label {
+  display: block;
+  font: 500 clamp(0.66rem, 0.85vw, 0.8rem)/1.2 var(--wiki-sans);
+  text-align: center;
+  white-space: nowrap;
+}
+.auth-sequence__step-button:hover {
+  color: #cfc4d8;
+}
+.auth-sequence__step-button[aria-pressed="true"] {
+  color: #f4edf8;
+}
+.auth-sequence__step-button[aria-pressed="true"] .auth-sequence__step-label {
+  font-weight: 600;
+}
+.auth-sequence__step-button:focus-visible {
+  outline: 2px solid #c2a7df;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Collapsed secondary notes under the stepper. The opened panel floats
+   above the button so opening it never shifts the layout. */
+.auth-sequence__notes {
+  position: relative;
+  z-index: 9;
+  width: fit-content;
+  margin: 0.85rem auto 0;
+  color: #7f7784;
+  font: 400 0.7rem/1.5 var(--wiki-sans);
+}
+.auth-sequence__notes summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #8a8190;
+  cursor: pointer;
+  list-style: none;
+}
+.auth-sequence__notes summary::-webkit-details-marker {
+  display: none;
+}
+.auth-sequence__notes summary::before {
+  content: "i";
+  display: grid;
+  place-items: center;
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid #8a819066;
+  border-radius: 50%;
+  font: italic 600 0.6rem/1 var(--wiki-serif);
+}
+.auth-sequence__notes summary:hover {
+  color: #cfc4d8;
+}
+.auth-sequence__notes summary:focus-visible {
+  outline: 2px solid #c2a7df;
+  outline-offset: 2px;
+}
+.auth-sequence__notes-panel {
+  position: absolute;
+  bottom: calc(100% + 0.6rem);
+  left: 50%;
+  width: min(30rem, 86vw);
+  padding: 0.85rem 1rem;
+  border: 1px solid #b3a0c933;
+  border-radius: 10px;
+  background: rgba(14, 12, 20, 0.96);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  color: #b9b0bf;
+  translate: -50% 0;
+}
+.auth-sequence__notes p {
+  margin: 0;
+}
+.auth-sequence__notes p + p {
+  margin-top: 0.45rem;
+  color: #918895;
+}
+
+.auth-sequence__artwork[data-sequence-paused="true"] * {
+  animation-play-state: paused !important;
+}
+.auth-sequence__artwork[data-reduced-motion="true"] * {
+  animation: none !important;
+  transition: none !important;
+}
+
+@media (min-width: 1021px) {
+  /* Artwork height, capped so the artwork plus the steps fit one screen. */
+  .home-page .authentication-story {
+    --auth-art-h: min(clamp(32rem, 44vw, 41rem), calc(100svh - 10rem));
+  }
+  .auth-sequence__artwork {
+    height: var(--auth-art-h);
+  }
+  /* The phone is sized from the column width, so cap the column relative to
+     the artwork height; otherwise wide screens blow the phone up past the
+     artwork and over the steps. */
+  .auth-sequence__demo {
+    justify-self: center;
+    width: 100%;
+    max-width: calc(var(--auth-art-h) * 1.02);
+  }
+  .home-page .authentication-story .authentication-story__inner {
+    grid-template-columns: minmax(24rem, 0.82fr) minmax(31rem, 1.18fr);
+    align-items: center;
+    gap: clamp(2rem, 4vw, 5rem);
+  }
+  .home-page .authentication-story .authentication-story__content {
+    align-self: center;
+    max-width: 38rem;
+  }
+  .home-page .authentication-story .authentication-story__title {
+    font-size: clamp(2.2rem, 3vw, 2.5rem);
+  }
+  .home-page .authentication-story .authentication-story__body {
+    font-size: clamp(1rem, 1.04vw, 1.12rem);
+    line-height: 1.72;
+  }
+}
+
+@media (min-width: 620px) and (max-width: 1020px) {
+  .home-page .authentication-story .authentication-story__content {
+    max-width: 48rem;
+  }
+  .auth-sequence__demo {
+    width: min(100%, 48rem);
+    margin-inline: auto;
+  }
+  .auth-sequence__artwork {
+    --auth-artwork-height: clamp(33rem, 82vw, 40rem);
+    height: var(--auth-artwork-height);
+  }
+}
+
+@media (max-width: 619px) {
+  .home-page .home-story-section.authentication-story {
+    padding: 4.75rem 1rem;
+    scroll-margin-top: 1.25rem;
+  }
+  .home-page .authentication-story .authentication-story__inner {
+    gap: 2.8rem;
+  }
+  .auth-sequence__artwork {
+    --auth-artwork-height: 39rem;
+    height: var(--auth-artwork-height);
+  }
+  .auth-sequence__phone-stage {
+    top: 12%;
+    right: -25%;
+    width: 100%;
+  }
+  .auth-sequence__hand {
+    top: 48.5%;
+    left: 53.5%;
+    width: 58%;
+  }
+  .auth-sequence__token {
+    top: 24%;
+    left: -3%;
+    width: 62%;
+  }
+  .auth-sequence__token-caption strong {
+    font-size: 1.15rem;
+  }
+  .auth-sequence__token-caption span {
+    font-size: 0.75rem;
+  }
+  .auth-sequence__artwork:is(
+      [data-sequence-step="qr-reveal"],
+      [data-sequence-step="qr-scan"]
+    )
+    .auth-sequence__token--qr
+    .auth-sequence__token-caption {
+    width: 62%;
+    margin-left: 4%;
+  }
+  .auth-sequence__artwork[data-sequence-step="hologram"]
+    .auth-sequence__token--hologram {
+    top: 20%;
+    left: 0;
+    width: 68%;
+  }
+  .auth-sequence__artwork[data-sequence-step="serial"]
+    .auth-sequence__token--serial {
+    top: 37%;
+    left: -2%;
+    width: 62%;
+  }
+  .auth-sequence__artwork[data-sequence-step="nfc"] .auth-sequence__token--nfc {
+    top: 25%;
+    left: 0;
+    width: 62%;
+  }
+  .auth-sequence__artwork[data-sequence-step="verified"] .auth-sequence__token {
+    left: 0;
+    width: 37%;
+  }
+  .auth-sequence__artwork[data-sequence-step="verified"]
+    .auth-sequence__token--qr {
+    top: 0;
+  }
+  .auth-sequence__artwork[data-sequence-step="verified"]
+    .auth-sequence__token--hologram {
+    top: 27%;
+    width: 34%;
+  }
+  .auth-sequence__artwork[data-sequence-step="verified"]
+    .auth-sequence__token--serial {
+    top: 54%;
+    width: 44%;
+  }
+  .auth-sequence__artwork[data-sequence-step="verified"]
+    .auth-sequence__token--nfc {
+    top: 71%;
+    width: 33%;
+  }
+  .auth-sequence__artwork[data-sequence-step="verified"]
+    .auth-sequence__token-caption
+    strong {
+    font-size: 0.95rem;
+  }
+  .auth-sequence__artwork[data-sequence-step="verified"]
+    .auth-sequence__token-caption
+    span {
+    font-size: 0.67rem;
+  }
+  .auth-sequence__surface-note {
+    font-size: 1rem;
+  }
+  .auth-sequence__step-label {
+    font-size: 0.6rem;
+    white-space: normal;
+  }
+}
+
+@media (max-width: 360px) {
+  .home-page .authentication-story .authentication-story__title {
+    font-size: clamp(1.7rem, 8.6vw, 1.95rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-sequence__artwork * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@keyframes auth-camera-frame {
+  0% {
+    transform: translate(12%, -42%) rotate(7deg) scale(1.18);
+  }
+  23%,
+  100% {
+    transform: translateY(-50%) rotate(-6deg);
+  }
+}
+@keyframes auth-camera-focus {
+  0% {
+    color: #6f6477;
+    transform: translateY(-50%) scale(1.08);
+  }
+  25%,
+  65% {
+    color: #6f6477;
+    transform: translateY(-50%);
+  }
+  76%,
+  100% {
+    color: #738d75;
+    transform: translateY(-50%);
+  }
+}
+@keyframes auth-camera-scan {
+  0%,
+  24% {
+    top: 4%;
+    opacity: 0;
+  }
+  27% {
+    top: 4%;
+    opacity: 1;
+  }
+  65% {
+    top: 96%;
+    opacity: 1;
+  }
+  69%,
+  100% {
+    top: 96%;
+    opacity: 0;
+  }
+}
+@keyframes auth-camera-scanning {
+  0%,
+  20% {
+    opacity: 0;
+  }
+  26%,
+  65% {
+    opacity: 1;
+  }
+  72%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes auth-camera-read {
+  0%,
+  68% {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  78%,
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes auth-sequence-serial-tap {
+  0% {
+    transform: translate(0.8rem, 0.9rem) rotate(1deg);
+  }
+  50% {
+    transform: none;
+  }
+  72% {
+    transform: translate(0.25rem, 0.3rem) rotate(0.4deg);
+  }
+  100% {
+    transform: none;
+  }
+}
+@keyframes auth-sequence-tilt {
+  0%,
+  100% {
+    transform: perspective(600px) rotateY(-7deg);
+    filter: hue-rotate(0deg);
+  }
+  50% {
+    transform: perspective(600px) rotateY(18deg) rotate(-7deg);
+    filter: hue-rotate(45deg);
+  }
+}
+@keyframes auth-sequence-signal {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Single-column layouts pin the bottom of the section (artwork + steps) while
+   scrolling through the steps; keep that part within one screen. */
+@media (max-width: 1020px) {
+  .scroll-steps-track[data-scroll-driven="true"] .auth-sequence__artwork {
+    height: min(var(--auth-artwork-height, 39rem), calc(100svh - 12.5rem));
+  }
+  /* Breathing room under the steps while the section is held on screen. */
+  .authentication-story
+    .scroll-steps-track[data-scroll-driven="true"]
+    > .scroll-steps-pin {
+    padding-bottom: 2rem;
+  }
+}
+
+/* Phones, final step: the four methods sit in a 2 × 2 grid in the space left
+   of the phone (titles only), instead of a tall column that would overlap
+   once the artwork is shortened to fit the screen. */
+@media (max-width: 619px) {
+  .auth-sequence__artwork[data-sequence-step="verified"] .auth-sequence__token {
+    width: 24%;
+  }
+  .auth-sequence__artwork[data-sequence-step="verified"]
+    .auth-sequence__token--qr {
+    top: 10%;
+    left: 0;
+  }
+  .auth-sequence__artwork[data-sequence-step="verified"]
+    .auth-sequence__token--hologram {
+    top: 10%;
+    left: 26%;
+    width: 24%;
+  }
+  .auth-sequence__artwork[data-sequence-step="verified"]
+    .auth-sequence__token--serial {
+    top: 43%;
+    left: 0;
+    width: 24%;
+  }
+  .auth-sequence__artwork[data-sequence-step="verified"]
+    .auth-sequence__token--nfc {
+    top: 38%;
+    left: 26%;
+    width: 24%;
+  }
+  .auth-sequence__artwork[data-sequence-step="verified"]
+    .auth-sequence__token-number {
+    font-size: 0.5rem;
+  }
+  .auth-sequence__artwork[data-sequence-step="verified"]
+    .auth-sequence__token-caption
+    strong {
+    font-size: 0.9rem;
+  }
+  .auth-sequence__artwork[data-sequence-step="verified"]
+    .auth-sequence__token-caption
+    span {
+    display: none;
+  }
+}
+
+/* Wider phones/tablets and up: give the note room to stay on one line. */
+@media (min-width: 620px) {
+  .auth-sequence__surface-note {
+    left: 8%;
+    right: 8%;
+    white-space: nowrap;
+  }
+}
+
+/* --- Linked scene: sections 2 → 3 ---------------------------------------- */
+/* Large screens (components/home/storyZoomLink.ts): the skincare group from
+   the K-beauty section arrives in the middle of the screen and its QR label
+   grows into this section's QR label. So the section opens with only the
+   artwork, centred: the phone comes up to the label and scans it. Half-way
+   through the scan the artwork slides right to its usual place and the text
+   comes in from the left. Driven by `--scroll-progress` on the pin (seven
+   steps; the scan is the third, 0.29 → 0.43). */
+.authentication-story[data-zoom-linked="true"] .scroll-steps-pin {
+  --p: var(--scroll-progress, 1);
+  --settle-linear: clamp(0, calc((var(--p) - 0.34) / 0.08), 1);
+  --settle: calc(
+    var(--settle-linear) * var(--settle-linear) * (3 - 2 * var(--settle-linear))
+  );
+}
+
+.authentication-story[data-zoom-linked="true"] .auth-sequence__demo {
+  /* `--demo-center-shift` (px) is set by AuthenticationStorySection. */
+  translate: calc(var(--demo-center-shift, 0) * (1 - var(--settle)) * 1px) 0;
+  /* Waits until the skincare group has landed. */
+  opacity: clamp(0, calc(var(--p) / 0.045 - 0.5), 1);
+}
+
+.home-page
+  .authentication-story[data-zoom-linked="true"]
+  .authentication-story__content {
+  opacity: var(--settle);
+  translate: calc((1 - var(--settle)) * -5rem) 0;
+}
+
+/* The label waits in place and only fades in under the arriving one. */
+.authentication-story[data-zoom-linked="true"]
+  .auth-sequence__artwork[data-sequence-step="intro"]
+  .auth-sequence__token--qr {
+  transform: rotate(-6deg);
+}

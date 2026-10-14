@@ -1,0 +1,5 @@
+Fraunces variable webfonts
+Source: https://github.com/undercasetype/Fraunces
+Files: fonts/webfonts/variable/Fraunces[SOFT,WONK,opsz,wght].woff2
+       fonts/webfonts/variable/Fraunces-Italic[SOFT,WONK,opsz,wght].woff2
+License: SIL Open Font License 1.1 (OFL.txt)

@@ -1,0 +1,18 @@
+Kalam — Indian Type Foundry
+License: SIL Open Font License 1.1 (see OFL.txt).
+Family: https://fonts.google.com/specimen/Kalam
+Official license: https://github.com/google/fonts/blob/main/ofl/kalam/OFL.txt
+
+Unmodified Latin WOFF2 files from the official Google Fonts stylesheet:
+https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&display=swap
+
+Regular (400):
+https://fonts.gstatic.com/s/kalam/v18/YA9dr0Wd4kDdMthROCfhsCkA.woff2
+
+Bold (700):
+https://fonts.gstatic.com/s/kalam/v18/YA9Qr0Wd4kDdMtDqHTLMkiQqtbGs.woff2
+
+These local files support the draft preview without external font requests.
+Before publishing the wiki, upload both WOFF2 files and their license to
+static.igem.wiki via the team's uploads tool and update the @font-face URLs
+in src/styles/home.css, following README.md. No production upload has been made.

@@ -1,0 +1,246 @@
+/* Supporting blocks under home sections (components/home/SectionExtras.tsx). */
+
+/* Handwritten one-liner. */
+.home-page .home-hand-note {
+  width: fit-content;
+  max-width: 100%;
+  margin: 1.4rem 0 0;
+  color: #c9a8ff;
+  font-family: "Kalam", "Segoe Print", cursive;
+  font-size: clamp(1.15rem, 1.6vw, 1.4rem);
+  font-weight: 700;
+  line-height: 1.3;
+  transform: rotate(-2deg);
+  transform-origin: left center;
+}
+
+/* Spans the section below the text and artwork. */
+.home-story-section__extra {
+  position: relative;
+  z-index: 3;
+  grid-column: 1 / -1;
+  grid-row: 2;
+  width: min(100%, 72rem);
+  margin: clamp(2.5rem, 5vw, 4rem) auto 0;
+}
+
+/* --- Flow ---------------------------------------------------------------- */
+
+.home-flow {
+  display: grid;
+  grid-template-columns: repeat(var(--flow-count), minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: none;
+}
+
+.home-flow li {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 0.35rem;
+  padding: 1.1rem 1rem 1.2rem;
+  border: 1px solid rgba(201, 168, 255, 0.16);
+  border-radius: 14px;
+  background: rgba(14, 12, 20, 0.72);
+  color: #b8afc1;
+  font-family: var(--wiki-sans);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* Arrow between steps. */
+.home-flow li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -0.85rem;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-top: 1.5px solid #8f78b0;
+  border-right: 1.5px solid #8f78b0;
+  translate: 0 -50%;
+  rotate: 45deg;
+}
+
+.home-flow strong {
+  color: #f0ebf2;
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.home-flow__index {
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  margin-bottom: 0.25rem;
+  border-radius: 50%;
+  background: rgba(168, 120, 220, 0.2);
+  color: #d9c4f5;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* --- Features ------------------------------------------------------------ */
+
+.home-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-features li {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1.1rem 1.15rem;
+  border: 1px solid rgba(201, 168, 255, 0.16);
+  border-radius: 14px;
+  background: rgba(14, 12, 20, 0.72);
+  color: #b8afc1;
+  font-family: var(--wiki-sans);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.home-features strong {
+  color: #f0ebf2;
+  font-size: 0.98rem;
+  font-weight: 600;
+}
+
+.home-features strong::before {
+  content: "";
+  display: block;
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-bottom: 0.6rem;
+  border-radius: 50%;
+  background: #a878dc;
+  box-shadow: 0 0 12px rgba(168, 120, 220, 0.7);
+}
+
+/* --- Reader -------------------------------------------------------------- */
+
+.home-reader-steps {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(14rem, 1fr);
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.home-spectrum {
+  display: grid;
+  align-content: center;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(201, 168, 255, 0.16);
+  border-radius: 14px;
+  background: rgba(14, 12, 20, 0.72);
+}
+
+.home-spectrum svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.home-spectrum path {
+  fill: none;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+}
+
+.home-spectrum__ref {
+  stroke: rgba(201, 168, 255, 0.45);
+  stroke-dasharray: 4 5;
+}
+
+.home-spectrum__tag {
+  stroke: #c9a8ff;
+}
+
+.home-spectrum figcaption {
+  color: #8f8798;
+  font-family: var(--wiki-sans);
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+/* --- Outcomes (section 9, centred under its text) ------------------------ */
+
+.home-outcomes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin: 1.6rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-outcomes li {
+  padding: 0.45rem 0.95rem;
+  border: 1px solid rgba(201, 168, 255, 0.3);
+  border-radius: 999px;
+  background: rgba(14, 12, 20, 0.7);
+  color: #e6dcef;
+  font-family: var(--wiki-sans);
+  font-size: 0.875rem;
+}
+
+/* Centred sections centre their note too. */
+.home-story-section--new-authentication-standard .home-hand-note,
+.home-story-section--closing .home-hand-note {
+  margin-inline: auto;
+  transform-origin: center;
+}
+
+/* --- Small screens ------------------------------------------------------- */
+
+@media (max-width: 1020px) {
+  .home-story-section__extra {
+    order: 3;
+    margin-top: 0;
+  }
+
+  .home-reader-steps {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  /* Flows stack vertically with the arrow pointing down. */
+  .home-flow {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+  }
+
+  .home-flow li {
+    grid-template-columns: auto 1fr;
+    column-gap: 0.8rem;
+  }
+
+  .home-flow__index {
+    grid-row: span 2;
+    margin: 0;
+  }
+
+  .home-flow li:not(:last-child)::after {
+    top: auto;
+    right: auto;
+    bottom: -0.75rem;
+    left: 1.75rem;
+    width: 0.55rem;
+    height: 0.55rem;
+    translate: 0 0;
+    rotate: 135deg;
+  }
+}

@@ -1,0 +1,177 @@
+/* Entrance motion for home sections (components/home/useRevealOnScroll.ts).
+
+   Two layers, mixed per section so each one arrives differently:
+
+   1. Artwork follows the scroll (`--reveal-progress`, 0 → 1), chosen with
+      data-reveal-art on the section:
+        zoom    grows from small and settles at full size
+        iris    opens from a circle in the centre
+        drift   slides in from its side and straightens up
+        focus   comes into focus from a soft blur while scaling down slightly
+
+   (3. below: a pinned variant where art and text follow the scroll.)
+
+   2. Text plays once when the section is reached (`data-reveal`), chosen
+      with data-reveal-title / data-reveal-body:
+        title  words  each word rises in turn
+               mask   the title rises out from behind its baseline
+        body   fade   fades up from a slight blur
+               side   slides in from the artwork's side
+*/
+
+/* --- 1. Scroll-linked artwork ------------------------------------------- */
+
+[data-reveal] .reveal-art {
+  --p: var(--reveal-progress, 1);
+  --ease: calc(1 - (1 - var(--p)) * (1 - var(--p)));
+  opacity: min(1, calc(var(--p) * 1.6));
+  will-change: scale, translate, clip-path, filter;
+}
+
+[data-reveal-art="zoom"] .reveal-art {
+  scale: calc(0.72 + 0.28 * var(--ease));
+}
+
+[data-reveal-art="iris"] .reveal-art {
+  /* Ends well past the box: the artwork overflows its frame. */
+  clip-path: circle(calc(18% + 132% * var(--ease)) at 50% 50%);
+  scale: calc(0.92 + 0.08 * var(--ease));
+}
+
+[data-reveal-art="drift"] .reveal-art {
+  translate: calc(var(--drift-from, -1) * (1 - var(--ease)) * 14%) 0;
+  rotate: calc(var(--drift-from, -1) * (1 - var(--ease)) * -5deg);
+}
+
+[data-reveal-art="focus"] .reveal-art {
+  scale: calc(1.12 - 0.12 * var(--ease));
+  filter: blur(calc((1 - var(--ease)) * 10px));
+}
+
+/* Art on the right drifts in from the right. */
+.home-story-section--image-right[data-reveal-art="drift"] .reveal-art {
+  --drift-from: 1;
+}
+
+/* --- 2. Text entrances ---------------------------------------------------- */
+
+[data-reveal] .reveal-text {
+  transition:
+    opacity 700ms cubic-bezier(0.22, 0.7, 0.3, 1),
+    translate 700ms cubic-bezier(0.22, 0.7, 0.3, 1),
+    filter 700ms ease,
+    clip-path 800ms cubic-bezier(0.22, 0.7, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+/* Title: words */
+[data-reveal-title="words"] .reveal-word {
+  display: inline-block;
+  transition:
+    opacity 600ms cubic-bezier(0.22, 0.7, 0.3, 1),
+    translate 600ms cubic-bezier(0.22, 0.7, 0.3, 1);
+  transition-delay: calc(120ms + var(--word-index) * 70ms);
+}
+
+[data-reveal="hidden"][data-reveal-title="words"] .reveal-word {
+  opacity: 0;
+  translate: 0 0.6em;
+}
+
+/* Title: mask */
+[data-reveal="hidden"][data-reveal-title="mask"] .reveal-title {
+  clip-path: inset(0 0 100% 0);
+  translate: 0 0.5em;
+}
+
+[data-reveal="shown"][data-reveal-title="mask"] .reveal-title {
+  clip-path: inset(0 0 -0.2em 0);
+}
+
+/* Body: fade */
+[data-reveal="hidden"][data-reveal-body="fade"] .reveal-body {
+  opacity: 0;
+  translate: 0 18px;
+  filter: blur(4px);
+}
+
+/* Body: side */
+[data-reveal="hidden"][data-reveal-body="side"] .reveal-body {
+  opacity: 0;
+  translate: calc(var(--side-from, 1) * 40px) 0;
+}
+
+.home-story-section--image-right[data-reveal-body="side"] .reveal-body {
+  --side-from: -1;
+}
+
+/* --- 3. Pinned reveal --------------------------------------------------- */
+/* Large screens (HomeStorySection PINNED_REVEAL_SECTIONS): the section is
+   pinned to the screen. Over the first half of the scroll the art grows out
+   of the dark; over the second half the title comes in word by word, then
+   the body. Driven by `--scroll-progress` from useScrollSteps. */
+
+[data-reveal-art="pinned"]
+  .scroll-steps-track[data-scroll-driven="true"]
+  > .scroll-steps-pin {
+  --sp: var(--scroll-progress, 0);
+  height: 100svh;
+  min-height: 0;
+  align-items: center;
+}
+
+[data-reveal][data-reveal-art="pinned"] .reveal-art {
+  --art-p: clamp(0, var(--sp, 1) / 0.5, 1);
+  justify-self: center;
+  /* Keep the 3:2 artwork within one screen. */
+  width: min(100%, 135svh);
+  opacity: calc(var(--art-p) * 0.72);
+  scale: calc(0.55 + 0.45 * var(--art-p));
+  filter: blur(calc((1 - var(--art-p)) * 8px));
+}
+
+[data-reveal-title="pinned"] .reveal-word {
+  --w: clamp(0, (var(--sp, 1) - 0.5 - var(--word-index) * 0.035) * 9, 1);
+  display: inline-block;
+  opacity: var(--w);
+  translate: 0 calc((1 - var(--w)) * 0.6em);
+}
+
+[data-reveal-body="pinned"] .reveal-body {
+  --b: clamp(0, (var(--sp, 1) - 0.72) * 5, 1);
+  opacity: var(--b);
+  translate: 0 calc((1 - var(--b)) * 20px);
+  filter: blur(calc((1 - var(--b)) * 4px));
+}
+
+/* Values follow the scroll directly, so no easing lag. */
+[data-reveal-title="pinned"] .reveal-text,
+[data-reveal-body="pinned"] .reveal-text {
+  transition: none;
+}
+
+/* --- Reduced motion: keep the fades, drop the movement ------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] .reveal-art {
+    opacity: 1;
+    scale: none;
+    translate: none;
+    rotate: none;
+    clip-path: none;
+    filter: none;
+  }
+
+  [data-reveal] .reveal-text,
+  [data-reveal] .reveal-word {
+    transition: opacity 400ms ease;
+  }
+
+  [data-reveal="hidden"] .reveal-word,
+  [data-reveal="hidden"] .reveal-title,
+  [data-reveal="hidden"] .reveal-body {
+    translate: none;
+    filter: none;
+    clip-path: none;
+  }
+}

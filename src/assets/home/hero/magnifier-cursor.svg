@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <g transform="rotate(-6 24 24)">
+    <circle cx="17.5" cy="17.5" r="11.4" fill="#bda9df" fill-opacity=".09"/>
+    <path d="M27.1 26.1c4.7 4.4 9.4 9.1 14.3 14.2" stroke="#191824" stroke-width="5.4" stroke-linecap="round"/>
+    <path d="M26.7 26.6c4.8 4.5 9.6 9.3 14.2 14" stroke="#d9c9ee" stroke-width="2.7" stroke-linecap="round"/>
+    <path d="M27.6 27.7c4.4 4.1 8.8 8.6 13.1 12.9" stroke="#8f70bd" stroke-width=".9" stroke-linecap="round" opacity=".85"/>
+    <path d="M28.3 17.5c0 6.1-4.7 11.3-10.8 11.3S6.2 24 6.2 17.6 11 6.4 17.5 6.4c6.2 0 10.8 4.9 10.8 11.1Z" fill="#0c0c12" fill-opacity=".3" stroke="#e5dcf2" stroke-width="2.2"/>
+    <path d="M27.2 17.1c.3 6.4-4.2 10.6-9.7 10.8-5.9.2-10.3-4.4-10.1-10.3.2-5.5 4.3-10 10.1-10.1 5.7-.1 9.5 4.1 9.7 9.6Z" stroke="#8f70bd" stroke-width="1.05" stroke-linecap="round" stroke-dasharray="2.2 1.1" opacity=".9"/>
+    <path d="M10.5 12.3c1.7-2.4 4.2-3.6 7.1-3.7M9.1 16.1c-.2 1.2-.1 2.5.2 3.6M12.2 25.3c1.7 1 3.6 1.4 5.7 1.3" stroke="#f0e9f8" stroke-width="1" stroke-linecap="round" opacity=".72"/>
+    <path d="m29.7 30.6 3.2-.8m-.9 3.3 3.2-.8m-.8 3.3 3.1-.7" stroke="#5f4d79" stroke-width=".65" stroke-linecap="round" opacity=".85"/>
+  </g>
+</svg>

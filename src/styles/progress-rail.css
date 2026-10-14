@@ -1,0 +1,92 @@
+/* Chapter dots on the home page (components/home/HomeProgressRail.tsx). */
+.home-progress-rail {
+  position: fixed;
+  z-index: 900;
+  top: 50%;
+  right: clamp(0.6rem, 1.4vw, 1.4rem);
+  translate: 0 -50%;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 300ms ease,
+    visibility 0s linear 300ms;
+}
+
+.home-progress-rail.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 300ms ease;
+}
+
+.home-progress-rail ol {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-progress-rail a {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  min-height: 1.6rem;
+  color: #b8afc1;
+  font-family: var(--wiki-sans);
+  font-size: 0.78rem;
+  text-decoration: none;
+}
+
+.home-progress-rail__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(201, 168, 255, 0.32);
+  transition:
+    background-color 200ms ease,
+    box-shadow 200ms ease,
+    scale 200ms ease;
+}
+
+.home-progress-rail__label {
+  padding: 0.15rem 0.5rem;
+  border-radius: 6px;
+  background: rgba(8, 8, 12, 0.82);
+  opacity: 0;
+  translate: 6px 0;
+  transition:
+    opacity 200ms ease,
+    translate 200ms ease;
+  pointer-events: none;
+}
+
+.home-progress-rail a[aria-current="step"] .home-progress-rail__dot {
+  background: #c9a8ff;
+  box-shadow: 0 0 10px rgba(201, 168, 255, 0.8);
+  scale: 1.35;
+}
+
+/* Labels only on hover/focus so they never cover the section text. */
+.home-progress-rail a:hover .home-progress-rail__label,
+.home-progress-rail a:focus-visible .home-progress-rail__label {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.home-progress-rail a[aria-current="step"] {
+  color: #f0ebf2;
+}
+
+.home-progress-rail a:focus-visible {
+  outline: 2px solid #c9a8ff;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Only where there is room beside the content. */
+@media (max-width: 1180px) {
+  .home-progress-rail {
+    display: none;
+  }
+}
