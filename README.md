@@ -25,13 +25,21 @@ npm ci
 npm run dev
 ```
 
-Open the local URL printed by Vite. The base path is `/Atlas/`.
+Open the local URL printed by Vite. The base path is `/`, matching Vercel hosting.
 
 ```sh
 npm run build
 npm run lint
 npm run preview
 ```
+
+## Deployment on Vercel
+
+Import `daydreamplace/Atlas` from GitHub. The GitHub repository itself is the project root (Root Directory: `.`), even though this checkout is stored in a local `Atlas` folder. Use the Vite preset, `npm run build`, and the `dist` output directory. No environment variables are required. `vercel.json` records these build settings.
+
+## Project history
+
+The earlier GitLab and local branch histories are preserved as ancestors of `main`, with their original commit hashes, authors, and dates. The history integration preserves Atlas's current files; it does not restore the earlier institution's pages to the current portfolio. Earlier commits remain the work of their credited authors.
 
 ## Credits and license
 
