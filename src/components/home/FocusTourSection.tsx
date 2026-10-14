@@ -36,6 +36,8 @@ export function FocusTourSection({
     enabled: true,
     stepLength: STEP_LENGTH,
     align: "top",
+    // Each detail gets its moment, however fast the reader scrolls.
+    stopAtSteps: true,
   });
   const titleId = `${section.id}-title`;
   const focus = tour.steps[stepIndex - 1]?.focus ?? WHOLE_ARTWORK;
